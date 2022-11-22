@@ -4,7 +4,7 @@ You must include a .env file which contains an array of the cloundinary servers 
 the format is as follows:
 
 ````
-REACT_APP_CLOUDINARY_PARAMS=[{"name":"cloud1","api_key":"xxxxx","secret":"xxxxx"},{"name":"cloud2","api_key":"xxxxx","secret":"xxxxx"}]
+REACT_APP_CLOUDINARY_PARAMS=[{"name":"cloud1","api_key":"xxxxx","secret":"xxxxx", "upload_folder":"xxxx"},{"name":"cloud2","api_key":"xxxxx","secret":"xxxxx", "upload_folder":"xxxx"}]
 ````
 
 In the project directory, you can run:

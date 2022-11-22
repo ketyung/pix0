@@ -5,4 +5,6 @@ export interface CloudParam {
     api_key?: string,
 
     secret?: string, 
+
+    upload_folder?: string, 
 }
