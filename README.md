@@ -2,7 +2,10 @@
 ## Include a .env file
 You must include a .env file which contains an array of the cloundinary servers that you want to upload to
 the format is as follows:
+
+````
 REACT_APP_CLOUDINARY_PARAMS=[{"name":"cloud1","api_key":"xxxxx","secret":"xxxxx"},{"name":"cloud2","api_key":"xxxxx","secret":"xxxxx"}]
+````
 
 In the project directory, you can run:
 
