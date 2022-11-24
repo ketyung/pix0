@@ -51,6 +51,8 @@ export const generate = async (param : QuoteNftParam) : Promise<string>  =>{
     });
 
 
+    applyCrop(background);
+    
     layer.add(background);
             
     return layer.toDataURL();
