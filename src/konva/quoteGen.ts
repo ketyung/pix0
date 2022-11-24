@@ -3,8 +3,8 @@ import { Konva, applyCrop, loadImage } from './util';
 
 export const generate = async (param : QuoteNftParam) : Promise<string>  =>{
 
-    let width = window.innerWidth;
-    let height = window.innerHeight;
+    let width = 800; //window.innerWidth;
+    let height = 400; //window.innerHeight;
 
     let stage = new Konva.Stage({
       container: 'container',
@@ -15,8 +15,8 @@ export const generate = async (param : QuoteNftParam) : Promise<string>  =>{
     let layer = new Konva.Layer();
     stage.add(layer);
 
-    let xStart = 420; 
-    let yStart = 100;
+    let xStart = 30; 
+    let yStart = 30;
 
     let bg0 = new Konva.Rect({
         x: xStart,
