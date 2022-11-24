@@ -8,3 +8,12 @@ export interface CloudParam {
 
     upload_folder?: string, 
 }
+
+
+export interface QuoteNftParam {
+
+    bgImageSrc : string,
+
+    quoteText: string, 
+
+}
