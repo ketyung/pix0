@@ -14,6 +14,6 @@ export interface QuoteNftParam {
 
     bgImageSrc : string,
 
-    quoteText: string, 
+    quoteText?: string, 
 
 }

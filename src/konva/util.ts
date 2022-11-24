@@ -122,3 +122,17 @@ export async function applyCrop(img : konva.default.Image, pos : ClipPosition = 
     }
     
 }
+
+
+
+export const loadImage = async ( imgSrc : string ) : Promise<HTMLImageElement|undefined> =>{
+        
+    return new Promise((resolve, reject) => {
+        let img = new Image()
+        img.crossOrigin ="anonymous";
+        img.onload = () => { resolve(img); }
+        img.onerror = reject
+        img.src = imgSrc
+    })
+
+}
