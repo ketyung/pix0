@@ -15,8 +15,8 @@ export const generate = async (param : QuoteNftParam) : Promise<string>  =>{
     let layer = new Konva.Layer();
     stage.add(layer);
 
-    let xStart = 50; 
-    let yStart = 50;
+    let xStart = 420; 
+    let yStart = 100;
 
     let bg0 = new Konva.Rect({
         x: xStart,
@@ -27,7 +27,7 @@ export const generate = async (param : QuoteNftParam) : Promise<string>  =>{
         fillLinearGradientEndPoint: { x: stage.width() - (xStart * 2), y: stage.height() - (yStart * 2) },
         // gradient into transparent color, so we can see CSS styles
         fillLinearGradientColorStops: [
-            0, '#168', 0.5,'#638',1,'rgba(0, 0, 0, 1)',
+            0, '#168', 0.5,'#28a',1,'rgba(0, 0, 0, 1)',
         ],
         borderRadius: "20px",
         // remove background from hit graph for better perf
@@ -52,7 +52,7 @@ export const generate = async (param : QuoteNftParam) : Promise<string>  =>{
 
 
     applyCrop(background);
-    
+
     layer.add(background);
             
     return layer.toDataURL();
