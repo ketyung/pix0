@@ -17,7 +17,7 @@ export const generate = async (param : QuoteNftParam) : Promise<string>  =>{
 
     let xStart = 30; 
     let yStart = 30;
-
+    // refer to https://konvajs.org/docs/shapes/Rect.html
     let bg0 = new Konva.Rect({
         x: xStart,
         y: yStart,
@@ -29,7 +29,8 @@ export const generate = async (param : QuoteNftParam) : Promise<string>  =>{
         fillLinearGradientColorStops: [
             0, '#168', 0.5,'#28a',1,'rgba(0, 0, 0, 1)',
         ],
-        borderRadius: "20px",
+        shadowBlur: 10,
+        cornerRadius: 10,
         // remove background from hit graph for better perf
         // because we don't need any events on the background
         listening: false,
@@ -54,7 +55,33 @@ export const generate = async (param : QuoteNftParam) : Promise<string>  =>{
     applyCrop(background);
 
     layer.add(background);
-            
+       
+    let xStart3 = xStart2 + 20;
+    let yStart3 = yStart2 + 10;
+
+    let rect2 = new Konva.Rect({
+        x: xStart3,
+        y: yStart3,
+        width: 300,
+        height: 60,
+        fill : '#237',
+        cornerRadius: 20,
+        opacity: 0.5,
+    });
+
+   layer.add(rect2);
+
+    var text = new Konva.Text({
+        x: xStart3 + 10,
+        y: yStart3 + 15,
+        text: param.quoteText ?? 'Hello World',
+        fontSize: 30,
+        fontFamily: 'Helvetica',
+        fill: 'white'
+    });
+
+    layer.add(text);
+
     return layer.toDataURL();
   
 }
