@@ -1,19 +1,17 @@
 import { FC, useEffect, useState, useCallback } from "react";
-import { generate } from "../konva/quoteGen";
+import useGenQuote from "../hooks/useGenQuote";
 
 export const View : FC = () =>{
 
     const [imageDataURI, setImageDataURI] = useState<string>();
 
+    const {generate} = useGenQuote();
+
+
     const genImage = useCallback(async ()=>{
-        let imgSrc = "https://images.unsplash.com/photo-1586348943529-beaae6c28db9";
-
-        let s = await generate({
-            bgImageSrc : imgSrc,
-        });
-
+        
+        let s = await generate();
         setImageDataURI(s);
-
     },[]);
 
     useEffect(()=>{

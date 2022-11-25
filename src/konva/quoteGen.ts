@@ -4,7 +4,7 @@ import { Konva, applyCrop, loadImage } from './util';
 export const generate = async (param : QuoteNftParam) : Promise<string>  =>{
 
     let width = 800; //window.innerWidth;
-    let height = 400; //window.innerHeight;
+    let height = 300; //window.innerHeight;
 
     let stage = new Konva.Stage({
       container: 'container',
@@ -59,25 +59,22 @@ export const generate = async (param : QuoteNftParam) : Promise<string>  =>{
     let xStart3 = xStart2 + 20;
     let yStart3 = yStart2 + 10;
 
-    let rect2 = new Konva.Rect({
-        x: xStart3,
-        y: yStart3,
-        width: 300,
-        height: 60,
-        fill : '#237',
-        cornerRadius: 20,
-        opacity: 0.5,
-    });
-
-   layer.add(rect2);
-
+   
     var text = new Konva.Text({
         x: xStart3 + 10,
         y: yStart3 + 15,
         text: param.quoteText ?? 'Hello World',
-        fontSize: 30,
+        fontSize: 28,
         fontFamily: 'Helvetica',
-        fill: 'white'
+        fill: 'white',
+        shadowColor : '#333',
+        shadowOffsetX : 2,
+        shadowOffsetY : 2,
+        wrap : "word",
+        width : 200,
+        height : 150,
+        ellipsis : true,  
+
     });
 
     layer.add(text);
