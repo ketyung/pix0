@@ -12,7 +12,7 @@ export const View : FC = () =>{
         
         let s = await generate();
         setImageDataURI(s);
-    },[]);
+    },[generate]);
 
     useEffect(()=>{
 
