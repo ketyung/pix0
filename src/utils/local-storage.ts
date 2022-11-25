@@ -22,7 +22,8 @@ export class WalletPasswordStorage {
 
     private static getPassEncKey() {
 
-        return process.env.REACT_APP_LOCAL_WALLET_PASS_KEY ?? "v66253XA3355x53HBA345X233";
+        return process.env.REACT_APP_LOCAL_WALLET_PASS_KEY ?? 
+        "Vfaf42X6273#nMAj93HAJkxwPv66253XA3355x53HBA345XxJKad233";
     }
 
     static get() {
