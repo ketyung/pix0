@@ -1,9 +1,10 @@
-import { View } from './views/View';
+//import { View } from './views/View';
+import { WalletView } from './views/wallet/WalletView';
 import './App.css';
 
 
 function App() {
-  return <View/>;
+  return <WalletView/>;
 }
 
 export default App;
