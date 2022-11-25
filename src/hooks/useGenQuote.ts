@@ -1,7 +1,5 @@
 import { generate as genCode } from "../konva/quoteGen";
 
-
-
 export default function useGenQuote()  {
 
     const generate = async () : Promise<string> =>{

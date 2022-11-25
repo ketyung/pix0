@@ -20,7 +20,7 @@ export const getNetwork = (network : Network = Network.TestNet) => {
 
 
 
-export const generateWallet = async () =>{
+export const genAndFundWallet = async () =>{
 
     let net = getNetwork();
 
@@ -31,4 +31,27 @@ export const generateWallet = async () =>{
     let wallet = await client.fundWallet();
 
     return wallet;
+}
+
+
+
+export const genWallet = async () =>{
+
+    let wallet = xrpl.Wallet.generate();
+
+    return wallet;
+}
+
+
+export const fundWallet = async (wallet? : xrpl.Wallet) =>{
+
+    let net = getNetwork();
+
+    const client = new xrpl.Client(net);
+
+    await client.connect();
+    
+    let _wallet = await client.fundWallet(wallet);
+
+    return _wallet;
 }
