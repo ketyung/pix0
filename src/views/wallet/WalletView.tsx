@@ -23,7 +23,7 @@ export const WalletView : FC = () =>{
         setLoading(false);
     }
 
-    return <div className="flex items-center">
+    return <div className="m-auto pt-10 border-zinc-500 min-w-500"  style={{textAlign:"center"}}>
 
         {wallet && 
         <div>
@@ -40,7 +40,7 @@ export const WalletView : FC = () =>{
             </div>
         </div>}
       
-
+        <div>
         <button 
         onClick={async ()=>{
 
@@ -50,6 +50,7 @@ export const WalletView : FC = () =>{
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
         {loading ? <Spinner/> : <>Generate Wallet</>}
         </button>
+        </div>
 
     </div>
 }
