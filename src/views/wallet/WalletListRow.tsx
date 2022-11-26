@@ -2,6 +2,7 @@ import { StoredWallet } from "../../models";
 import { WalletsStorage } from "../../utils/local-storage";
 import { shortenStringTo } from "../../utils";
 import useXrp from "../../hooks/useXrp";
+import { Spinner } from "../components/Spinner";
 import { DeleteIcon } from "../icons/DeleteIcon";
 import { CoinIcon } from "../icons/CoinIcon";
 import { FC, useState, useEffect, useCallback } from "react";
@@ -20,6 +21,8 @@ export const WalletListRow : FC <Props> = ({
 
     const [balance, setBalance] = useState<string>();
 
+    const [loading, setLoading] = useState(false);
+
     const {getBalance} = useXrp();
 
     const removeSelected = () =>{
@@ -30,8 +33,11 @@ export const WalletListRow : FC <Props> = ({
     }
 
     const fetchBalance = useCallback( async () =>{
+
+        setLoading(true);
         let b = await getBalance(wallet);
         setBalance(b);
+        setLoading(false);
     },[getBalance]);
 
     useEffect(()=>{
@@ -49,6 +55,6 @@ export const WalletListRow : FC <Props> = ({
         removeSelected();
     }}><DeleteIcon/></button>
     <br/>
-    Balance : {balance}
+    Balance : {loading ? <Spinner/> : <>{balance}</>}
     </div>
 }
