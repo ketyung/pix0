@@ -90,7 +90,7 @@ export class WalletsStorage {
                 wss.push(sw);
 
                 let s = JSON.stringify(wss);
-                console.log("add.wallet.more", s, new Date());
+               
                 LocalStorage.set(this.key, s);    
             }  
             else {
@@ -156,5 +156,39 @@ export class WalletsStorage {
         return [];
     }
 
+
+    static get(pubkey : string) : StoredWallet|undefined {
+
+        let ws = LocalStorage.get(this.key);
+
+        if ( ws !== null) {
+
+            let wss = JSON.parse(ws) as StoredWallet[];
+       
+            return wss.filter(w => {
+                return (w.pubkey === pubkey);
+            })[0];
+        }
+    }
+
+
+}
+
+
+export class SelectedWalletStorage {
+
+
+    private static key : string = "SelectedWalletStorageKey";
+
+
+    static setSelected(pubkey : string) {
+
+        LocalStorage.set(this.key, pubkey);    
+    }
+
+    static getSelected() {
+
+        return LocalStorage.get(this.key);    
+    }
 
 }
