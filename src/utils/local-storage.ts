@@ -74,13 +74,14 @@ export class WalletsStorage {
 
         let ws = LocalStorage.get(this.key);
 
-        console.log("adding.wallet:",wallet.publicKey, new Date());
-
-        console.log("add.ws::", ws, new Date());
-
-        if ( ws != null) {
+        if ( ws !== null) {
 
             let wss = JSON.parse(ws) as StoredWallet[];
+            if (wss.length >= 5 ){
+                window.alert("Has exceeded the max no of wallet allowed!");
+                return;
+            }
+            
             if (wss !== null && wss.filter(w => {
                 return (w.pubkey === wallet.publicKey);
             })[0] === undefined ){
@@ -94,23 +95,32 @@ export class WalletsStorage {
                 console.log("add.wallet.more", s, new Date());
                 LocalStorage.set(this.key, s);    
             }  
+            else {
+
+                console.log("null.wss::XX");
+                this.createAndAdd(wallet);
+            }
         }
         else {
 
-            let newWs : StoredWallet[] = [];
-
-            let sw : StoredWallet = { pubkey : wallet.publicKey,
-            encryptedValue : encryptWallet(wallet) }
-
-            console.log("adding.sw:@:", sw, new Date());
-
-            newWs.push(sw);
-
-            let s = JSON.stringify(newWs);
-            LocalStorage.set(this.key, s );
-
-            console.log("add.wallet", s, new Date());
+            this.createAndAdd(wallet);
         }
+    }
+
+    private static createAndAdd(wallet : Wallet) {
+
+
+        let newWs : StoredWallet[] = [];
+
+        let sw : StoredWallet = { pubkey : wallet.publicKey,
+        encryptedValue : encryptWallet(wallet) }
+
+
+        newWs.push(sw);
+
+        let s = JSON.stringify(newWs);
+        LocalStorage.set(this.key, s );
+
     }
 
     static remove (pubkey : string) {

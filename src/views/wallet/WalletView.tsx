@@ -7,15 +7,14 @@ import useXrp from "../../hooks/useXrp";
 
 export const WalletView : FC = () =>{
 
-    const {genAndFundWallet} = useXrp();
+    const {genWallet} = useXrp();
 
     const [loading, setLoading] = useState(false);
 
     const genWalletNow = async () =>{
 
         setLoading(true);
-
-        let w = await genAndFundWallet();
+        await genWallet();
         setLoading(false);
     }
 

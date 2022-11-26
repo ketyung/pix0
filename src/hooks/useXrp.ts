@@ -9,6 +9,14 @@ export default function useXrp() {
         return w;
     }
 
-    return {genAndFundWallet} as const;
+    const genWallet = async () : Promise <xrpl.Wallet|undefined> =>{
+
+        let w = await xrp.genWallet();
+        return w;
+    } 
+
+
+
+    return {genAndFundWallet,genWallet} as const;
 
 }
