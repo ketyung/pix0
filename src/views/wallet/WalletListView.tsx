@@ -1,5 +1,6 @@
 import { FC, useState, useEffect } from "react";
 import { StoredWallet } from "../../models";
+import { WalletListRow } from "./WalletListRow";
 import { WalletsStorage } from "../../utils/local-storage";
 
 export const WalletListView : FC = () =>{
@@ -17,9 +18,7 @@ export const WalletListView : FC = () =>{
     return  <div className="items-left">
         {
             storedWallets?.map((w,i)=>{
-                return <div key={"wallet_"+i} className="items-left max-w-200 text-ellipsis">
-                {w.pubkey}
-                </div>;
+                return <WalletListRow key={"wallet_"+i} wallet={w} index={i}/>;
             })
         }
     
