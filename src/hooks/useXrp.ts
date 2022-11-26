@@ -3,7 +3,7 @@ import * as xrpl from 'xrpl';
 
 export default function useXrp() {
 
-    const genAndFundWallet = async () : Promise<{ wallet : xrpl.Wallet, balance : number}> =>{
+    const genAndFundWallet = async () : Promise<{ wallet : xrpl.Wallet, balance : number}|undefined> =>{
   
         let w = await xrp.genAndFundWallet();
         return w;

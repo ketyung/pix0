@@ -1,4 +1,5 @@
 import * as xrpl from 'xrpl';
+import { WalletsStorage } from '../utils/local-storage';
 
 export enum Network {
 
@@ -20,24 +21,41 @@ export const getNetwork = (network : Network = Network.TestNet) => {
 
 
 
-export const genAndFundWallet = async () =>{
+export const genAndFundWallet = async (storeWallet : boolean = true) =>{
 
-    let net = getNetwork();
+    try {
 
-    const client = new xrpl.Client(net);
+        let net = getNetwork();
 
-    await client.connect();
+        const client = new xrpl.Client(net);
     
-    let wallet = await client.fundWallet();
+        await client.connect();
+        
+        let wallet = await client.fundWallet();
+    
+        if (storeWallet) {
+    
+            WalletsStorage.add(wallet.wallet);
+        }
+    
+        return wallet;
+    }
+    catch(e : any) {
 
-    return wallet;
+        console.error("error@genAndFundWallet", e, new Date());
+        return undefined;
+    }
 }
 
 
 
-export const genWallet = async () =>{
+export const genWallet = async (storeWallet : boolean = true) =>{
 
     let wallet = xrpl.Wallet.generate();
+
+    if (storeWallet) {
+        WalletsStorage.add(wallet);
+    }
 
     return wallet;
 }

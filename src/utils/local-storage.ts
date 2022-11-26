@@ -36,7 +36,7 @@ export class WalletPasswordStorage {
             return enc.decrypt(p, this.getPassEncKey());
         }
 
-        return undefined;
+        return 'my-default-password';
     }
 
     static set(password : string) {
@@ -55,9 +55,13 @@ export class WalletPasswordStorage {
 const encryptWallet = (wallet : Wallet) =>{
 
     let s = JSON.stringify(wallet);
-    let pw = WalletPasswordStorage.get(); 
+    let pw = `${wallet.publicKey}-${WalletPasswordStorage.get()}`; 
 
-    return enc.encrypt(s, pw);
+    let e =  enc.encrypt(s, pw);
+
+    console.log("en.wallet::",e, new Date());
+
+    return e; 
 }
 
 
@@ -70,30 +74,42 @@ export class WalletsStorage {
 
         let ws = LocalStorage.get(this.key);
 
-        if (ws === null || ws === undefined) {
+        console.log("adding.wallet:",wallet.publicKey, new Date());
 
-            let newWs : StoredWallet[] = [];
+        console.log("add.ws::", ws, new Date());
 
-            let sw : StoredWallet = { pubkey : wallet.publicKey,
-            encryptedValue : encryptWallet(wallet) }
-            newWs.push(sw);
-
-            LocalStorage.set(this.key, newWs);
-        }
-        else {
+        if ( ws != null) {
 
             let wss = JSON.parse(ws) as StoredWallet[];
-            if (wss.filter(w => {
+            if (wss !== null && wss.filter(w => {
                 return (w.pubkey === wallet.publicKey);
             })[0] === undefined ){
 
                 let sw : StoredWallet = { pubkey : wallet.publicKey,
                 encryptedValue : encryptWallet(wallet) }
-                   
+                
                 wss.push(sw);
-                LocalStorage.set(this.key, wss);    
-            }
-          
+
+                let s = JSON.stringify(wss);
+                console.log("add.wallet.more", s, new Date());
+                LocalStorage.set(this.key, s);    
+            }  
+        }
+        else {
+
+            let newWs : StoredWallet[] = [];
+
+            let sw : StoredWallet = { pubkey : wallet.publicKey,
+            encryptedValue : encryptWallet(wallet) }
+
+            console.log("adding.sw:@:", sw, new Date());
+
+            newWs.push(sw);
+
+            let s = JSON.stringify(newWs);
+            LocalStorage.set(this.key, s );
+
+            console.log("add.wallet", s, new Date());
         }
     }
 
@@ -105,13 +121,22 @@ export class WalletsStorage {
 
             let wss = JSON.parse(ws) as StoredWallet[];
             wss.splice(wss.findIndex(w => w.pubkey === pubkey),1);
+            LocalStorage.set(this.key, JSON.stringify(wss));    
+         
         }
+    }
+
+    static removeAll () {
+
+        LocalStorage.set(this.key, null);
     }
 
     static storedWallets() : StoredWallet[] {
 
 
         let ws = LocalStorage.get(this.key);
+
+        console.log("ws::", ws);
 
         if ( ws !== undefined && ws !== null) {
 

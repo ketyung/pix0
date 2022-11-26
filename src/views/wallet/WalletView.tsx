@@ -1,14 +1,13 @@
 import { FC, useState } from "react";
-import * as xrpl from 'xrpl';
 import { Spinner } from "../components/Spinner";
+import { WalletListView } from "./WalletListView";
+import { WalletsStorage } from "../../utils/local-storage";
 import useXrp from "../../hooks/useXrp";
 
 
 export const WalletView : FC = () =>{
 
     const {genAndFundWallet} = useXrp();
-
-    const [wallet, setWallet] = useState<{wallet : xrpl.Wallet, balance : number}>();
 
     const [loading, setLoading] = useState(false);
 
@@ -17,29 +16,20 @@ export const WalletView : FC = () =>{
         setLoading(true);
 
         let w = await genAndFundWallet();
-
-        setWallet(w);
-
         setLoading(false);
     }
 
     return <div className="m-auto p-10 mt-20 border-2 border-gray-200 rounded-3xl max-w-2xl text-center">
 
-        {wallet && 
-        <div>
-            <div className="items-left">
-            Public Key : {wallet?.wallet.publicKey}
-            </div>
+        {<WalletListView/> 
+        /*        
+        <button onClick={()=>{
 
-            <div className="items-left">
-            Seed Phrase : {wallet?.wallet.seed}
-            </div>
-
-            <div className="items-left">
-            Balance : {wallet?.balance}
-            </div>
-        </div>}
-      
+            WalletsStorage.removeAll();
+        }}>Remove All</button>
+        */
+        }
+        
         <div>
         <button 
         onClick={async ()=>{
