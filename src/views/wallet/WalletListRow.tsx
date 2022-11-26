@@ -33,12 +33,13 @@ export const WalletListRow : FC <Props> = ({
 
     const {getBalance, fundWallet} = useXrp();
 
-    const {setSelectedWallet,selectedWalletPubkey} = useWalletState();
+    const {setSelectedWallet,selectedWalletPubkey, setWalletCount} = useWalletState();
 
     const removeSelected = () =>{
 
         if ( window.confirm(`To remove wallet ${shortenStringTo(wallet.pubkey, 10)}`)){
             WalletsStorage.remove(wallet.pubkey);
+            setWalletCount(WalletsStorage.storedWalletsCount());
         }
     }
 

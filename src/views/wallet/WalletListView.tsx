@@ -2,6 +2,7 @@ import { FC, useState, useEffect } from "react";
 import { StoredWallet } from "../../models";
 import { WalletListRow } from "./WalletListRow";
 import { ViewType } from "./WalletView";
+import useWalletState from "../../hooks/useWalletState";
 import { WalletsStorage } from "../../utils/local-storage";
 
 type Props = {
@@ -15,12 +16,14 @@ export const WalletListView : FC <Props> = ({
 
     const [storedWallets, setStoredWallets] = useState<StoredWallet[]>();
 
+    const {walletsCount} = useWalletState();
+
     useEffect (()=>{
 
         let sws = WalletsStorage.storedWallets();
         setStoredWallets(sws);
     
-    },[WalletsStorage.storedWalletsCount()]);
+    },[walletsCount]);
 
 
     return  <div className="items-left">
