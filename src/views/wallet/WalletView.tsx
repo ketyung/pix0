@@ -20,15 +20,8 @@ export const WalletView : FC = () =>{
 
     return <div className="m-auto p-10 mt-20 border-2 border-gray-200 rounded-3xl max-w-2xl text-center">
 
-        {<WalletListView/> 
-        /*        
-        <button onClick={()=>{
-
-            WalletsStorage.removeAll();
-        }}>Remove All</button>
-        */
-        }
-        
+        <WalletListView/> 
+    
         <div>
         <button 
         onClick={async ()=>{
