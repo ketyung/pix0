@@ -28,11 +28,12 @@ export default function useWalletState() {
 
     const selectedWalletPubkey : string|undefined = walletState.selectedWalletPubkey;
 
-
+    /*
     useEffect(()=>{
         setSelectedWallet(SelectedWalletStorage.getSelected());
     },[]);
-
+    */
+   
     return {setSelectedWallet, setWalletCount, walletsCount, selectedWalletPubkey} as const;
 
 }
