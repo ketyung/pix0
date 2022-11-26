@@ -1,5 +1,7 @@
 import * as xrp from "../xrp";
 import * as xrpl from 'xrpl';
+import { decryptStoredWallet } from "../utils/enc";
+import { StoredWallet } from "../models";
 
 export default function useXrp() {
 
@@ -16,7 +18,13 @@ export default function useXrp() {
     } 
 
 
+    const fundWallet = async (storedWallet : StoredWallet) =>{
 
-    return {genAndFundWallet,genWallet} as const;
+        let w = decryptStoredWallet(storedWallet);
+        await xrp.fundWallet(w);
+    }
+
+
+    return {genAndFundWallet,genWallet, fundWallet} as const;
 
 }

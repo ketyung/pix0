@@ -59,8 +59,6 @@ const encryptWallet = (wallet : Wallet) =>{
 
     let e =  enc.encrypt(s, pw);
 
-    console.log("en.wallet::",e, new Date());
-
     return e; 
 }
 
