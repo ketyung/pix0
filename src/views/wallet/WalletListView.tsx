@@ -11,8 +11,9 @@ export const WalletListView : FC = () =>{
 
         let sws = WalletsStorage.storedWallets();
         setStoredWallets(sws);
+        console.log("fetch.stored.wallet...", new Date());
 
-    },[]);
+    },[WalletsStorage.storedWalletsCount()]);
 
 
     return  <div className="items-left">

@@ -141,12 +141,13 @@ export class WalletsStorage {
         LocalStorage.set(this.key, null);
     }
 
+    static storedWalletsCount() : number {
+        return this.storedWallets().length;
+    }
+    
     static storedWallets() : StoredWallet[] {
 
-
         let ws = LocalStorage.get(this.key);
-
-        console.log("ws::", ws);
 
         if ( ws !== undefined && ws !== null) {
 
