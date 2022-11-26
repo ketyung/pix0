@@ -99,15 +99,15 @@ export const getBalance = async ( wallet : xrpl.Wallet) =>{
 
        // console.log("get.bal::", wallet.address, wallet.publicKey, wallet.seed);
 
-        const response = await client.request({
+       let address = wallet.classicAddress;
+
+       
+       const response = await client.request({
             "command": "account_info",
-            "account": wallet.address,
+            "account": address,
             "ledger_index": "validated"
         });
-
-    
-        console.log("resp@@X", response, wallet, new Date());
-    
+       
         balance = response.result.account_data.Balance;
 
         await client.disconnect();
