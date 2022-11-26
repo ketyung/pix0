@@ -108,7 +108,7 @@ export const getBalance = async ( wallet : xrpl.Wallet) =>{
             "ledger_index": "validated"
         });
        
-        balance = response.result.account_data.Balance;
+        balance = (parseFloat(response.result.account_data.Balance) / 1000_000).toFixed(2);
 
         await client.disconnect();
         
