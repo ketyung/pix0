@@ -27,8 +27,8 @@ export const WalletView : FC = () =>{
 
     return <div className="m-auto p-10 mt-20 border-2 border-gray-200 rounded-3xl max-w-2xl text-center">
         
-        <div><button className="bg-gray-200 hover:bg-gray-500 
-        px-4 py-2 float-right mb-8 text-black  
+        <div className="text-right"><button className="bg-gray-200 hover:bg-gray-500 
+        px-4 py-2 mb-4 text-black clear-both   
         font-boiold rounded-full min-w-200" onClick={()=>{
             setSelectedWallet(undefined);
         }}>All wallets</button></div>
