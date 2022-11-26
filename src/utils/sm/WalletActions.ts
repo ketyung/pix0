@@ -31,7 +31,7 @@ export function setWalletsCount(count : number) {
 export function setSelectedWallet(selectedWalletPubkey?: string ) {
 
     const action: WalletAction = {
-        type: SET_WALLETS_COUNT,
+        type: SET_SELECTED_WALLET,
         selectedWalletPubkey : selectedWalletPubkey,
         dateUpdated : new Date(), 
     } 

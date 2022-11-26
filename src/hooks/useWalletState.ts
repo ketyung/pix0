@@ -14,8 +14,7 @@ export default function useWalletState() {
         if ( pubkey)
             SelectedWalletStorage.setSelected(pubkey);
         dispatch(setSelWallet(pubkey));
-    },
-    [dispatch]);
+    },[dispatch]);
 
     const setWalletCount = useCallback((count : number) => 
         dispatch(setWalletCnt(count)),
