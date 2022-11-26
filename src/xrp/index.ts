@@ -38,7 +38,7 @@ export const genAndFundWallet = async (storeWallet : boolean = true) =>{
             WalletsStorage.add(wallet.wallet);
         }
     
-        await client.disconnect();
+       // await client.disconnect();
 
         return wallet;
     }
@@ -110,8 +110,6 @@ export const getBalance = async ( wallet : xrpl.Wallet) =>{
        
         balance = (parseFloat(response.result.account_data.Balance) / 1000_000).toFixed(2);
 
-        await client.disconnect();
-        
     }
     catch(e: any){
         console.error("getBalance::@error",e, new Date());
