@@ -25,7 +25,7 @@ export const WalletListRow : FC <Props> = ({
 
     return <div className="items-left max-w-200 text-ellipsis 
     m-4 bg-slate-50 hover:bg-slate-200 align-top 
-    rounded-3xl p-2">
+    rounded-3xl p-2 pb-5">
     <span className="max-w-40 mr-4">{(index ?? 0) + 1}.</span> 
     <span className="max-w-200">{shortenStringTo(wallet.pubkey, 20)}</span>
     <button className="max-w-15 ml-4 pt-2 mb-2" onClick={()=>{
