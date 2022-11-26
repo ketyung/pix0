@@ -42,7 +42,7 @@ export const WalletView : FC = () =>{
         {(viewType === ViewType.IndWallet &&
             selectedWalletPubkey) ? 
         <WalletIndView pubkey={selectedWalletPubkey}/> : 
-        <WalletListView/> }
+        <WalletListView setViewType={setViewType}/> }
     
         <div>
         <button 
