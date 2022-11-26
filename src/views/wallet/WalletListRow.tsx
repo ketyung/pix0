@@ -1,8 +1,8 @@
 import { StoredWallet } from "../../models";
 import { WalletsStorage } from "../../utils/local-storage";
-import { SelectedWalletStorage } from "../../utils/local-storage";
 import { shortenStringTo } from "../../utils";
 import useXrp from "../../hooks/useXrp";
+import useWalletState from "../../hooks/useWalletState";
 import { Spinner } from "../components/Spinner";
 import { DeleteIcon } from "../icons/DeleteIcon";
 import { CheckIcon } from "../icons/CheckIcon";
@@ -28,6 +28,8 @@ export const WalletListRow : FC <Props> = ({
     const [processing, setProcessing] = useState(false);
 
     const {getBalance, fundWallet} = useXrp();
+
+    const {setSelectedWallet,selectedWalletPubkey} = useWalletState();
 
     const removeSelected = () =>{
 
@@ -66,8 +68,8 @@ export const WalletListRow : FC <Props> = ({
     
     <button title="Select this?" className="max-w-15 ml-4 pt-2 
     mb-2" onClick={()=>{
-        SelectedWalletStorage.setSelected(wallet.pubkey);
-    }}><CheckIcon checked={SelectedWalletStorage.getSelected() === wallet.pubkey}/></button>
+        setSelectedWallet(wallet.pubkey);
+    }}><CheckIcon checked={selectedWalletPubkey === wallet.pubkey}/></button>
    
     <button title="Remove?" className="max-w-15 ml-4 pt-2 
     mb-2" onClick={()=>{
