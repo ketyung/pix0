@@ -17,3 +17,10 @@ export interface QuoteNftParam {
     quoteText?: string, 
 
 }
+
+export interface StoredWallet {
+
+    pubkey : string,
+
+    encryptedValue : string, 
+}

@@ -1,4 +1,6 @@
 import * as enc from './enc';
+import { Wallet } from 'xrpl';
+import { StoredWallet } from '../models';
 
 export class LocalStorage {
 	static get(name: string) {
@@ -46,5 +48,59 @@ export class WalletPasswordStorage {
     static remove(){
         LocalStorage.remove(this.key);
     }
+
+}
+
+
+const encryptWallet = (wallet : Wallet) =>{
+
+    let s = JSON.stringify(wallet);
+    let pw = WalletPasswordStorage.get(); 
+
+    return enc.encrypt(s, pw);
+}
+
+
+export class WalletsStorage {
+
+    private static key : string = "WalletsStorageKey";
+
+
+    static add(wallet : Wallet) {
+
+        let ws = LocalStorage.get(this.key);
+
+        if (ws === null || ws === undefined) {
+
+            let newWs : StoredWallet[] = [];
+
+            let sw : StoredWallet = { pubkey : wallet.publicKey,
+            encryptedValue : encryptWallet(wallet) }
+            newWs.push(sw);
+
+            LocalStorage.set(this.key, newWs);
+        }
+        else {
+
+            let wss = JSON.parse(ws) as StoredWallet[];
+            if (wss.filter(w => {
+                return (w.pubkey === wallet.publicKey);
+            })[0] === undefined ){
+
+                let sw : StoredWallet = { pubkey : wallet.publicKey,
+                encryptedValue : encryptWallet(wallet) }
+                   
+                wss.push(sw);
+                LocalStorage.set(this.key, wss);    
+            }
+          
+        }
+    }
+
+    static remove (pubkey : string) {
+
+
+    }
+
 
 }

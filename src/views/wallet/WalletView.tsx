@@ -23,8 +23,7 @@ export const WalletView : FC = () =>{
         setLoading(false);
     }
 
-    return <div className="m-auto p-10 m-top-20" 
-    style={{textAlign:"center",border:"1px solid #ccc", maxWidth:"500px"}}>
+    return <div className="m-auto p-10 mt-20 border-2 border-gray-200 rounded-3xl max-w-2xl text-center">
 
         {wallet && 
         <div>
@@ -48,7 +47,7 @@ export const WalletView : FC = () =>{
             await genWalletNow();
         }}
         disabled={loading}
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full min-w-200">
         {loading ? <Spinner/> : <>Create Wallet</>}
         </button>
         </div>
