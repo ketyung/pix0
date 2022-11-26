@@ -65,17 +65,23 @@ export const genWallet = async (storeWallet : boolean = true) =>{
 
 export const fundWallet = async (wallet? : xrpl.Wallet) =>{
 
-    let net = getNetwork();
+    try {
 
-    const client = new xrpl.Client(net);
+        let net = getNetwork();
 
-    await client.connect();
+        const client = new xrpl.Client(net);
     
-    let _wallet = await client.fundWallet(wallet);
-
-    await client.disconnect();
+        await client.connect();
         
-    return _wallet;
+        let _wallet = await client.fundWallet(wallet);
+        
+        return _wallet;
+    }
+    catch(e : any) {
+
+        console.error("fundWallet::@error",e, new Date());
+  
+    }
 }
 
 
@@ -91,7 +97,7 @@ export const getBalance = async ( wallet : xrpl.Wallet) =>{
 
         await client.connect();
 
-        console.log("get.bal::", wallet.address, wallet.publicKey, wallet.seed);
+       // console.log("get.bal::", wallet.address, wallet.publicKey, wallet.seed);
 
         const response = await client.request({
             "command": "account_info",

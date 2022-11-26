@@ -23,13 +23,24 @@ export const WalletListRow : FC <Props> = ({
 
     const [loading, setLoading] = useState(false);
 
-    const {getBalance} = useXrp();
+    const [processing, setProcessing] = useState(false);
+
+    const {getBalance, fundWallet} = useXrp();
 
     const removeSelected = () =>{
 
         if ( window.confirm(`To remove wallet ${shortenStringTo(wallet.pubkey, 10)}`)){
             WalletsStorage.remove(wallet.pubkey);
         }
+    }
+
+
+    const fundWalletNow = async () =>{
+
+        setProcessing(true);
+        let w = await fundWallet(wallet);
+        setProcessing(false);
+        setBalance(`${w?.balance}`);
     }
 
     const fetchBalance = useCallback( async () =>{
@@ -49,8 +60,9 @@ export const WalletListRow : FC <Props> = ({
     rounded-3xl p-2 pb-5">
     <span className="max-w-40 mr-4">{(index ?? 0) + 1}.</span> 
     <span className="max-w-200">{shortenStringTo(wallet.pubkey, 20)}</span>
-    <button title="Fund this wallet?" className="max-w-15 ml-4 pt-2 mb-2" onClick={()=>{
-    }}><CoinIcon/></button>
+    <button disabled={processing} title="Fund this wallet?" className="max-w-15 ml-4 pt-2 mb-2" onClick={async ()=>{
+        await fundWalletNow();
+    }}>{processing ? <Spinner/> : <CoinIcon/>}</button>
     <button title="Remove?" className="max-w-15 ml-4 pt-2 mb-2" onClick={()=>{
         removeSelected();
     }}><DeleteIcon/></button>

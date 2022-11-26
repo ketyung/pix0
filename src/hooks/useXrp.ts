@@ -21,7 +21,7 @@ export default function useXrp() {
     const fundWallet = async (storedWallet : StoredWallet) =>{
 
         let w = decryptStoredWallet(storedWallet);
-        await xrp.fundWallet(w);
+        return await xrp.fundWallet(w);
     }
 
     const getBalance = async (storedWallet : StoredWallet) =>{
