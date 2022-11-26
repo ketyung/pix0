@@ -99,7 +99,27 @@ export class WalletsStorage {
 
     static remove (pubkey : string) {
 
+        let ws = LocalStorage.get(this.key);
 
+        if ( ws !== undefined && ws !== null) {
+
+            let wss = JSON.parse(ws) as StoredWallet[];
+            wss.splice(wss.findIndex(w => w.pubkey === pubkey),1);
+        }
+    }
+
+    static storedWallets() : StoredWallet[] {
+
+
+        let ws = LocalStorage.get(this.key);
+
+        if ( ws !== undefined && ws !== null) {
+
+            let wss = JSON.parse(ws) as StoredWallet[];
+            return wss; 
+        }
+
+        return [];
     }
 
 
