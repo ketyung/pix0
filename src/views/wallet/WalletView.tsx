@@ -3,8 +3,14 @@ import { Spinner } from "../components/Spinner";
 import { WalletListView } from "./WalletListView";
 import { WalletIndView } from "./WalletIndView";
 import useWalletState from "../../hooks/useWalletState";
-import { SelectedWalletStorage } from "../../utils/local-storage";
 import useXrp from "../../hooks/useXrp";
+
+export enum ViewType {
+
+    AllWallets,
+
+    IndWallet, 
+}
 
 
 export const WalletView : FC = () =>{
@@ -12,6 +18,8 @@ export const WalletView : FC = () =>{
     const {genWallet} = useXrp();
 
     const [loading, setLoading] = useState(false);
+
+    const [viewType, setViewType] = useState<ViewType>();
 
     const {selectedWalletPubkey, setSelectedWallet} = useWalletState();
 
@@ -28,10 +36,13 @@ export const WalletView : FC = () =>{
         <div className="text-right"><button className="bg-gray-200 hover:bg-gray-500 
         px-4 py-2 mb-4 text-black clear-both   
         font-boiold rounded-full min-w-200" onClick={()=>{
-            setSelectedWallet(undefined);
+            setViewType(ViewType.AllWallets);
        }}>All wallets</button></div>
 
-        {selectedWalletPubkey? <WalletIndView pubkey={selectedWalletPubkey}/> : <WalletListView/> }
+        {(viewType === ViewType.IndWallet &&
+            selectedWalletPubkey) ? 
+        <WalletIndView pubkey={selectedWalletPubkey}/> : 
+        <WalletListView/> }
     
         <div>
         <button 

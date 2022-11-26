@@ -8,6 +8,8 @@ import { DeleteIcon } from "../icons/DeleteIcon";
 import { CheckIcon } from "../icons/CheckIcon";
 import { CoinIcon } from "../icons/CoinIcon";
 import { FC, useState, useEffect, useCallback } from "react";
+import { ViewType } from "./WalletView";
+import { View } from "../View";
 
 
 type Props = {
@@ -15,10 +17,12 @@ type Props = {
     index? : number, 
 
     wallet : StoredWallet,
+
+    setViewType? : (viewType : ViewType) => void,
 }
 
 export const WalletListRow : FC <Props> = ({
-    wallet, index
+    wallet, index , setViewType
 }) =>{
 
     const [balance, setBalance] = useState<string>();
@@ -69,8 +73,9 @@ export const WalletListRow : FC <Props> = ({
     <button title="Select this?" className="max-w-15 ml-4 pt-2 
     mb-2" onClick={()=>{
         setSelectedWallet(wallet.pubkey);
-
-       // console.log("wallet.pubkey::", wallet.pubkey, "selWalPubk", selectedWalletPubkey);
+        if (setViewType) {
+            setViewType(ViewType.IndWallet);
+        }
 
     }}><CheckIcon checked={selectedWalletPubkey === wallet.pubkey}/></button>
    
