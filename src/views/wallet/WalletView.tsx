@@ -1,7 +1,8 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import { Spinner } from "../components/Spinner";
 import { WalletListView } from "./WalletListView";
-import { WalletsStorage } from "../../utils/local-storage";
+import { WalletIndView } from "./WalletIndView";
+import { SelectedWalletStorage } from "../../utils/local-storage";
 import useXrp from "../../hooks/useXrp";
 
 
@@ -11,6 +12,8 @@ export const WalletView : FC = () =>{
 
     const [loading, setLoading] = useState(false);
 
+    const [selectedWallet, setSelectedWallet] = useState<string>();
+
     const genWalletNow = async () =>{
 
         setLoading(true);
@@ -18,9 +21,13 @@ export const WalletView : FC = () =>{
         setLoading(false);
     }
 
+    useEffect(()=>{
+        setSelectedWallet(SelectedWalletStorage.getSelected());
+    },[SelectedWalletStorage.getSelected()]);
+
     return <div className="m-auto p-10 mt-20 border-2 border-gray-200 rounded-3xl max-w-2xl text-center">
 
-        <WalletListView/> 
+        {selectedWallet ? <WalletIndView pubkey={selectedWallet}/> : <WalletListView/> }
     
         <div>
         <button 

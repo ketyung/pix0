@@ -1,5 +1,6 @@
 import { StoredWallet } from "../../models";
 import { WalletsStorage } from "../../utils/local-storage";
+import { SelectedWalletStorage } from "../../utils/local-storage";
 import { shortenStringTo } from "../../utils";
 import useXrp from "../../hooks/useXrp";
 import { Spinner } from "../components/Spinner";
@@ -65,6 +66,7 @@ export const WalletListRow : FC <Props> = ({
     
     <button title="Select this?" className="max-w-15 ml-4 pt-2 
     mb-2" onClick={()=>{
+        SelectedWalletStorage.setSelected(wallet.pubkey);
     }}><CheckIcon/></button>
    
     <button title="Remove?" className="max-w-15 ml-4 pt-2 
@@ -79,7 +81,7 @@ export const WalletListRow : FC <Props> = ({
     <span className="max-w-40 mr-4">{(index ?? 0) + 1}.</span> 
     <span className="max-w-200 mr-10">{shortenStringTo(wallet.pubkey, 20)}</span>
     <div>
-    <span className="mr-20">Balance : {loading ? <Spinner/> : <>{balance}</>}</span>
+    <span className="mr-20">Balance : {loading ? <Spinner/> : <>{balance} XRP</>}</span>
     {buttons}
     </div>
     </div>

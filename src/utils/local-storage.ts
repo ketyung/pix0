@@ -188,7 +188,8 @@ export class SelectedWalletStorage {
 
     static getSelected() {
 
-        return LocalStorage.get(this.key);    
+        let s =LocalStorage.get(this.key);    
+        return (s===null) ? undefined : s;
     }
 
 }
