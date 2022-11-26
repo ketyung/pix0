@@ -91,7 +91,7 @@ export const WalletListRow : FC <Props> = ({
     <span className="max-w-40 mr-4">{(index ?? 0) + 1}.</span> 
     <span className="max-w-200 mr-10">{shortenStringTo(wallet.pubkey, 20)}</span>
     <div>
-    <span className="mr-20">Balance : {loading ? <Spinner/> : <>{balance} XRP</>}</span>
+    <span className="mr-20 min-w-160">Balance : {loading ? <Spinner/> : <>{balance} XRP</>}</span>
     {buttons}
     </div>
     </div>
