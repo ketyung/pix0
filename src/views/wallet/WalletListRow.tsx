@@ -67,7 +67,7 @@ export const WalletListRow : FC <Props> = ({
     <button title="Select this?" className="max-w-15 ml-4 pt-2 
     mb-2" onClick={()=>{
         SelectedWalletStorage.setSelected(wallet.pubkey);
-    }}><CheckIcon/></button>
+    }}><CheckIcon checked={SelectedWalletStorage.getSelected() === wallet.pubkey}/></button>
    
     <button title="Remove?" className="max-w-15 ml-4 pt-2 
     mb-2" onClick={()=>{
