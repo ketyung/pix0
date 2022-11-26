@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from "react";
+import { FC, useState } from "react";
 import { Spinner } from "../components/Spinner";
 import { WalletListView } from "./WalletListView";
 import { WalletIndView } from "./WalletIndView";
@@ -21,7 +21,7 @@ export const WalletView : FC = () =>{
 
     const [viewType, setViewType] = useState<ViewType>();
 
-    const {selectedWalletPubkey, setSelectedWallet} = useWalletState();
+    const {selectedWalletPubkey} = useWalletState();
 
     const genWalletNow = async () =>{
 
