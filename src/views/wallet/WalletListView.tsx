@@ -16,8 +16,8 @@ export const WalletListView : FC = () =>{
 
     return  <div className="items-left">
         {
-            storedWallets?.map(w=>{
-                return <div className="items-left max-w-200 text-ellipsis">
+            storedWallets?.map((w,i)=>{
+                return <div key={"wallet_"+i} className="items-left max-w-200 text-ellipsis">
                 {w.pubkey}
                 </div>;
             })
