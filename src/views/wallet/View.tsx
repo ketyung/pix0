@@ -34,7 +34,7 @@ export const View : FC = () =>{
     return <div className="m-auto p-10 mt-20 border-2 border-gray-200 rounded-3xl w-5/6 text-center">
         
         <div className="text-right"><button className="bg-gray-200 hover:bg-gray-500 
-        px-4 py-2 mb-4 text-black clear-both   
+        px-4 py-2 mb-4 text-black clear-both hover:text-white 
         font-boiold rounded-full min-w-200" onClick={()=>{
             setViewType(ViewType.AllWallets);
        }}>All wallets</button></div>
