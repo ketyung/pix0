@@ -1,7 +1,7 @@
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { Dispatch } from "redux";
 import { useCallback, useEffect} from "react";
-import { SelectedWalletStorage } from "../utils/local-storage";
+import { SelectedWalletStorage, WalletsStorage } from "../utils/local-storage";
 import { WalletState } from "../utils/sm/WalletStateReducer";
 import { setWalletsCount as setWalletCnt, setSelectedWallet as setSelWallet} from "../utils/sm/WalletActions";
 
@@ -30,6 +30,7 @@ export default function useWalletState() {
 
     useEffect(()=>{
         setSelectedWallet(SelectedWalletStorage.getSelected());
+        setWalletCount( WalletsStorage.storedWalletsCount());
     },[]);
     
    

@@ -21,7 +21,7 @@ export const View : FC = () =>{
 
     const [viewType, setViewType] = useState<ViewType>(ViewType.IndWallet);
 
-    const {selectedWalletPubkey} = useWalletState();
+    const {selectedWalletPubkey, walletsCount} = useWalletState();
 
     const genWalletNow = async () =>{
 
@@ -44,18 +44,20 @@ export const View : FC = () =>{
         <WalletIndView pubkey={selectedWalletPubkey}/> : 
         <WalletListView setViewType={setViewType}/> }
     
+        {(viewType === ViewType.IndWallet && walletsCount === 0) || 
+        viewType === ViewType.AllWallets
+        &&
         <div>
-        <button 
-        onClick={async ()=>{
-
-            await genWalletNow();
-        }}
-        disabled={loading}
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 
-        px-4 rounded-full min-w-200">
-        {loading ? <Spinner/> : <>Create Wallet</>}
-        </button>
+            <button 
+            onClick={async ()=>{
+                await genWalletNow();
+            }}
+            disabled={loading}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 
+            px-4 rounded-full min-w-200">
+            {loading ? <Spinner/> : <>Create Wallet</>}
+            </button>
         </div>
-
+        }
     </div>
 }
