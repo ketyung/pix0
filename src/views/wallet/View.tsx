@@ -19,7 +19,7 @@ export const View : FC = () =>{
 
     const [loading, setLoading] = useState(false);
 
-    const [viewType, setViewType] = useState<ViewType>();
+    const [viewType, setViewType] = useState<ViewType>(ViewType.IndWallet);
 
     const {selectedWalletPubkey} = useWalletState();
 

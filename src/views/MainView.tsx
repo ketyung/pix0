@@ -4,6 +4,8 @@ import { Page } from "../models";
 import { View as WalletView } from "./wallet/View";
 import { View as MintNFTView } from "./mintNFT/View";
 import { View as CollectiblesView } from "./collectibles/View";
+import { View as CreateCollectionView } from "./createCollection/View";
+import { View as MarketView } from "./market/View";
 
 export const MainView : FC = () =>{
 
@@ -26,6 +28,12 @@ export const MainView : FC = () =>{
 
                     return <CollectiblesView/>;
 
+                case Page.CreateCollection :
+
+                    return <CreateCollectionView/>
+
+                case Page.Market :
+                    return <MarketView/>
                 default :
                     return <WalletView/>
             }
