@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { SideBar } from "./SideBar";
+import { MainView } from "./MainView";
 
 export const HomeView : FC = () =>{
 
@@ -11,7 +12,7 @@ export const HomeView : FC = () =>{
         </aside>
         <main className="main flex flex-col flex-grow -ml-64 md:ml-0 
         transition-all duration-150 ease-in">
-            This is the main page
+            <MainView/>
         </main>
       </div>
 }
