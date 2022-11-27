@@ -36,6 +36,13 @@ export const SideBar : FC = () =>{
                 <div className="text-center text-xs font-normal ">Create Collection</div>
             </a>
 
+            <a href="#" className="text-gray-400 hover:text-orange-300">
+                <div className="flex-shrink-0 inline-flex items-center justify-center w-14">
+                    <i className="fa fa-exchange"></i>
+                </div>
+                <div className="text-center text-xs font-normal ">Sell/Buy NFT</div>
+            </a>
+
         </div>
     </nav>
 </div>

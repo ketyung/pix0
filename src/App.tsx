@@ -1,4 +1,4 @@
-import { View } from './views/View';
+import { HomeView } from './views/HomeView';
 //import { WalletView } from './views/wallet/WalletView';
 import { Provider } from "react-redux";
 import { StateStore } from './utils/sm/StateStore';
@@ -10,7 +10,7 @@ function App() {
   return (
     <div className="App">
        <Provider store={StateStore}>
-         <View/>
+         <HomeView/>
        </Provider>
     </div>
   );

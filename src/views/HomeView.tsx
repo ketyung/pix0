@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { SideBar } from "./SideBar";
 
-export const View : FC = () =>{
+export const HomeView : FC = () =>{
 
 
     return <div className="flex flex-row min-h-screen bg-gray-100 text-gray-800">
