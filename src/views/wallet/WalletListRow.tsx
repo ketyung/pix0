@@ -4,9 +4,9 @@ import { shortenStringTo } from "../../utils";
 import useXrp from "../../hooks/useXrp";
 import useWalletState from "../../hooks/useWalletState";
 import { Spinner } from "../components/Spinner";
-import { DeleteIcon } from "../icons/DeleteIcon";
-import { CheckIcon } from "../icons/CheckIcon";
-import { CoinIcon } from "../icons/CoinIcon";
+import { DeleteIcon } from "../components/icons/DeleteIcon";
+import { CheckIcon } from "../components/icons/CheckIcon";
+import { CoinIcon } from "../components/icons/CoinIcon";
 import { FC, useState, useEffect, useCallback } from "react";
 import { ViewType } from "./View";
 
