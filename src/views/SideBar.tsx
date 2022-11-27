@@ -9,8 +9,8 @@ export const SideBar : FC = () =>{
 
     const classNamesIfPageIs = ( page : Page) => {
 
-        return isPage(page) ? "text-sky-400" : 
-        "cursor-pointer text-gray-400 hover:text-orange-300"
+        return isPage(page) ? "text-sky-300 bg-gray-700 p-2 rounded-md" : 
+        "cursor-pointer text-gray-400 hover:text-orange-300 p-2"
 
     }
 
