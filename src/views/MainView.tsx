@@ -3,6 +3,7 @@ import usePage from "../hooks/usePage";
 import { Page } from "../models";
 import { View as WalletView } from "./wallet/View";
 import { View as MintNFTView } from "./mintNFT/View";
+import { View as CollectiblesView } from "./collectibles/View";
 
 export const MainView : FC = () =>{
 
@@ -20,7 +21,11 @@ export const MainView : FC = () =>{
                 case Page.MintNFT :
                     
                     return <MintNFTView/>;
-                    
+
+                case Page.Collectibles :
+
+                    return <CollectiblesView/>;
+
                 default :
                     return <WalletView/>
             }
