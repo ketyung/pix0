@@ -24,3 +24,18 @@ export interface StoredWallet {
 
     encryptedValue : string, 
 }
+
+
+
+export enum Page {
+
+    Wallet,
+
+    MintNFT, 
+
+    CreateCollection,
+
+    Market,
+
+    Collectibles,
+}
