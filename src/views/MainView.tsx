@@ -6,6 +6,7 @@ import { View as MintNFTView } from "./mintNFT/View";
 import { View as CollectiblesView } from "./collectibles/View";
 import { View as CreateCollectionView } from "./createCollection/View";
 import { View as MarketView } from "./market/View";
+import { ConnectedAsView } from "./ConnectedAsView";
 
 export const MainView : FC = () =>{
 
@@ -42,6 +43,7 @@ export const MainView : FC = () =>{
     }
 
     return <div>
+    <ConnectedAsView/>
     {switchView()}
     </div>
 }
