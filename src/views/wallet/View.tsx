@@ -13,7 +13,7 @@ export enum ViewType {
 }
 
 
-export const WalletView : FC = () =>{
+export const View : FC = () =>{
 
     const {genWallet} = useXrp();
 

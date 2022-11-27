@@ -1,7 +1,7 @@
 import { FC, useState, useEffect } from "react";
 import { StoredWallet } from "../../models";
 import { WalletListRow } from "./WalletListRow";
-import { ViewType } from "./WalletView";
+import { ViewType } from "./View";
 import useWalletState from "../../hooks/useWalletState";
 import { WalletsStorage } from "../../utils/local-storage";
 

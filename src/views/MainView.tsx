@@ -1,7 +1,8 @@
 import { FC } from "react";
 import usePage from "../hooks/usePage";
 import { Page } from "../models";
-import { WalletView } from "./wallet/WalletView";
+import { View as WalletView } from "./wallet/View";
+import { View as MintNFTView } from "./mintNFT/View";
 
 export const MainView : FC = () =>{
 
@@ -16,6 +17,10 @@ export const MainView : FC = () =>{
                 case Page.Wallet :
                     return <WalletView/>;
 
+                case Page.MintNFT :
+                    
+                    return <MintNFTView/>;
+                    
                 default :
                     return <WalletView/>
             }

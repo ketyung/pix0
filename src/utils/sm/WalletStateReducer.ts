@@ -32,8 +32,6 @@ export const WalletReducer = (state : WalletState = INIT_STATE,
 
         case WalletActions.SET_SELECTED_WALLET :
 
-        console.log(" action.selectedWalletPubkey::",  action.selectedWalletPubkey, new Date());
-
             return {...state, selectedWalletPubkey : action.selectedWalletPubkey, 
                 dateUpdated : new Date() };
 

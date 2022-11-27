@@ -8,7 +8,7 @@ import { DeleteIcon } from "../icons/DeleteIcon";
 import { CheckIcon } from "../icons/CheckIcon";
 import { CoinIcon } from "../icons/CoinIcon";
 import { FC, useState, useEffect, useCallback } from "react";
-import { ViewType } from "./WalletView";
+import { ViewType } from "./View";
 
 
 type Props = {
