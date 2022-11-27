@@ -3,6 +3,7 @@ import { Spinner } from "../components/Spinner";
 import { WalletListView } from "./WalletListView";
 import { WalletIndView } from "./WalletIndView";
 import useWalletState from "../../hooks/useWalletState";
+import { CloseIcon } from "../components/icons/CloseIcon";
 import useXrp from "../../hooks/useXrp";
 
 export enum ViewType {
@@ -33,7 +34,13 @@ export const View : FC = () =>{
    
     return <div className="m-auto p-10 mt-20 border-2 border-gray-200 rounded-3xl w-5/6 text-center">
         
-        <div className="text-right"><button className="bg-gray-200 hover:bg-gray-500 
+        <div className="text-right">
+        {viewType === ViewType.AllWallets && 
+        <button className="mr-10" onClick={()=>{
+            setViewType(ViewType.IndWallet);
+        }}><CloseIcon textColorClass="text-gray-400"/></button>}
+
+        <button className="bg-gray-200 hover:bg-gray-500 
         px-4 py-2 mb-4 text-black clear-both hover:text-white 
         font-boiold rounded-full min-w-200" onClick={()=>{
             setViewType(ViewType.AllWallets);

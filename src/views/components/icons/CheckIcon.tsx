@@ -1,15 +1,17 @@
+import { Props as extProps } from "./CloseIcon";
 import { FC } from "react";
 
-type Props = {
 
+type Props = {
     checked? : boolean,
-}
+} & extProps;
+
 
 export const CheckIcon : FC <Props> = ({
-    checked
+    checked, textColorClass
 }) =>{
 
-    return <svg className={"h-6 w-6 " + (checked ? "text-green-500" : "text-gray-300")}  
+    return <svg className={`h-6 w-6 inline-block ${(checked ? "text-green-500" : "text-gray-300")} ${textColorClass ?? "text-gray-600"}`}  
     width="24" height="24" viewBox="0 0 24 24" 
     strokeWidth="2" stroke="currentColor" fill="none" 
     strokeLinecap="round" strokeLinejoin="round">

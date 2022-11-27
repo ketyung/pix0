@@ -3,7 +3,7 @@ import { FC } from "react";
 
 export const CoinIcon : FC = () =>{
 
-    return <svg className="h-6 w-6 text-yellow-500" 
+    return <svg className="h-6 w-6 inline-block text-yellow-500" 
     width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" 
     stroke="currentColor" fill="none" strokeLinecap="round" 
     strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  

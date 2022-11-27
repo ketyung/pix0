@@ -3,7 +3,7 @@ import { FC } from "react";
 
 export const DeleteIcon : FC = () =>{
 
-    return <svg className="h-6 w-6 text-red-300" 
+    return <svg className="h-6 w-6 inline-block text-red-300" 
     viewBox="0 0 24 24"  fill="none" 
     stroke="currentColor"  strokeWidth="2"  
     strokeLinecap="round"  strokeLinejoin="round">  
