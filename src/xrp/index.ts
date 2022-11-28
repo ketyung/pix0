@@ -169,11 +169,8 @@ export const mintNft = async (
 
         const nft_tx_prepared = await client.autofill(nftMint);
        
-       
         let signerWallet = xrpl.Wallet.fromSeed(minterWallet.seed ?? "");
        
-        console.log("prepared:::", nft_tx_prepared, "signerWallet", signerWallet, new Date());
-
         const nft_signed = signerWallet.sign(nft_tx_prepared);
 
         const nft_result = await client.submitAndWait(nft_signed.tx_blob);
