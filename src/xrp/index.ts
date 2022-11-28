@@ -161,7 +161,7 @@ export const mintNft = async (
 
             TransferFee : transferFee ,
 
-            Fee : fee ? `${fee}` : undefined,
+            Fee : fee ? xrpl.xrpToDrops(`${fee}`) : undefined,
 
             Flags : isBurnable ? 1 : undefined // tfBurnable
 
