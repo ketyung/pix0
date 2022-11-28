@@ -114,7 +114,7 @@ export const WalletListRow : FC <Props> = ({
     <span className="mr-20 min-w-260">Balance : {loading ? <Spinner/> : <>{balance} XRP</>}</span>
     {buttons}
     </div>
-    {seed && <div>
+    {seed && <div className="bg-gray-300 rounded-2xl p-2 pl-4 max-w-32">
     Seed Phrase : {seed} 
         <div className="text-sm">
         Please keep this safe and don't share to others
