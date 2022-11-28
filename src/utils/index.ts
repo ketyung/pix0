@@ -16,3 +16,8 @@ export const copy = (copyText : string ) =>{
  
     navigator.clipboard.writeText(copyText);
 }
+
+export const uriExists = async  ( uri : string) : Promise<boolean> =>{
+    let res = await fetch(uri);
+    return res.status === 200;
+}
