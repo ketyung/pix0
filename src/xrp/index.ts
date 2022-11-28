@@ -201,9 +201,9 @@ export const mintNft = async (
     catch(e : any ){
 
         if (completion )
-            completion(new Error(`${e.message} - ${e.data}` ));
+            completion(new Error(`${e.message}` ));
 
-        console.error("error@minNft:",e.data, new Date());
+        console.error("error@minNft:",e.message, e.data, new Date());
     }
     
 }
