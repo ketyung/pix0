@@ -169,6 +169,8 @@ export const mintNft = async (
 
         const nft_tx_prepared = await client.autofill(nftMint);
        
+        console.log("prepared:::", nft_tx_prepared, new Date());
+        
         const nft_signed = minterWallet.sign(nft_tx_prepared);
 
         const nft_result = await client.submitAndWait(nft_signed.tx_blob);
@@ -179,6 +181,7 @@ export const mintNft = async (
 
             if (nft_result.result.meta.TransactionResult == "tesSUCCESS") {
                 
+                await client.disconnect();
                 if ( completion ) {
 
                     completion(nft_signed.hash);
@@ -187,6 +190,8 @@ export const mintNft = async (
             } 
             else {
                 
+                await client.disconnect();
+             
                 if ( completion ) {
                     completion(new Error(`Error sending transaction: ${nft_result}`));
                 }
