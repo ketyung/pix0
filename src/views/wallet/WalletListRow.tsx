@@ -4,6 +4,7 @@ import { shortenStringTo } from "../../utils";
 import useXrp from "../../hooks/useXrp";
 import useWalletState from "../../hooks/useWalletState";
 import { Spinner } from "../components/Spinner";
+import { decryptStoredWallet } from "../../utils/enc";
 import { DeleteIcon } from "../components/icons/DeleteIcon";
 import { CheckIcon } from "../components/icons/CheckIcon";
 import { CoinIcon } from "../components/icons/CoinIcon";
@@ -29,6 +30,8 @@ export const WalletListRow : FC <Props> = ({
     const [loading, setLoading] = useState(false);
 
     const [processing, setProcessing] = useState(false);
+
+    const [seed, setSeed] = useState<string>();
 
     const {getBalance, fundWallet} = useXrp();
 
@@ -59,6 +62,20 @@ export const WalletListRow : FC <Props> = ({
         setLoading(false);
     },[getBalance]);
 
+
+    const showSeed = () =>{
+
+        let w = WalletsStorage.get(wallet.pubkey);
+        if ( w ) {         
+            let dw = decryptStoredWallet(w);
+            setSeed(dw.seed);
+        
+            setTimeout(()=>{
+                setSeed(undefined);
+            },10000);
+        }
+    }
+
     useEffect(()=>{
         fetchBalance();
     },[])
@@ -76,23 +93,32 @@ export const WalletListRow : FC <Props> = ({
         if (setViewType) {
             setViewType(ViewType.IndWallet);
         }
-
     }}><CheckIcon checked={selectedWalletPubkey === wallet.pubkey}/></button>
    
     <button title="Remove?" className="max-w-15 ml-4 pt-2 
     mb-2" onClick={()=>{
         removeSelected();
     }}><DeleteIcon/></button>
+
+    <button title="Show seed phrase" 
+    className="text-sm max-w-35 ml-4 p-2 mb-2 bg-gray-500 rounded text-white" 
+    onClick={()=>{showSeed();}}>Show seed phrase</button>
     </div>
 
     return <div className="items-left max-w-200 text-ellipsis 
     m-4 bg-slate-50 hover:bg-slate-200 align-top 
     rounded-3xl p-2 pb-5 text-left pl-20">
     <span className="max-w-40 mr-4">{(index ?? 0) + 1}.</span> 
-    <span className="max-w-200 mr-10">{shortenStringTo(wallet.pubkey, 20)}</span>
+    <span className="min-w-200 mr-10">{shortenStringTo(wallet.pubkey, 20)}</span>
     <div>
-    <span className="mr-20 min-w-160">Balance : {loading ? <Spinner/> : <>{balance} XRP</>}</span>
+    <span className="mr-20 min-w-260">Balance : {loading ? <Spinner/> : <>{balance} XRP</>}</span>
     {buttons}
     </div>
+    {seed && <div>
+    Seed Phrase : {seed} 
+        <div className="text-sm">
+        Please keep this safe and don't share to others
+        </div>    
+    </div>}
     </div>
 }
