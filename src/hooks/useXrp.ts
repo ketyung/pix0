@@ -9,17 +9,17 @@ export default function useXrp() {
 
     const {selectedWalletPubkey} = useWalletState();
 
-    const genAndFundWallet = async () : Promise<{ wallet : xrpl.Wallet, balance : number}|undefined> =>{
-  
-        let w = await xrp.genAndFundWallet();
-        return w;
-    }
+    const genWallet = () : xrpl.Wallet =>{
 
-    const genWallet = async () : Promise <xrpl.Wallet|undefined> =>{
-
-        let w = await xrp.genWallet();
+        let w = xrp.genWallet();
         return w;
     } 
+
+    const walletFromSeed = (seed : string) => {
+
+        let w = xrp.walletFromSeed(seed);
+        return w; 
+    }
 
 
     const fundWallet = async (storedWallet : StoredWallet) =>{
@@ -93,7 +93,7 @@ export default function useXrp() {
     }
 
 
-    return {genAndFundWallet,genWallet,getNftsOf,  
-        fundWallet,getBalance,mintNft} as const;
+    return {genWallet,getNftsOf,  
+        fundWallet,getBalance,mintNft, walletFromSeed} as const;
 
 }

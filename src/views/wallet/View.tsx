@@ -1,5 +1,4 @@
 import { FC, useState } from "react";
-import { Spinner } from "../components/Spinner";
 import { WalletListView } from "./WalletListView";
 import { WalletIndView } from "./WalletIndView";
 import useWalletState from "../../hooks/useWalletState";
@@ -18,18 +17,9 @@ export const View : FC = () =>{
 
     const {genWallet} = useXrp();
 
-    const [loading, setLoading] = useState(false);
-
     const [viewType, setViewType] = useState<ViewType>(ViewType.IndWallet);
 
     const {selectedWalletPubkey, walletsCount} = useWalletState();
-
-    const genWalletNow = async () =>{
-
-        setLoading(true);
-        await genWallet();
-        setLoading(false);
-    }
 
    
     return <div className="m-auto p-10 mt-20 border-2 border-gray-200 rounded-3xl w-5/6 text-center">
@@ -56,13 +46,12 @@ export const View : FC = () =>{
         &&
         <div>
             <button 
-            onClick={async ()=>{
-                await genWalletNow();
+            onClick={()=>{
+                genWallet();
             }}
-            disabled={loading}
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 
             px-4 rounded-full min-w-200">
-            {loading ? <Spinner/> : <>Create Wallet</>}
+            Create Wallet
             </button>
         </div>
         }

@@ -63,9 +63,21 @@ export const genAndFundWallet = async (storeWallet : boolean = true) =>{
 
 
 
-export const genWallet = async (storeWallet : boolean = true) =>{
+export const genWallet = (storeWallet : boolean = true) =>{
 
     let wallet = xrpl.Wallet.generate();
+
+    if (storeWallet) {
+        WalletsStorage.add(wallet);
+    }
+
+    return wallet;
+}
+
+
+export const walletFromSeed = (seed : string, storeWallet : boolean = true) =>{
+
+    let wallet = xrpl.Wallet.fromSeed(seed);
 
     if (storeWallet) {
         WalletsStorage.add(wallet);

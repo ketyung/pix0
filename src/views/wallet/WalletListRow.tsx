@@ -65,6 +65,11 @@ export const WalletListRow : FC <Props> = ({
 
     const showSeed = () =>{
 
+        if ( seed ) {
+            setSeed(undefined);
+            return;
+        }
+
         let w = WalletsStorage.get(wallet.pubkey);
         if ( w ) {         
             let dw = decryptStoredWallet(w);
@@ -107,7 +112,7 @@ export const WalletListRow : FC <Props> = ({
 
     return <div className="items-left max-w-200 text-ellipsis 
     m-4 bg-slate-50 hover:bg-slate-200 align-top 
-    rounded-3xl p-2 pb-5 text-left pl-20">
+    rounded-3xl p-4 text-left">
     <span className="max-w-40 mr-4">{(index ?? 0) + 1}.</span> 
     <span className="min-w-200 mr-10">{shortenStringTo(wallet.pubkey, 20)}</span>
     <div>
