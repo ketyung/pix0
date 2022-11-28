@@ -81,7 +81,8 @@ export const SimpleMintForm : FC = () =>{
             }}/>
         </div>
         <div className="mb-4">
-        <button className="shadow bg-purple-500 hover:bg-purple-400 
+        <button style={{minWidth:"150px"}}
+        className="shadow bg-gray-800 hover:bg-purple-700 
         focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" 
         type="button" disabled={processing} onClick={async ()=>{
             await mintNow();

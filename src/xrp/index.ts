@@ -138,51 +138,58 @@ export const mintNft = async (
     transferFee? : number, 
     completion? : (res : string|Error)=> void) => {
 
-    let net = getNetwork();
+    try {
+        let net = getNetwork();
 
-    const client = new xrpl.Client(net);
+        const client = new xrpl.Client(net);
 
-    await client.connect();
+        await client.connect();
 
-    let nftMint : xrpl.NFTokenMint = {
+        let nftMint : xrpl.NFTokenMint = {
 
-        Account : minterWallet.classicAddress,
+            Account : minterWallet.classicAddress,
 
-        NFTokenTaxon : 0, 
+            NFTokenTaxon : 0, 
 
-        URI : mediaURI,
+            URI : mediaURI,
 
-        TransactionType : "NFTokenMint",
+            TransactionType : "NFTokenMint",
 
-        TransferFee : transferFee ,
+            TransferFee : transferFee ,
 
-        Fee : fee ? `${fee}` : undefined,
+            Fee : fee ? `${fee}` : undefined,
 
-    };
+        };
 
-    const nft_prepared = await client.autofill(nftMint);
-    const nft_signed = minterWallet.sign(nft_prepared);
+        const nft_prepared = await client.autofill(nftMint);
+        const nft_signed = minterWallet.sign(nft_prepared);
 
-    const nft_result = await client.submitAndWait(nft_signed.tx_blob);
+        const nft_result = await client.submitAndWait(nft_signed.tx_blob);
 
-    if (nft_result.result.meta !== undefined && 
-        !(typeof nft_result.result.meta === 'string' 
-        || nft_result.result.meta instanceof String)) {
+        if (nft_result.result.meta !== undefined && 
+            !(typeof nft_result.result.meta === 'string' 
+            || nft_result.result.meta instanceof String)) {
 
-        if (nft_result.result.meta.TransactionResult == "tesSUCCESS") {
-            
-            if ( completion ) {
+            if (nft_result.result.meta.TransactionResult == "tesSUCCESS") {
+                
+                if ( completion ) {
 
-                completion(nft_signed.hash);
-            }
-            //console.log(`Transaction succeeded: https://testnet.xrpl.org/transactions/${nft_signed.hash}`)
-        } 
-        else {
-            
-            if ( completion ) {
-                completion(new Error(`Error sending transaction: ${nft_result}`));
+                    completion(nft_signed.hash);
+                }
+                //console.log(`Transaction succeeded: https://testnet.xrpl.org/transactions/${nft_signed.hash}`)
+            } 
+            else {
+                
+                if ( completion ) {
+                    completion(new Error(`Error sending transaction: ${nft_result}`));
+                }
             }
         }
+    }
+    catch(e : any ){
+
+        if (completion )
+            completion(new Error(e.message));
     }
     
 }
