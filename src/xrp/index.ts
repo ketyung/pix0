@@ -9,7 +9,7 @@ export enum Network {
 }
 
 
-export const getNetwork = (network : Network = Network.TestNet) => {
+export const getNetwork = (network : Network = Network.DevNet) => {
 
     if ( network === Network.DevNet ) {
 
@@ -17,6 +17,17 @@ export const getNetwork = (network : Network = Network.TestNet) => {
     }
 
     return "wss://s.altnet.rippletest.net:51233";
+}
+
+
+export const getExplorerUrl = (network : Network = Network.DevNet) => {
+
+    if ( network === Network.DevNet ) {
+
+        return "https://devnet.xrpl.org/";
+    }
+
+    return "https://testnet.xrpl.org/";
 }
 
 export const genAndFundWallet = async (storeWallet : boolean = true) =>{

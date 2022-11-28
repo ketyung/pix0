@@ -1,13 +1,13 @@
 import { FC } from "react";
 
-type Props ={
+export type Props ={
     title? : string,
     
     text? : string,
 }
 
 export const ErrorView : FC <Props> = ({
-    title, text, 
+    title, text
 }) =>{
 
     return <div role="alert">
