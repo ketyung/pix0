@@ -155,7 +155,7 @@ export const mintNft = async (
 
             NFTokenTaxon : 0, 
 
-            URI : mediaURI,
+            URI : xrpl.convertStringToHex(mediaURI),
 
             TransactionType : "NFTokenMint",
 
@@ -169,9 +169,12 @@ export const mintNft = async (
 
         const nft_tx_prepared = await client.autofill(nftMint);
        
-        console.log("prepared:::", nft_tx_prepared, new Date());
-        
-        const nft_signed = minterWallet.sign(nft_tx_prepared);
+       
+        let signerWallet = xrpl.Wallet.fromSeed(minterWallet.seed ?? "");
+       
+        console.log("prepared:::", nft_tx_prepared, "signerWallet", signerWallet, new Date());
+
+        const nft_signed = signerWallet.sign(nft_tx_prepared);
 
         const nft_result = await client.submitAndWait(nft_signed.tx_blob);
 
