@@ -225,7 +225,7 @@ export const getNftsOf = async (
     let req : xrpl.AccountNFTsRequest = {
         account : wallet.classicAddress,
         limit : limit,
-        marker : offset,
+        marker : `${offset}`,
         command: "account_nfts",
         id : id, 
     };
