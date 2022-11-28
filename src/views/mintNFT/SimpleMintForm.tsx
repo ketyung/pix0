@@ -15,6 +15,16 @@ export const SimpleMintForm : FC = () =>{
 
     const {mintNft} = useXrp();
 
+
+    const setMessageNow = (message : Message) => {
+
+        setMessage(message);
+
+        setTimeout(()=>{
+            setMessage(undefined);
+        },5000);
+    }
+
     const mintNow = async () =>{
 
         setMessage(undefined);
@@ -26,14 +36,14 @@ export const SimpleMintForm : FC = () =>{
                 await mintNft(mediaURI,2, undefined, (e)=>{
 
                     if ( e instanceof Error) {
-                        setMessage ({
+                        setMessageNow ({
                             text: e.message,
                             type : MessageType.Error
                         });
                     }
                     else {
 
-                        setMessage({
+                        setMessageNow({
                             text: "Success!",
                             type: MessageType.Info,
                         })
@@ -46,7 +56,7 @@ export const SimpleMintForm : FC = () =>{
         }
         else {
 
-            setMessage ({
+            setMessageNow ({
                 text: "Invalid URI",
                 type : MessageType.Error
             });
@@ -73,7 +83,7 @@ export const SimpleMintForm : FC = () =>{
         <div className="mb-4">
         <button className="shadow bg-purple-500 hover:bg-purple-400 
         focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" 
-        type="button" onClick={async ()=>{
+        type="button" disabled={processing} onClick={async ()=>{
             await mintNow();
         }}>
         {processing ? <Spinner/> : <>Mint NFT</>}
