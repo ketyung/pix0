@@ -56,3 +56,25 @@ export interface Message {
 
     hash? : string, 
 }
+
+
+
+export interface AccountNFToken {
+    Flags: number
+    Issuer: string
+    NFTokenID: string
+    NFTokenTaxon: number
+    URI?: string
+    nft_serial: number
+}
+
+export interface NFTResult {
+
+    nfts: AccountNFToken[],
+
+    offset?: number,
+
+    limit? : number, 
+
+    id? : unknown,
+}

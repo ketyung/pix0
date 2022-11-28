@@ -2,7 +2,7 @@ import * as xrp from "../xrp";
 import * as xrpl from 'xrpl';
 import useWalletState from './useWalletState';
 import { decryptStoredWallet } from "../utils/enc";
-import { StoredWallet } from "../models";
+import { StoredWallet, NFTResult } from "../models";
 import { WalletsStorage } from "../utils/local-storage";
 
 export default function useXrp() {
@@ -69,8 +69,31 @@ export default function useXrp() {
       
     }
 
+    const getNftsOf = async (
+        offset : number = 0, 
+        limit :number = 20,
+        id : number = 1) : 
+        Promise<NFTResult|undefined>=> {
 
-    return {genAndFundWallet,genWallet, 
+
+        if ( selectedWalletPubkey ) {
+
+            let connectedWallet = WalletsStorage.get(selectedWalletPubkey);
+            if ( connectedWallet) {
+
+                let wallet = decryptStoredWallet(connectedWallet);
+                
+                let res = await xrp.getNftsOf(wallet, id, offset, limit);
+
+                return res;
+            }
+        }
+
+        return undefined;
+    }
+
+
+    return {genAndFundWallet,genWallet,getNftsOf,  
         fundWallet,getBalance,mintNft} as const;
 
 }

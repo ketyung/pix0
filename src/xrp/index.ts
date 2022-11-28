@@ -1,5 +1,6 @@
 import * as xrpl from 'xrpl';
 import { WalletsStorage } from '../utils/local-storage';
+import { NFTResult } from '../models';
 
 export enum Network {
 
@@ -206,4 +207,39 @@ export const mintNft = async (
        // console.error("error@minNft:",e.message, e.data, new Date());
     }
     
+}
+
+
+export const getNftsOf = async ( 
+    wallet : xrpl.Wallet, 
+    id : number, 
+    offset : number = 0, 
+    limit :number = 20) : Promise<NFTResult>=> {
+
+    let net = getNetwork();
+
+    const client = new xrpl.Client(net);
+
+    await client.connect();
+
+    let req : xrpl.AccountNFTsRequest = {
+        account : wallet.classicAddress,
+        limit : limit,
+        marker : offset,
+        command: "account_nfts",
+        id : id, 
+    };
+
+    let resp = await client.request(req);
+    
+    let res : NFTResult = {
+
+        nfts : resp.result.account_nfts,
+        offset : offset,
+        limit : limit,
+        id : resp.id, 
+    }
+
+    return res; 
+
 }
