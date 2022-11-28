@@ -35,7 +35,6 @@ export default function useXrp() {
     }
 
     const mintNft = async (
-        minterWallet : xrpl.Wallet,
         mediaURI : string, 
         fee? : number, 
         transferFee? : number, 
