@@ -34,7 +34,7 @@ export const fetchAsNFTMedata = async ( uri : string) : Promise<NFTMetadata|unde
     }
     catch(e : any) {
 
-        console.error("error@fetchAsJson@", e, new Date());
+        //console.error("error@fetchAsJson@", e, new Date());
         return undefined;
     }
 }
