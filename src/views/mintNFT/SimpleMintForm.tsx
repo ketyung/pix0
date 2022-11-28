@@ -33,7 +33,7 @@ export const SimpleMintForm : FC = () =>{
 
             setProcessing(true);
             if ( await uriExists(mediaURI) ){
-                await mintNft(mediaURI,10, undefined, true, (e)=>{
+                await mintNft(mediaURI,2, undefined, true, (e)=>{
 
                     if ( e instanceof Error) {
                         setMessageNow ({
@@ -46,6 +46,7 @@ export const SimpleMintForm : FC = () =>{
                         setMessageNow({
                             text: "Success!",
                             type: MessageType.Info,
+                            hash : e, 
                         })
                     }
                     setProcessing(false);

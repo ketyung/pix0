@@ -159,7 +159,7 @@ export const mintNft = async (
 
             TransactionType : "NFTokenMint",
 
-            TransferFee : transferFee ,
+            TransferFee : transferFee ?? 0 ,
 
             Fee : fee ? xrpl.xrpToDrops(`${fee}`) : undefined,
 
@@ -181,7 +181,7 @@ export const mintNft = async (
 
             if (nft_result.result.meta.TransactionResult == "tesSUCCESS") {
                 
-                //await client.disconnect();
+                await client.disconnect();
                 if ( completion ) {
 
                     completion(nft_signed.hash);
@@ -190,7 +190,7 @@ export const mintNft = async (
             } 
             else {
                 
-                //await client.disconnect();
+                await client.disconnect();
              
                 if ( completion ) {
                     completion(new Error(`Error sending transaction: ${nft_result}`));
@@ -203,7 +203,7 @@ export const mintNft = async (
         if (completion )
             completion(new Error(`${e.message}` ));
 
-        console.error("error@minNft:",e.message, e.data, new Date());
+       // console.error("error@minNft:",e.message, e.data, new Date());
     }
     
 }
