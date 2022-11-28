@@ -181,7 +181,7 @@ export const mintNft = async (
 
             if (nft_result.result.meta.TransactionResult == "tesSUCCESS") {
                 
-                await client.disconnect();
+                //await client.disconnect();
                 if ( completion ) {
 
                     completion(nft_signed.hash);
@@ -190,7 +190,7 @@ export const mintNft = async (
             } 
             else {
                 
-                await client.disconnect();
+                //await client.disconnect();
              
                 if ( completion ) {
                     completion(new Error(`Error sending transaction: ${nft_result}`));
@@ -201,7 +201,9 @@ export const mintNft = async (
     catch(e : any ){
 
         if (completion )
-            completion(new Error(e.message));
+            completion(new Error(`${e.message} - ${e.data}` ));
+
+        console.error("error@minNft:",e.data, new Date());
     }
     
 }
