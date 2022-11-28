@@ -120,8 +120,6 @@ export const getBalance = async ( wallet : xrpl.Wallet) =>{
 
 // refer here 
 // https://js.xrpl.org/interfaces/NFTokenMint.html
-// and here for sending tx 
-// https://github.com/XRPLF/xrpl-dev-portal/blob/master/content/_code-samples/issue-a-token/js/issue-a-token.js
 export const mintNft = async (
     minterWallet : xrpl.Wallet,
     mediaURI : string, 

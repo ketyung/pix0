@@ -1,9 +1,13 @@
 import * as xrp from "../xrp";
 import * as xrpl from 'xrpl';
+import useWalletState from './useWalletState';
 import { decryptStoredWallet } from "../utils/enc";
 import { StoredWallet } from "../models";
+import { WalletsStorage } from "../utils/local-storage";
 
 export default function useXrp() {
+
+    const {selectedWalletPubkey} = useWalletState();
 
     const genAndFundWallet = async () : Promise<{ wallet : xrpl.Wallet, balance : number}|undefined> =>{
   
@@ -30,7 +34,42 @@ export default function useXrp() {
         return await xrp.getBalance(w);
     }
 
+    const mintNft = async (
+        minterWallet : xrpl.Wallet,
+        mediaURI : string, 
+        fee? : number, 
+        transferFee? : number, 
+        completion? : (res : string|Error)=> void) => {
 
-    return {genAndFundWallet,genWallet, fundWallet,getBalance} as const;
+        if ( selectedWalletPubkey ) {
+
+            let connectedWallet = WalletsStorage.get(selectedWalletPubkey);
+            if ( connectedWallet) {
+
+                let wallet = decryptStoredWallet(connectedWallet);
+      
+                await xrp.mintNft(wallet, mediaURI,fee, transferFee, completion);
+            }
+            else {
+
+                if ( completion ) {
+                    completion(new Error("No connected wallet!"));
+                }
+            }
+        }
+        else {
+
+            if ( completion ) {
+
+                completion(new Error("No connected wallet!"));
+            }
+        }
+       
+      
+    }
+
+
+    return {genAndFundWallet,genWallet, 
+        fundWallet,getBalance,mintNft} as const;
 
 }
