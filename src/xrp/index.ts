@@ -19,8 +19,6 @@ export const getNetwork = (network : Network = Network.TestNet) => {
     return "wss://s.altnet.rippletest.net:51233";
 }
 
-
-
 export const genAndFundWallet = async (storeWallet : boolean = true) =>{
 
     try {
@@ -124,7 +122,58 @@ export const getBalance = async ( wallet : xrpl.Wallet) =>{
 // https://js.xrpl.org/interfaces/NFTokenMint.html
 // and here for sending tx 
 // https://github.com/XRPLF/xrpl-dev-portal/blob/master/content/_code-samples/issue-a-token/js/issue-a-token.js
-export const mintNft = async (mediaURI : string) => {
+export const mintNft = async (
+    minterWallet : xrpl.Wallet,
+    mediaURI : string, 
+    fee? : number, 
+    transferFee? : number, 
+    completion? : (res : string|Error)=> void) => {
 
+    let net = getNetwork();
 
+    const client = new xrpl.Client(net);
+
+    await client.connect();
+
+    let nftMint : xrpl.NFTokenMint = {
+
+        Account : minterWallet.classicAddress,
+
+        NFTokenTaxon : 0, 
+
+        URI : mediaURI,
+
+        TransactionType : "NFTokenMint",
+
+        TransferFee : transferFee ,
+
+        Fee : fee ? `${fee}` : undefined,
+
+    };
+
+    const nft_prepared = await client.autofill(nftMint);
+    const nft_signed = minterWallet.sign(nft_prepared);
+
+    const nft_result = await client.submitAndWait(nft_signed.tx_blob);
+
+    if (nft_result.result.meta !== undefined && 
+        !(typeof nft_result.result.meta === 'string' 
+        || nft_result.result.meta instanceof String)) {
+
+        if (nft_result.result.meta.TransactionResult == "tesSUCCESS") {
+            
+            if ( completion ) {
+
+                completion(nft_signed.hash);
+            }
+            //console.log(`Transaction succeeded: https://testnet.xrpl.org/transactions/${nft_signed.hash}`)
+        } 
+        else {
+            
+            if ( completion ) {
+                completion(new Error(`Error sending transaction: ${nft_result}`));
+            }
+        }
+    }
+    
 }
