@@ -1,10 +1,13 @@
 import { FC, useState } from "react";
 import useXrp from "../../hooks/useXrp";
+import { MessageView } from "../components/MessageView";
+import { Message, MessageType } from "../../models";
 import { Spinner } from "../components/Spinner";
 import { uriExists } from "../../utils";
 
 export const SimpleMintForm : FC = () =>{
 
+    const [message, setMessage] = useState<Message>();
 
     const [processing, setProcessing] = useState(false);
 
@@ -14,17 +17,39 @@ export const SimpleMintForm : FC = () =>{
 
     const mintNow = async () =>{
 
+        setMessage(undefined);
+
         if (mediaURI){
 
             setProcessing(true);
             if ( await uriExists(mediaURI) ){
                 await mintNft(mediaURI,2, undefined, (e)=>{
 
+                    if ( e instanceof Error) {
+                        setMessage ({
+                            text: e.message,
+                            type : MessageType.Error
+                        });
+                    }
+                    else {
+
+                        setMessage({
+                            text: "Success!",
+                            type: MessageType.Info,
+                        })
+                    }
+                    setProcessing(false);
+      
                 });
             }
             setProcessing(false);
         }
         else {
+
+            setMessage ({
+                text: "Invalid URI",
+                type : MessageType.Error
+            });
 
         }
     }
@@ -32,6 +57,7 @@ export const SimpleMintForm : FC = () =>{
     return <div className="m-auto p-10 mt-4 border-2 border-gray-200 rounded-3xl w-5/6 text-left">
         <h1 className="font-bold">Simple Mint</h1>
         You can mint an NFT by simply providing a media URI or upload an image/video etc below :
+        {message && <MessageView message={message}/>}
         <form className="bg-white shadow-md rounded-2xl px-8 pt-6 pb-8 mb-4 mt-4">
         <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="mediaURI">

@@ -39,3 +39,20 @@ export enum Page {
 
     Collectibles,
 }
+
+
+export enum MessageType {
+
+    Error,
+
+    Info, 
+}
+
+export interface Message {
+
+    type : MessageType,
+
+    text : string, 
+
+    hash? : string, 
+}
