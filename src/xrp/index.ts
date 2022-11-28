@@ -161,8 +161,8 @@ export const mintNft = async (
 
         };
 
-        const nft_prepared = await client.autofill(nftMint);
-        const nft_signed = minterWallet.sign(nft_prepared);
+        const nft_tx_prepared = await client.autofill(nftMint);
+        const nft_signed = minterWallet.sign(nft_tx_prepared);
 
         const nft_result = await client.submitAndWait(nft_signed.tx_blob);
 
