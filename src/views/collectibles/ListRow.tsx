@@ -31,7 +31,8 @@ export const ListRow : FC <Props> = ({
     
     },[]);
 
-    return <div className="flex-1 w-64 p-4 inline-block border-2 border-gray-200 m-4 rounded-2xl">
+    return <div className="flex-1 w-64 p-4 inline-block border-2 border-gray-200 m-4 
+    rounded-2xl hover:bg-gray-300 hover:cursor-pointer">
        {(index ?? 0) +1}. {mediaURI === undefined &&
         <img src={xrpl.convertHexToString(uri ?? "")} 
         className="object-scale-down h-64 w-64"/>} 
