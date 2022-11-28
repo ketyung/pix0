@@ -9,7 +9,9 @@ export enum Network {
 }
 
 
-export const getNetwork = (network : Network = Network.DevNet) => {
+const defaultNet = Network.TestNet;
+
+export const getNetwork = (network : Network = defaultNet) => {
 
     if ( network === Network.DevNet ) {
 
@@ -20,7 +22,7 @@ export const getNetwork = (network : Network = Network.DevNet) => {
 }
 
 
-export const getExplorerUrl = (network : Network = Network.DevNet) => {
+export const getExplorerUrl = (network : Network = defaultNet) => {
 
     if ( network === Network.DevNet ) {
 
@@ -131,11 +133,13 @@ export const getBalance = async ( wallet : xrpl.Wallet) =>{
 
 // refer here 
 // https://js.xrpl.org/interfaces/NFTokenMint.html
+// and here https://xrpl.org/nftokenmint.html
 export const mintNft = async (
     minterWallet : xrpl.Wallet,
     mediaURI : string, 
     fee? : number, 
-    transferFee? : number, 
+    transferFee? : number,
+    isBurnable? : boolean,
     completion? : (res : string|Error)=> void) => {
 
     try {
@@ -159,9 +163,12 @@ export const mintNft = async (
 
             Fee : fee ? `${fee}` : undefined,
 
+            Flags : isBurnable ? 1 : undefined // tfBurnable
+
         };
 
         const nft_tx_prepared = await client.autofill(nftMint);
+       
         const nft_signed = minterWallet.sign(nft_tx_prepared);
 
         const nft_result = await client.submitAndWait(nft_signed.tx_blob);

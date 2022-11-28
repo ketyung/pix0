@@ -38,6 +38,7 @@ export default function useXrp() {
         mediaURI : string, 
         fee? : number, 
         transferFee? : number, 
+        isBurnable? : boolean,
         completion? : (res : string|Error)=> void) => {
 
         if ( selectedWalletPubkey ) {
@@ -47,7 +48,8 @@ export default function useXrp() {
 
                 let wallet = decryptStoredWallet(connectedWallet);
       
-                await xrp.mintNft(wallet, mediaURI,fee, transferFee, completion);
+                await xrp.mintNft(wallet, mediaURI,fee, transferFee,
+                    isBurnable,completion);
             }
             else {
 
