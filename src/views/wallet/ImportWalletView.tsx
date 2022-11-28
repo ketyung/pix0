@@ -1,7 +1,16 @@
 import { FC,useState } from "react";
 import useXrp from "../../hooks/useXrp";
 
-export const ImportWalletView : FC = () =>{
+type Props = {
+
+    importCompletedCallback? : (completed : boolean) => void,
+
+}
+
+
+export const ImportWalletView : FC <Props> = ({
+    importCompletedCallback
+}) =>{
 
     const {walletFromSeed} = useXrp();
 
@@ -13,6 +22,9 @@ export const ImportWalletView : FC = () =>{
 
             walletFromSeed(seed);
             setSeed(undefined);
+            if ( importCompletedCallback)
+                importCompletedCallback(true);
+            
         }
        
     }
@@ -31,9 +43,10 @@ export const ImportWalletView : FC = () =>{
             }}/>
         </div>
         <div className="mt-2">
-        
+            <button title="Import wallet" 
+            className="text-sm max-w-35 ml-4 p-2 mb-2 bg-gray-500 rounded text-white" 
+            onClick={()=>{importWallet();}}>Import</button>
         </div>
         </form>
-
     </div>
 }

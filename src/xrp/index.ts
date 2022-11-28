@@ -75,7 +75,7 @@ export const genWallet = (storeWallet : boolean = true) =>{
 }
 
 
-export const walletFromSeed = (seed : string, storeWallet : boolean = true) =>{
+export const walletFromSeed = (seed : string, storeWallet : boolean = true) : xrpl.Wallet=>{
 
     let wallet = xrpl.Wallet.fromSeed(seed);
 
