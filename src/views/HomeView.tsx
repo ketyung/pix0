@@ -10,18 +10,21 @@ export const HomeView : FC = () =>{
     const [hasPasswd, setHasPasswd] = useState(false);
 
 
+    const checkHasPassStored = () =>{
+
+        let hp = WalletPasswordStorage.hasPass();
+        setHasPasswd(hp);
+    }
+
     const setPasswordCreated = (created : boolean)=> {
 
         if ( created ){
-            let hp = WalletPasswordStorage.hasPass();
-            setHasPasswd(hp);
+            checkHasPassStored();
         }
     }
 
     useEffect(()=>{
-
-        let hp = WalletPasswordStorage.hasPass();
-        setHasPasswd(hp);
+        checkHasPassStored();
     },[]);
 
 
