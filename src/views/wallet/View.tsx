@@ -30,6 +30,10 @@ export const View : FC = () =>{
         if (completed) {
             setViewType(ViewType.AllWallets);
         }
+        else {
+
+            setViewType(ViewType.ImportWallet);
+        }
     }
 
     const switchView = () =>{

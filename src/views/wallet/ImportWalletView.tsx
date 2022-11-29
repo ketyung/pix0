@@ -27,6 +27,9 @@ export const ImportWalletView : FC <Props> = ({
                 if (e instanceof Error) {
                     
                     window.alert(e.message);
+                    if ( importCompletedCallback)
+                        importCompletedCallback(false);
+           
                 }
                 else {
                     if ( importCompletedCallback)
