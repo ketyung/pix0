@@ -83,7 +83,7 @@ export class WalletsStorage {
 
     private static getKey () {
 
-        let k = `${WalletPasswordStorage.get_encrypted()}-${this.key}`
+        let k = `${this.key}`
         return k;
 
     }
