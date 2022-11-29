@@ -45,7 +45,7 @@ export const ConnectedAsView : FC = () =>{
     
   
     return <div className="float-right clear-both bg-gray-900 rounded-3xl text-base 
-    text-sky-200 mr-20 mt-2 p-1 w-1/5 align-text-top cursor-pointer max-w-500 dropdown relative">
+    text-sky-200 mr-20 mt-2 p-1 w-2/5 align-text-top cursor-pointer max-w-500 dropdown relative">
     <i className="fa fa-plug" aria-hidden="true"></i> 
     <span className="ml-4">{shortenStringTo(
         pubkeyOrAddress(WalletsStorage.get(selectedWalletPubkey)) ?? "", 10)}</span> 
