@@ -25,11 +25,8 @@ export const ConnectedAsView : FC = () =>{
 
                 let b = await getBalance(wallet);
                 setBalance(b);
-         
             }
-
             setLoading(false);
-          
         }
     },[getBalance]);
 
