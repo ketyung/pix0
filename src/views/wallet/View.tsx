@@ -42,7 +42,10 @@ export const View : FC = () =>{
 
                 case ViewType.IndWallet :
 
-                    return walletsCount === 0 ? buttons : (selectedWalletPubkey ? 
+                    return walletsCount === 0 ? 
+                    <div><p className="mb-4">You do NOT have any wallet yet, 
+                    create or import one!</p>{buttons}</div> : 
+                    (selectedWalletPubkey ? 
                         <WalletIndView pubkey={selectedWalletPubkey}/>
                         : <WalletListView setViewType={setViewType}/>)
     
