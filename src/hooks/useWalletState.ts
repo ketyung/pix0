@@ -1,9 +1,11 @@
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { Dispatch } from "redux";
 import { useCallback, useEffect} from "react";
+import { decryptStoredWallet } from "../utils/enc";
 import { SelectedWalletStorage, WalletsStorage } from "../utils/local-storage";
 import { WalletState } from "../utils/sm/WalletStateReducer";
 import { setWalletsCount as setWalletCnt, setSelectedWallet as setSelWallet} from "../utils/sm/WalletActions";
+import { StoredWallet } from "../models";
 
 
 export default function useWalletState() {
@@ -27,6 +29,7 @@ export default function useWalletState() {
     const walletsCount : number|undefined = walletState.walletsCount;
 
     const selectedWalletPubkey : string|undefined = walletState.selectedWalletPubkey;
+
 
     useEffect(()=>{
         setSelectedWallet(SelectedWalletStorage.getSelected());

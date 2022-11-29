@@ -1,6 +1,6 @@
 import * as xrpl from 'xrpl';
 import { WalletsStorage } from '../utils/local-storage';
-import { NFTResult } from '../models';
+import { NFTResult} from '../models';
 
 export enum Network {
 
@@ -21,6 +21,7 @@ export const getNetwork = (network : Network = defaultNet) => {
 
     return "wss://s.altnet.rippletest.net:51233";
 }
+
 
 
 export const getExplorerUrl = (network : Network = defaultNet) => {

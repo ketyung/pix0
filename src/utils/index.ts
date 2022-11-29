@@ -1,4 +1,5 @@
-import { NFTMetadata } from "../models";
+import { NFTMetadata, StoredWallet } from "../models";
+import { decryptStoredWallet } from "./enc";
 
 export const shortenStringTo = (str : string, length : number = 32, strInBetween : string = "...") => {
 
@@ -37,4 +38,21 @@ export const fetchAsNFTMedata = async ( uri : string) : Promise<NFTMetadata|unde
         //console.error("error@fetchAsJson@", e, new Date());
         return undefined;
     }
+}
+
+export const pubkeyOrAddress = (wallet? : StoredWallet, _type : string = "address" ) => {
+
+    if (_type === "pubkey")
+    {
+        return wallet?.pubkey ?? "";
+    }
+
+    if ( wallet ) {
+        let w = decryptStoredWallet(wallet);
+   
+        return w.classicAddress;
+    }
+
+    return "";
+ 
 }
