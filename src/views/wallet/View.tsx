@@ -1,6 +1,7 @@
 import { FC, useState } from "react";
 import { WalletListView } from "./WalletListView";
 import { WalletIndView } from "./WalletIndView";
+import { ImportWalletView } from "./ImportWalletView";
 import useWalletState from "../../hooks/useWalletState";
 import { CloseIcon } from "../components/icons/CloseIcon";
 import useXrp from "../../hooks/useXrp";
@@ -10,6 +11,8 @@ export enum ViewType {
     AllWallets,
 
     IndWallet, 
+
+    ImportWallet, 
 }
 
 
@@ -20,6 +23,41 @@ export const View : FC = () =>{
     const [viewType, setViewType] = useState<ViewType>(ViewType.IndWallet);
 
     const {selectedWalletPubkey, walletsCount} = useWalletState();
+
+
+    const switchView = () =>{
+
+        if ( viewType ) {
+
+            switch(+viewType) {
+
+
+                case ViewType.IndWallet :
+                    
+                    return selectedWalletPubkey ? 
+                        <WalletIndView pubkey={selectedWalletPubkey}/>
+                        : <WalletListView setViewType={setViewType}/>
+    
+                case ViewType.AllWallets :
+                
+                    return <WalletListView setViewType={setViewType}/>
+          
+                case ViewType.ImportWallet :
+
+                    return <ImportWalletView/>
+                
+                default :
+    
+                    return <WalletListView setViewType={setViewType}/>
+            }
+        }
+        else {
+
+            return <WalletListView setViewType={setViewType}/>
+       
+        }
+        
+    }
 
    
     return <div className="m-auto p-10 mt-20 border-2 border-gray-200 rounded-3xl w-5/6 text-center">
@@ -36,10 +74,7 @@ export const View : FC = () =>{
             setViewType(ViewType.AllWallets);
        }}>All wallets</button></div>
 
-        {(viewType === ViewType.IndWallet &&
-            selectedWalletPubkey) ? 
-        <WalletIndView pubkey={selectedWalletPubkey}/> : 
-        <WalletListView setViewType={setViewType}/> }
+        {switchView() }
     
         {(viewType === ViewType.IndWallet && walletsCount === 0) || 
         viewType === ViewType.AllWallets

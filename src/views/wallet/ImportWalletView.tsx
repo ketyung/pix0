@@ -20,10 +20,12 @@ export const ImportWalletView : FC <Props> = ({
 
         if (seed ){
 
-            walletFromSeed(seed);
+            let w = walletFromSeed(seed);
             setSeed(undefined);
-            if ( importCompletedCallback)
-                importCompletedCallback(true);
+            if (w) {
+                if ( importCompletedCallback)
+                     importCompletedCallback(true);
+            }
             
         }
        
