@@ -82,7 +82,7 @@ export class WalletsStorage {
         if ( ws !== null) {
 
             let wss = JSON.parse(ws) as StoredWallet[];
-            if (wss != null && wss.length >= 5 ){
+            if (wss !== null && wss.length >= 5 ){
                 window.alert("Has exceeded the max no of wallet allowed!");
                 return;
             }
