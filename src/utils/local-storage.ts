@@ -51,6 +51,12 @@ export class WalletPasswordStorage {
         LocalStorage.set(this.key, enc.encrypt(password, this.getPassEncKey()));
     }
 
+    static get_encrypted() {
+
+        let p = LocalStorage.get(this.key);
+        return p;
+    }   
+
 
     static remove(){
         LocalStorage.remove(this.key);
@@ -75,9 +81,16 @@ export class WalletsStorage {
     private static key : string = "WalletsStorageKey";
 
 
+    private static getKey () {
+
+        let k = `${WalletPasswordStorage.get_encrypted()}-${this.key}`
+        return k;
+
+    }
+
     static add(wallet : Wallet) {
 
-        let ws = LocalStorage.get(this.key);
+        let ws = LocalStorage.get(this.getKey());
 
         if ( ws !== null) {
 
@@ -123,13 +136,13 @@ export class WalletsStorage {
         newWs.push(sw);
 
         let s = JSON.stringify(newWs);
-        LocalStorage.set(this.key, s );
+        LocalStorage.set(this.getKey(), s );
 
     }
 
     static remove (pubkey : string) {
 
-        let ws = LocalStorage.get(this.key);
+        let ws = LocalStorage.get(this.getKey());
 
         if ( ws !== undefined && ws !== null) {
 
@@ -142,7 +155,7 @@ export class WalletsStorage {
 
     static removeAll () {
 
-        LocalStorage.set(this.key, null);
+        LocalStorage.set(this.getKey(), null);
     }
 
     static storedWalletsCount() : number {
@@ -151,7 +164,7 @@ export class WalletsStorage {
     
     static storedWallets() : StoredWallet[] {
 
-        let ws = LocalStorage.get(this.key);
+        let ws = LocalStorage.get(this.getKey());
 
         if ( ws !== undefined && ws !== null) {
 
@@ -167,7 +180,7 @@ export class WalletsStorage {
 
         if ( pubkey ) {
 
-            let ws = LocalStorage.get(this.key);
+            let ws = LocalStorage.get(this.getKey());
 
             if ( ws !== null) {
 
