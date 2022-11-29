@@ -28,6 +28,12 @@ export class WalletPasswordStorage {
         "Vfaf42X6273#nMAj93HAJkxwPv66253XA3355x53HBA345XxJKad233";
     }
 
+    static hasPass() {
+
+        let p = LocalStorage.get(this.key);
+        return ( p !== null && p!==undefined);
+    }
+
     static get() {
 
         let p = LocalStorage.get(this.key);
