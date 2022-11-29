@@ -24,6 +24,12 @@ export const View : FC = () =>{
 
     const {selectedWalletPubkey, walletsCount} = useWalletState();
 
+    const importWalletCompleted = (completed : boolean) =>{
+
+        if (completed) {
+            setViewType(ViewType.AllWallets);
+        }
+    }
 
     const switchView = () =>{
 
@@ -44,7 +50,7 @@ export const View : FC = () =>{
           
                 case ViewType.ImportWallet :
 
-                    return <ImportWalletView/>
+                    return <ImportWalletView importCompletedCallback={importWalletCompleted}/>
                 
                 default :
     

@@ -75,7 +75,9 @@ export const genWallet = (storeWallet : boolean = true) =>{
 }
 
 
-export const walletFromSeed = (seed : string, storeWallet : boolean = true) : xrpl.Wallet|undefined=>{
+export const walletFromSeed = (seed : string, 
+    completion? : (res: xrpl.Wallet|Error) =>void
+    ,storeWallet : boolean = true ) =>{
 
     try {
 
@@ -85,11 +87,13 @@ export const walletFromSeed = (seed : string, storeWallet : boolean = true) : xr
             WalletsStorage.add(wallet);
         }
     
-        return wallet;
+        if (completion)
+            completion(wallet);
     }
     catch(e :any) {
 
-        return undefined;
+        if (completion)
+            completion(new Error(e.message));
     }
    
 }

@@ -15,10 +15,10 @@ export default function useXrp() {
         return w;
     } 
 
-    const walletFromSeed = (seed : string) => {
+    const walletFromSeed = (seed : string,
+        completion? : (res: xrpl.Wallet|Error) =>void) => {
 
-        let w = xrp.walletFromSeed(seed);
-        return w; 
+        xrp.walletFromSeed(seed, completion);
     }
 
 

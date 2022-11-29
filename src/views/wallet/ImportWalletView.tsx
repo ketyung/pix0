@@ -20,18 +20,27 @@ export const ImportWalletView : FC <Props> = ({
 
         if (seed ){
 
-            let w = walletFromSeed(seed);
-            setSeed(undefined);
-            if (w) {
-                if ( importCompletedCallback)
-                     importCompletedCallback(true);
-            }
+            walletFromSeed(seed,
+            (e)=>{
+
+                setSeed(undefined);
+                if (e instanceof Error) {
+                    
+                    window.alert(e.message);
+                }
+                else {
+                    if ( importCompletedCallback)
+                        importCompletedCallback(true);
+                }
+
+            });
+            
             
         }
        
     }
 
-    return <div className="">
+    return <div>
         <form className="bg-white shadow-md rounded-2xl px-8 pt-6 pb-8 mb-4 mt-4">
         <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="mediaURI">
