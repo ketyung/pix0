@@ -35,14 +35,16 @@ export const View : FC = () =>{
 
         if ( viewType ) {
 
+           // console.log("viewType::", viewType, walletsCount);
+
             switch(+viewType) {
 
 
                 case ViewType.IndWallet :
-                    
-                    return selectedWalletPubkey ? 
+
+                    return walletsCount === 0 ? buttons : (selectedWalletPubkey ? 
                         <WalletIndView pubkey={selectedWalletPubkey}/>
-                        : <WalletListView setViewType={setViewType}/>
+                        : <WalletListView setViewType={setViewType}/>)
     
                 case ViewType.AllWallets :
                 
@@ -65,6 +67,28 @@ export const View : FC = () =>{
         
     }
 
+
+    const buttons =<div>
+        <button
+        onClick={()=>{
+            genWallet();
+        }}
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 
+        px-4 rounded-full min-w-200 mr-4">
+        Create Wallet
+        </button>
+
+        <button 
+        onClick={()=>{
+            setViewType(ViewType.ImportWallet);
+        }}
+        className="bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 
+        px-4 rounded-full min-w-200 ml-4">
+        Import Wallet
+        </button>
+    </div>;
+
+
    
     return <div className="m-auto p-10 mt-20 border-2 border-gray-200 rounded-3xl w-5/6 text-center">
         
@@ -82,29 +106,7 @@ export const View : FC = () =>{
 
         {switchView() }
     
-        {(viewType === ViewType.IndWallet && walletsCount === 0) || 
-        viewType === ViewType.AllWallets
-        &&
-        <div>
-            <button
-            onClick={()=>{
-                genWallet();
-            }}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 
-            px-4 rounded-full min-w-200 mr-4">
-            Create Wallet
-            </button>
-
-            <button 
-            onClick={()=>{
-                setViewType(ViewType.ImportWallet);
-            }}
-            className="bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 
-            px-4 rounded-full min-w-200 ml-4">
-            Import Wallet
-            </button>
-            
-        </div>
-        }
+        {viewType === ViewType.AllWallets
+        && buttons}
     </div>
 }
