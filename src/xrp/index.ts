@@ -81,6 +81,12 @@ export const walletFromSeed = (seed : string,
 
     try {
 
+        if ( seed.trim() === "" ){
+            if (completion)
+                completion(new Error("Empty seed phrase!"));
+            return;
+        }
+
         let wallet = xrpl.Wallet.fromSeed(seed);
 
         if (storeWallet) {
