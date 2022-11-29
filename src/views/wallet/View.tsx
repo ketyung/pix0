@@ -85,7 +85,7 @@ export const View : FC = () =>{
                 genWallet();
             }}
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 
-            px-4 rounded-full min-w-200 mr-2">
+            px-4 rounded-full min-w-200 mr-4">
             Create Wallet
             </button>
 
@@ -93,8 +93,8 @@ export const View : FC = () =>{
             onClick={()=>{
                 setViewType(ViewType.ImportWallet);
             }}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 
-            px-4 rounded-full min-w-200 ml-2">
+            className="bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 
+            px-4 rounded-full min-w-200 ml-4">
             Import Wallet
             </button>
             

@@ -46,7 +46,7 @@ export const ImportWalletView : FC <Props> = ({
         </div>
         <div className="mt-2">
             <button title="Import wallet" 
-            className="text-sm max-w-35 ml-4 p-2 mb-2 bg-gray-500 rounded text-white" 
+            className="text-sm min-w-35 font-bold ml-4 p-2 mb-2 bg-gray-500 rounded text-white" 
             onClick={()=>{importWallet();}}>Import</button>
         </div>
         </form>
