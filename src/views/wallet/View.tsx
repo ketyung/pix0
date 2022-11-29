@@ -3,6 +3,7 @@ import { WalletListView } from "./WalletListView";
 import { WalletIndView } from "./WalletIndView";
 import { ImportWalletView } from "./ImportWalletView";
 import useWalletState from "../../hooks/useWalletState";
+import { InfoView } from "../components/InfoView";
 import { CloseIcon } from "../components/icons/CloseIcon";
 import useXrp from "../../hooks/useXrp";
 
@@ -43,8 +44,10 @@ export const View : FC = () =>{
                 case ViewType.IndWallet :
 
                     return walletsCount === 0 ? 
-                    <div><p className="mb-4">You do NOT have any wallet yet, 
-                    create or import one!</p>{buttons}</div> : 
+                    <div><InfoView 
+                    title="FYI"
+                    text="You do NOT have any wallet yet, create or import one"/>
+                    <div className="mt-4">{buttons}</div></div> : 
                     (selectedWalletPubkey ? 
                         <WalletIndView pubkey={selectedWalletPubkey}/>
                         : <WalletListView setViewType={setViewType}/>)
