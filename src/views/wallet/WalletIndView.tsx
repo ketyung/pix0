@@ -44,7 +44,7 @@ export const WalletIndView : FC <Props> = ({
     return <div className="items-left max-w-200 text-ellipsis 
     m-4 bg-slate-50 hover:bg-slate-200 align-top 
     rounded-3xl p-2 pb-5 text-left pl-20">
-     <div className="max-w-200 mr-10 mb-4">{shortenStringTo(pubkeyOrAddress(storedWallet), 20)}</div>
+     <div className="max-w-200 mr-10 mb-4">{shortenStringTo(pubkeyOrAddress(storedWallet) ?? "", 20)}</div>
      <div className="mr-20">Balance : {loading ? <Spinner/> : <>{balance} XRP</>}</div>
     </div>
 }

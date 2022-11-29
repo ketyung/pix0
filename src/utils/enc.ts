@@ -1,6 +1,7 @@
 import { StoredWallet } from "../models";
 import { Wallet } from "xrpl";
 import { WalletPasswordStorage } from "./local-storage";
+import { shortenStringTo } from ".";
 const CryptoJS = require('crypto-js');
 
 
@@ -19,11 +20,18 @@ export const decrypt = (ciphertext : string , secret : string ) =>{
 
 
 
-export const decryptStoredWallet = (storedWallet : StoredWallet) : Wallet =>{
+export const decryptStoredWallet = (storedWallet : StoredWallet) : Wallet|undefined =>{
 
-    let pw = `${storedWallet.pubkey}-${WalletPasswordStorage.get()}`; 
+    let pw = `${WalletPasswordStorage.get()}-${shortenStringTo(storedWallet.pubkey,10)}`; 
 
-    let txt =  decrypt(storedWallet.encryptedValue, pw);
+    try {
 
-     return JSON.parse(txt) as Wallet;
+        let txt =  decrypt(storedWallet.encryptedValue, pw);
+
+        return JSON.parse(txt) as Wallet;
+    }
+    catch(e : any) {
+
+
+    }
 }

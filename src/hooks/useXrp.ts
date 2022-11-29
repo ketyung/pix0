@@ -31,7 +31,8 @@ export default function useXrp() {
     const getBalance = async (storedWallet : StoredWallet) =>{
      
         let w = decryptStoredWallet(storedWallet);
-        return await xrp.getBalance(w);
+        if ( w )
+            return await xrp.getBalance(w);
     }
 
     const mintNft = async (
@@ -48,8 +49,17 @@ export default function useXrp() {
 
                 let wallet = decryptStoredWallet(connectedWallet);
       
-                await xrp.mintNft(wallet, mediaURI,fee, transferFee,
-                    isBurnable,completion);
+                if ( wallet ) {
+
+                    await xrp.mintNft(wallet, mediaURI,fee, transferFee,
+                        isBurnable,completion);
+                }
+                else {
+                    if ( completion ) {
+                        completion(new Error("Undefined wallet!"));
+                    }
+    
+                }
             }
             else {
 
@@ -83,13 +93,17 @@ export default function useXrp() {
 
                 let wallet = decryptStoredWallet(connectedWallet);
                 
-                let res = await xrp.getNftsOf(wallet, id, offset, limit);
+                if ( wallet ) {
+                    let res = await xrp.getNftsOf(wallet, id, offset, limit);
 
-                return res;
+                    return res;
+              
+                }
+
+                return undefined;
             }
         }
 
-        return undefined;
     }
 
 

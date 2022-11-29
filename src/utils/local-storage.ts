@@ -1,5 +1,6 @@
 import * as enc from './enc';
 import { Wallet } from 'xrpl';
+import { shortenStringTo } from '.';
 import { StoredWallet } from '../models';
 
 export class LocalStorage {
@@ -61,7 +62,7 @@ export class WalletPasswordStorage {
 const encryptWallet = (wallet : Wallet) =>{
 
     let s = JSON.stringify(wallet);
-    let pw = `${wallet.publicKey}-${WalletPasswordStorage.get()}`; 
+    let pw = `${WalletPasswordStorage.get()}-${shortenStringTo(wallet.publicKey,10)}`; 
 
     let e =  enc.encrypt(s, pw);
 
@@ -81,7 +82,7 @@ export class WalletsStorage {
         if ( ws !== null) {
 
             let wss = JSON.parse(ws) as StoredWallet[];
-            if (wss.length >= 5 ){
+            if (wss != null && wss.length >= 5 ){
                 window.alert("Has exceeded the max no of wallet allowed!");
                 return;
             }
@@ -145,7 +146,7 @@ export class WalletsStorage {
     }
 
     static storedWalletsCount() : number {
-        return this.storedWallets().length;
+        return this.storedWallets()?.length;
     }
     
     static storedWallets() : StoredWallet[] {
@@ -162,18 +163,25 @@ export class WalletsStorage {
     }
 
 
-    static get(pubkey : string) : StoredWallet|undefined {
+    static get(pubkey? : string) : StoredWallet|undefined {
 
-        let ws = LocalStorage.get(this.key);
+        if ( pubkey ) {
 
-        if ( ws !== null) {
+            let ws = LocalStorage.get(this.key);
 
-            let wss = JSON.parse(ws) as StoredWallet[];
-       
-            return wss.filter(w => {
-                return (w.pubkey === pubkey);
-            })[0];
+            if ( ws !== null) {
+
+                let wss = JSON.parse(ws) as StoredWallet[];
+        
+                if ( wss !== undefined  && wss !== null) {
+                    return wss.filter(w => {
+                        return (w.pubkey === pubkey);
+                    })[0];
+                }
+            
+            }
         }
+
     }
 
 
@@ -196,5 +204,11 @@ export class SelectedWalletStorage {
         let s =LocalStorage.get(this.key);    
         return (s===null) ? undefined : s;
     }
+
+    static remove () {
+
+        LocalStorage.set(this.key, null);
+    }
+
 
 }

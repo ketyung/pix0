@@ -73,7 +73,8 @@ export const WalletListRow : FC <Props> = ({
         let w = WalletsStorage.get(wallet.pubkey);
         if ( w ) {         
             let dw = decryptStoredWallet(w);
-            setSeed(dw.seed);
+            if ( dw )
+                setSeed(dw.seed);
         
             setTimeout(()=>{
                 setSeed(undefined);
@@ -115,7 +116,7 @@ export const WalletListRow : FC <Props> = ({
     rounded-3xl p-4 text-left">
     <span className="max-w-40 mr-4">{(index ?? 0) + 1}.</span> 
     <span className="min-w-200 mr-10">{shortenStringTo(
-        pubkeyOrAddress(wallet), 20)}</span>
+        pubkeyOrAddress(wallet) ?? "", 20)}</span>
     <div>
     <span className="mr-20 min-w-260">Balance : {loading ? <Spinner/> : <>{balance} XRP</>}</span>
     {buttons}

@@ -50,7 +50,7 @@ export const pubkeyOrAddress = (wallet? : StoredWallet, _type : string = "addres
     if ( wallet ) {
         let w = decryptStoredWallet(wallet);
    
-        return w.classicAddress;
+        return w?.classicAddress;
     }
 
     return "";
