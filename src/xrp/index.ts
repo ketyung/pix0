@@ -83,7 +83,7 @@ export const walletFromSeed = (seed : string,
 
         if ( seed.trim() === "" ){
             if (completion)
-                completion(new Error("Empty seed phrase!"));
+                completion(new Error("Empty seed!"));
             return;
         }
 

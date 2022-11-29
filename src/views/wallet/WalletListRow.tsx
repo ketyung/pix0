@@ -105,9 +105,9 @@ export const WalletListRow : FC <Props> = ({
         removeSelected();
     }}><DeleteIcon/></button>
 
-    <button title="Show seed phrase" 
+    <button title="Show seed" 
     className="text-sm max-w-35 ml-4 p-2 mb-2 bg-gray-500 rounded text-white" 
-    onClick={()=>{showSeed();}}>Show seed phrase</button>
+    onClick={()=>{showSeed();}}>Show seed</button>
     </div>
 
     return <div className="items-left max-w-200 text-ellipsis 
@@ -120,7 +120,7 @@ export const WalletListRow : FC <Props> = ({
     {buttons}
     </div>
     {seed && <div className="bg-gray-300 rounded-2xl p-2 pl-4 max-w-32">
-    Seed Phrase : {seed} 
+    Seed : {seed} 
         <div className="text-sm">
         Please keep this safe and don't share to others
         </div>    
