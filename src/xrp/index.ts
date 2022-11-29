@@ -211,7 +211,7 @@ export const mintNft = async (
             !(typeof nft_result.result.meta === 'string' 
             || nft_result.result.meta instanceof String)) {
 
-            if (nft_result.result.meta.TransactionResult == "tesSUCCESS") {
+            if (nft_result.result.meta.TransactionResult === "tesSUCCESS") {
                 
                 await client.disconnect();
                 if ( completion ) {

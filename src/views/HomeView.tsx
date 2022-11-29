@@ -1,11 +1,31 @@
-import { FC } from "react";
+import { FC, useEffect, useState} from "react";
 import { SideBar } from "./SideBar";
+import { LoginView } from "./LoginView";
+import { WalletPasswordStorage } from '../utils/local-storage';
 import { MainView } from "./MainView";
+
 
 export const HomeView : FC = () =>{
 
+    const [hasPasswd, setHasPasswd] = useState(false);
 
-    return <div className="flex flex-row min-h-screen bg-gray-100 text-gray-800">
+
+    const setPasswordCreated = (created : boolean)=> {
+
+        if ( created ){
+            let hp = WalletPasswordStorage.hasPass();
+            setHasPasswd(hp);
+        }
+    }
+
+    useEffect(()=>{
+
+        let hp = WalletPasswordStorage.hasPass();
+        setHasPasswd(hp);
+    },[]);
+
+
+    return  hasPasswd ? <div className="flex flex-row min-h-screen bg-gray-100 text-gray-800">
         <aside className="sidebar w-30 md:shadow transform -translate-x-full md:translate-x-0 
         transition-transform duration-150 ease-in bg-gray-800">
             <SideBar/>
@@ -14,5 +34,5 @@ export const HomeView : FC = () =>{
         transition-all duration-150 ease-in">
             <MainView/>
         </main>
-      </div>
+      </div> : <LoginView setPasswordCreated={setPasswordCreated}/>;
 }
