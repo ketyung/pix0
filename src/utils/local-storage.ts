@@ -95,7 +95,6 @@ export class WalletsStorage {
             }  
             else {
 
-                console.log("null.wss::XX");
                 this.createAndAdd(wallet);
             }
         }
