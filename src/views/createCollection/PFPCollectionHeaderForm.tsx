@@ -8,12 +8,12 @@ export const PFPCollectionHeaderForm : FC = () =>{
     return <div>
     <form className="bg-white shadow-md rounded-2xl px-8 pt-6 pb-8 mb-4 mt-4">
     <div className="mb-4">
-        <TextField label="Name" id="name" type="text" placeholder="Name"
+        <TextField label="Name" labelInline={true} id="name" type="text" placeholder="Name"
         onChange={(e)=>{
         }}/>
     </div>
     <div className="mb-4">
-        <TextField label="Description" id="description" type="text" placeholder="Description"
+        <TextField label="Description" labelInline={true} id="description" type="text" placeholder="Description"
         onChange={(e)=>{
         }}/>
     </div>

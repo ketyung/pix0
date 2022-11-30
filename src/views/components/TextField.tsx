@@ -19,16 +19,20 @@ type Props = {
     onClick? : (e: React.FormEvent<HTMLInputElement>) => void,
  
     onDoubleClick? : (e: React.FormEvent<HTMLInputElement>) => void,
+
+    labelInline? : boolean,
  
 }
 
 export const TextField : FC <Props>= ({
     className, id, type, placeholder, label, 
-    onChange, onClick, onDoubleClick, autoComplete
+    onChange, onClick, onDoubleClick, autoComplete, labelInline
 }) =>{
 
-    return  <><label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={id}>
-    {label}</label><input className={ className ?? "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"}
+    return  <><label className={
+    `text-gray-700 text-sm font-bold mb-2${(labelInline ? " inline-block" : " block")}`} 
+    htmlFor={id}>{label}</label><input className={ className ?? 
+    "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"}
     id={id} type={type ?? "text"} placeholder={placeholder ?? ""} autoComplete={autoComplete}
     onChange={onChange} onClick={onClick} onDoubleClick={onDoubleClick}/></>
 
