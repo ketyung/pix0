@@ -1,3 +1,4 @@
+import { Spinner } from "./Spinner";
 import { FC , useState } from "react";
 
 type Props = {
@@ -10,11 +11,19 @@ type Props = {
     maxFileSize? : number, 
 
     onError?: (error : Error) => void,
+
+    uploadAction? : (media: {
+        mediaDataUrl? : string,
+        contentType?: string,
+    }) => void, 
+
+    uploading? : boolean,
 }
 
 
 export const UploadField : FC <Props> = ({
-    id, label, allowedFileTypes, maxFileSize, onError
+    id, label, allowedFileTypes, 
+    maxFileSize, onError, uploadAction, uploading
 }) =>{
 
     const [mediaDataUrl, setMediaDataUrl] = useState<string>();
@@ -90,10 +99,10 @@ export const UploadField : FC <Props> = ({
     }
 
 
-    return <> <label htmlFor={id} 
+    return <div className="inline-block"><label htmlFor={id} 
     className="form-label inline-block mb-2 text-gray-700">{label}</label>
     <input className="form-control
-    block w-full px-3 py-1.5 text-base
+    inline-block w-full px-3 py-1.5 text-base
     font-normal text-gray-700 bg-white bg-clip-padding
     border border-solid border-gray-300 rounded
     transition ease-in-out m-0
@@ -101,5 +110,14 @@ export const UploadField : FC <Props> = ({
     type="file" id={id} onChange={(e)=>{
         onChange(e);
     }}/>
-    </>
+    {mediaDataUrl && <button title="Upload" disabled={uploading} 
+    className="text-sm ml-4 min-w-32 font-bold ml-4 p-2 mb-2 
+    bg-gray-500 rounded-2xl text-white" 
+    onClick={()=>{
+        if ( uploadAction ){
+            uploadAction({mediaDataUrl: mediaDataUrl, contentType : contentType});
+        }
+    }}>{uploading ? <Spinner/> : 
+    <><i className="fa fa-cloud-upload mr-2" aria-hidden="true"/>Upload</>}</button>}
+    </div>
 }
