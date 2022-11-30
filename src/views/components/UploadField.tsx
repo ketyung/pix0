@@ -20,13 +20,20 @@ type Props = {
     uploading? : boolean,
 
     withImagePreview? : boolean,
+
+    setMediaCallback? : (media: {
+        mediaDataUrl? : string,
+        contentType?: string,
+    }, index? : number ) => void, 
+
+    index? : number 
 }
 
 
 export const UploadField : FC <Props> = ({
     id, label, allowedFileTypes, 
     maxFileSize, onError, uploadAction, 
-    uploading, withImagePreview, 
+    uploading, withImagePreview, setMediaCallback, index 
 }) =>{
 
     const [mediaDataUrl, setMediaDataUrl] = useState<string>();
@@ -90,7 +97,7 @@ export const UploadField : FC <Props> = ({
             // convert image file to base64 string
             let res = reader.result;
             if ( typeof res === 'string') {
-                setMediaDataUrl(res);
+                setMediaDataUrlNow(res);
             }
         }, false);
 
@@ -99,6 +106,13 @@ export const UploadField : FC <Props> = ({
         }    
     }
 
+    const setMediaDataUrlNow = (dataUrl? : string) =>{
+
+        setMediaDataUrl(dataUrl);
+        if ( setMediaCallback) {
+            setMediaCallback({mediaDataUrl : dataUrl, contentType: contentType}, index);
+        }
+    }
 
    
     const onChange = async () =>{

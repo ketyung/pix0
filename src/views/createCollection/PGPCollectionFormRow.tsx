@@ -21,6 +21,7 @@ export const PFPCollectionFormRow : FC <Props> = ({
 
     return <div className="mt-2">
         <span className="mr-2">{(index ?? 0) + 1}.</span>
-        <UploadField id={`pfpRow_${index}`} onError={onError} withImagePreview={true}/>
+        <UploadField id={`pfpRow_${index}`} 
+        index={index} onError={onError} withImagePreview={true}/>
     </div>
 }
