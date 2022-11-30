@@ -83,4 +83,90 @@ export const uploadAll = () => {
 
 
 
+export const createFolderIfNotExists = () =>{
+
+    let prms = getAllCloudParams();
+    if ( prms ){
+
+        let prm = prms[ randomInt(0, prms.length -1)];
+        const myconfig = cloudinary.config({
+            cloud_name: prm.name,
+            api_key: prm.api_key,
+            api_secret: prm.secret,
+            secure: true
+        });
+
+         
+        cloudinary.api.sub_folders( prm.upload_folder ?? "pix0_uploads"
+        ,myconfig).then((e : any)=>{
+
+            console.log("list.folders::", e, new Date());
+
+        })
+        .catch(e=>{
+
+            console.log("Error@sub_folder:",e, new Date());
+        })
+        ;
+
+
+    
+    }
+   
+
+}
+
+
+export const uploadOne = ( file? : File, subFolder? : string ) => {
+
+    let prms = getAllCloudParams();
+    if ( prms ){
+
+        let prm = prms[ randomInt(0, prms.length -1)];
+        const myconfig = cloudinary.config({
+            cloud_name: prm.name,
+            api_key: prm.api_key,
+            api_secret: prm.secret,
+            secure: true
+        });
+
+        const url = "https://api.cloudinary.com/v1_1/" + myconfig.cloud_name + "/auto/upload";
+   
+        const timestamp = Math.round((new Date).getTime()/1000);
+
+        const signature = cloudinary.utils.api_sign_request({
+          timestamp: timestamp,
+          source: 'uw',
+          folder: prm.upload_folder ?? ""}, myconfig.api_secret ?? "");
+          const formData = new FormData();
+        
+          if (file)
+            formData.append("file", file);
+          formData.append("api_key", myconfig.api_key ?? "");
+          formData.append("timestamp", timestamp+"");
+          formData.append("signature", signature);
+          formData.append("eager", "c_pad,h_300,w_400|c_crop,h_200,w_260");
+          formData.append("folder", prm.upload_folder ?? "");
+
+          fetch(url, {
+            method: "POST",
+            body: formData
+          })
+          .then((response) => {
+            return response.text();
+         })
+         .then((data) => {
+            console.log(JSON.parse(data))
+            //var str = JSON.stringify(JSON.parse(data), null, 4);
+         });
+            
+
+    }
+      
+        
+}
+
+
+
+
 
