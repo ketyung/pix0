@@ -1,5 +1,5 @@
 import { Spinner } from "./Spinner";
-import { FC , useState } from "react";
+import { FC , useState, useEffect } from "react";
 
 type Props = {
     label? : string,
@@ -32,7 +32,15 @@ export const UploadField : FC <Props> = ({
 
 
     const checkIfFileValid = (file : any ) : boolean => {
-        let aFileTypes = allowedFileTypes ?? ["image/png", "image/jpeg", "image/jpg"];
+
+        if ( file === undefined) {
+
+            if ( onError) {
+                onError( new Error("File is undefined!"));
+                return false;
+            }
+        }
+        let aFileTypes = allowedFileTypes ?? ["image/png", "image/jpeg", "image/jpg", "image/gif"];
 
         const isValid = aFileTypes.indexOf(file.type) !== -1  ;
       
@@ -62,62 +70,70 @@ export const UploadField : FC <Props> = ({
     }
 
 
-    const handleMediaDataUrl = async  (info : any ) =>{
+    const handleMediaDataUrl = async  (file : any ) =>{
 
-        let file = info.file;
-
-        if ( !checkIfFileValid(file)){
+        if ( !checkIfFileValid(file)){            
             return; 
         }
 
-        let src = file.url;
-
         setContentType(file.type);
             
-        if (!src && file.originFileObj) {
-          src = await new Promise((resolve) => {
-            const reader = new FileReader();
+        const reader = new FileReader();
 
-            reader.readAsDataURL(file.originFileObj);
+        reader.addEventListener("load", () => {
+            // convert image file to base64 string
+            let res = reader.result;
+            if ( typeof res === 'string') {
+                setMediaDataUrl(res);
+            }
+        }, false);
 
-            reader.onload = () => { 
-                if ( reader.result !== null && typeof reader.result === 'string' ) {
-                    resolve(reader.result);
-                }   
-            };
-        
-          });
+        if (file) {
+            reader.readAsDataURL(file);
         }
     
-        if ( src ) {
-            setMediaDataUrl(src);   
+        
+    }
+
+
+   
+    const onChange = async () =>{
+
+        if ( document !== null) {
+
+            const selectedFileInput = document.getElementById(id ?? "fileInput") as any;
+            let selectedFile = selectedFileInput.files[0];
+            await handleMediaDataUrl(selectedFile);
+    
         }
-    }
-
-    const onChange = async (info : any) =>{
-        await handleMediaDataUrl(info);
+      
     }
 
 
-    return <div className="inline-block"><label htmlFor={id} 
-    className="form-label inline-block mb-2 text-gray-700">{label}</label>
+    return <><div className="inline-block">{label &&<label htmlFor={id ?? "fileInput"} 
+    className="form-label inline-block mb-2 text-gray-700">{label}</label>}
     <input className="form-control
-    inline-block w-full px-3 py-1.5 text-base
+    inline w-full px-3 py-1.5 text-base
     font-normal text-gray-700 bg-white bg-clip-padding
     border border-solid border-gray-300 rounded
     transition ease-in-out m-0
     focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" 
-    type="file" id={id} onChange={(e)=>{
-        onChange(e);
+    type="file" id={id ?? "fileInput"} onChange={ ()=>{
+        onChange();
+    }} onClick={()=>{
+        setMediaDataUrl(undefined);
+        setContentType(undefined);
     }}/>
+    </div>
     {mediaDataUrl && <button title="Upload" disabled={uploading} 
-    className="text-sm ml-4 min-w-32 font-bold ml-4 p-2 mb-2 
-    bg-gray-500 rounded-2xl text-white" 
+    className="text-sm ml-4 p-2 min-w-32 font-bold ml-4 p-2 mb-2 
+    bg-gray-500 rounded-3xl text-white" 
     onClick={()=>{
-        if ( uploadAction ){
+         if ( uploadAction ){
             uploadAction({mediaDataUrl: mediaDataUrl, contentType : contentType});
         }
     }}>{uploading ? <Spinner/> : 
     <><i className="fa fa-cloud-upload mr-2" aria-hidden="true"/>Upload</>}</button>}
-    </div>
+    </>
+    
 }
