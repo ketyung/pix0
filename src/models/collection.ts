@@ -5,6 +5,15 @@ export enum Category {
     NICE_QUOTE_COLLECTION,
 }
 
+export enum Status {
+
+    PUBLISHED = 'P',
+
+    NEW ='N', 
+
+    DEACTIVATED = 'D',
+}
+
 
 export interface Collection {
     
@@ -17,6 +26,8 @@ export interface Collection {
     category? : Category,
 
     logo? : Buffer, 
+
+    status? : Status,
 
     layer_count? : number ,
 
