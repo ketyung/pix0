@@ -7,6 +7,9 @@ export const PFPCollectionHeaderForm : FC = () =>{
 
     return <div className="m-auto p-10 mt-4 border-2 border-gray-200 rounded-3xl w-5/6 text-left">
     <form className="bg-white shadow-md rounded-2xl px-8 pt-6 pb-8 mb-4 mt-4">
+    <div className="mb-4 font-bold">
+    Create Your Collection
+    </div>
     <div className="mb-4">
         <TextField label="Name" labelInline={true} id="name" type="text" placeholder="Name"
         onChange={(e)=>{
