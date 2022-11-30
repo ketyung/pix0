@@ -74,7 +74,7 @@ export const UploadField : FC <Props> = ({
 
         if (file === undefined) 
             return;
-            
+
         if (!checkIfFileValid(file)){            
             return; 
         }
@@ -111,7 +111,7 @@ export const UploadField : FC <Props> = ({
     }
 
 
-    return <div className="hover:bg-gray-200 inline-block p-2">
+    return <div className="hover:bg-gray-300 hover:cursor-pointer inline-block p-2">
     <div className="inline-block">{label &&<label htmlFor={id ?? "fileInput"} 
     className="form-label inline-block mb-2 text-gray-700">{label}</label>}
     <input className="form-control
@@ -127,15 +127,24 @@ export const UploadField : FC <Props> = ({
         setContentType(undefined);
     }}/>
     </div>
-    {mediaDataUrl && <button title="Upload..." disabled={uploading} 
-    className="text-sm ml-4 p-2 min-w-32 font-bold ml-4 p-2 mb-2 
-    bg-gray-500 rounded-3xl text-white" 
+    <button title="Upload..." disabled={uploading} 
+    className={`text-sm ml-4 p-2 min-w-32 font-bold ml-4 p-2 mb-2 
+    bg-gray-500 rounded-3xl text-white ${(mediaDataUrl ? 'opacity-100' : 'opacity-0')}`} 
     onClick={()=>{
          if ( uploadAction ){
             uploadAction({mediaDataUrl: mediaDataUrl, contentType : contentType});
         }
     }}>{uploading ? <Spinner/> : 
-    <><i className="fa fa-cloud-upload mr-2" aria-hidden="true"/>Upload</>}</button>}
+    <><i className="fa fa-cloud-upload mr-2" aria-hidden="true"/>Upload</>}</button>
+
+    <button title="Cancel" disabled={uploading} 
+    className={`text-sm ml-4 p-2 min-w-32 font-bold ml-4 p-2 mb-2 
+    bg-red-900 rounded-3xl text-white ${(mediaDataUrl ? 'opacity-100' : 'opacity-0')}`} 
+    onClick={()=>{
+        setMediaDataUrl(undefined);
+        setContentType(undefined);
+    }}> 
+    <i className="fa fa-times" aria-hidden="true"/>Cancel</button>
     </div>
     
 }
