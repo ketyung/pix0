@@ -66,31 +66,19 @@ export interface Media {
     
 }
 
+
+export const NEW_PFP_MEDIA : CollectionMedia = {
+    name : "profile_pricture",
+    layer_num : 0,
+    medias : [{
+        type : MediaType.data_uri,
+    }],
+    max_num_of_media : 1,
+};
+
+
 export const NEW_COLLECTION : Collection = {
 
     name : "", created_by : "",
-    media_list : [{
-        name : "profile_pricture",
-        layer_num : 0,
-        medias : [{
-            type : MediaType.data_uri,
-        }],
-        max_num_of_media : 1,
-    },
-    {
-        name : "profile_pricture",
-        layer_num : 0,
-        medias : [{
-            type : MediaType.data_uri,
-        }],
-        max_num_of_media : 1,
-    },
-    {
-        name : "profile_pricture",
-        layer_num : 0,
-        medias : [{
-            type : MediaType.data_uri,
-        }],
-        max_num_of_media : 1,
-    }]
+    media_list : [NEW_PFP_MEDIA,NEW_PFP_MEDIA,NEW_PFP_MEDIA]
 };
