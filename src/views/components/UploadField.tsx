@@ -1,5 +1,6 @@
 import { Spinner } from "./Spinner";
 import { FC , useState} from "react";
+import placeholder from '../../images/placeholder100.svg';
 
 type Props = {
     label? : string,
@@ -50,7 +51,7 @@ export const UploadField : FC <Props> = ({
                 return false;
             }
         }
-        let aFileTypes = allowedFileTypes ?? ["image/png", "image/jpeg", "image/jpg", "image/gif"];
+        let aFileTypes = allowedFileTypes ?? ["image/png", "image/jpeg", "image/jpg", "image/gif","video/mp4"];
 
         const isValid = aFileTypes.indexOf(file.type) !== -1  ;
       
@@ -160,8 +161,8 @@ export const UploadField : FC <Props> = ({
         setContentType(undefined);
     }}> 
     <i className="fa fa-times" aria-hidden="true"/>Cancel</button></>}
-    { withImagePreview  && <img id={`img_${id}`}
-    className="ml-2 object-scale-down w-14 h-14 inline-block" src={mediaDataUrl} />}
+    { withImagePreview  && <img id={`img_${id}`} placeholder={placeholder}
+    className="ml-2 object-scale-down w-14 h-14 inline-block" src={mediaDataUrl ?? placeholder} />}
     </div>
     
 }
