@@ -15,12 +15,12 @@ export interface Collection {
     description? : string,
 
     category? : Category,
-    
+
     logo? : Buffer, 
 
     layer_count? : number ,
 
-    media_list : CollectionMedia[],
+    media_list? : CollectionMedia[],
     
     created_by : string, 
 
@@ -65,3 +65,32 @@ export interface Media {
     poc? : number, 
     
 }
+
+export const NEW_COLLECTION : Collection = {
+
+    name : "", created_by : "",
+    media_list : [{
+        name : "profile_pricture",
+        layer_num : 0,
+        medias : [{
+            type : MediaType.data_uri,
+        }],
+        max_num_of_media : 1,
+    },
+    {
+        name : "profile_pricture",
+        layer_num : 0,
+        medias : [{
+            type : MediaType.data_uri,
+        }],
+        max_num_of_media : 1,
+    },
+    {
+        name : "profile_pricture",
+        layer_num : 0,
+        medias : [{
+            type : MediaType.data_uri,
+        }],
+        max_num_of_media : 1,
+    }]
+};
