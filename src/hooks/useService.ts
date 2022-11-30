@@ -7,6 +7,24 @@ export default function useService()  {
 
     const {selectedWalletPubkey} = useWalletState();
 
+    const addCollection = async  (collection : Collection,
+        completion? : (res : Error|Collection) => void ) => {
+        
+        if ( selectedWalletPubkey) {
+
+            collection.created_by = selectedWalletPubkey;
+
+            await service.addCollection(collection, completion);
+        }
+        else {
+
+            if (completion) {
+                completion( new Error('No connected wallet!'));
+            }
+        }
+        
+
+    }
 
     const getCollectionsBy = async (offset : number = 0, limit : number = 20 )
     : Promise<Collection[]> => {
@@ -20,6 +38,6 @@ export default function useService()  {
     }
 
 
-    return {getCollectionsBy} as const ;
+    return {getCollectionsBy, addCollection} as const ;
 
 }

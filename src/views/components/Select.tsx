@@ -14,11 +14,13 @@ type Props = {
     firstItem? : Item,
 
     id? : string,
+
+    onChange? : (e : any ) => void, 
 }
 
 
 export const Select : FC <Props> = ({
-    items, firstItem, id 
+    items, firstItem, id , onChange
 }) =>{
 
     return <select className="form-select appearance-none
@@ -27,7 +29,7 @@ export const Select : FC <Props> = ({
     border border-solid border-gray-300
     rounded transition ease-in-out m-0
     focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" 
-    aria-label="Default select example">
+    aria-label="Default select example" onChange={onChange}>
       <option key={`selOpt_${id}_0`}  
       selected>{firstItem?.name ?? "Please select"}</option>
       {

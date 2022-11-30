@@ -47,8 +47,8 @@ export const getCollectionsBy = async (creator : string, offset : number = 0, li
     
     try {
 
-        let r = await ((await fetch(url))).json() as Collection[];
-        return r;
+        let c = await ((await fetch(url))).json() as Collection[];
+        return c;
     }
     catch (e : any) {
 
