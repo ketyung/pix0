@@ -51,7 +51,7 @@ export const UploadField : FC <Props> = ({
                 return false;
             }
         }
-        let aFileTypes = allowedFileTypes ?? ["image/png", "image/jpeg", "image/jpg", "image/gif","video/mp4"];
+        let aFileTypes = allowedFileTypes ?? ["image/png", "image/jpeg", "image/jpg", "image/gif"/*,"video/mp4"*/];
 
         const isValid = aFileTypes.indexOf(file.type) !== -1  ;
       
