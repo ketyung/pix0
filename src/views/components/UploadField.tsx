@@ -1,5 +1,5 @@
 import { Spinner } from "./Spinner";
-import { FC , useState, useEffect } from "react";
+import { FC , useState} from "react";
 
 type Props = {
     label? : string,
@@ -72,7 +72,10 @@ export const UploadField : FC <Props> = ({
 
     const handleMediaDataUrl = async  (file : any ) =>{
 
-        if ( !checkIfFileValid(file)){            
+        if (file === undefined) 
+            return;
+            
+        if (!checkIfFileValid(file)){            
             return; 
         }
 
@@ -90,9 +93,7 @@ export const UploadField : FC <Props> = ({
 
         if (file) {
             reader.readAsDataURL(file);
-        }
-    
-        
+        }    
     }
 
 
@@ -110,14 +111,15 @@ export const UploadField : FC <Props> = ({
     }
 
 
-    return <><div className="inline-block">{label &&<label htmlFor={id ?? "fileInput"} 
+    return <div className="hover:bg-gray-200 inline-block p-2">
+    <div className="inline-block">{label &&<label htmlFor={id ?? "fileInput"} 
     className="form-label inline-block mb-2 text-gray-700">{label}</label>}
     <input className="form-control
     inline w-full px-3 py-1.5 text-base
     font-normal text-gray-700 bg-white bg-clip-padding
     border border-solid border-gray-300 rounded
-    transition ease-in-out m-0
-    focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" 
+    transition ease-in-out m-0 focus:text-gray-700 
+    focus:bg-white focus:border-blue-600 focus:outline-none" 
     type="file" id={id ?? "fileInput"} onChange={ ()=>{
         onChange();
     }} onClick={()=>{
@@ -125,7 +127,7 @@ export const UploadField : FC <Props> = ({
         setContentType(undefined);
     }}/>
     </div>
-    {mediaDataUrl && <button title="Upload" disabled={uploading} 
+    {mediaDataUrl && <button title="Upload..." disabled={uploading} 
     className="text-sm ml-4 p-2 min-w-32 font-bold ml-4 p-2 mb-2 
     bg-gray-500 rounded-3xl text-white" 
     onClick={()=>{
@@ -134,6 +136,6 @@ export const UploadField : FC <Props> = ({
         }
     }}>{uploading ? <Spinner/> : 
     <><i className="fa fa-cloud-upload mr-2" aria-hidden="true"/>Upload</>}</button>}
-    </>
+    </div>
     
 }

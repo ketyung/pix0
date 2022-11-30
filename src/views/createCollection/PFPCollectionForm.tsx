@@ -1,20 +1,16 @@
 import { FC } from "react";
-import { UploadField } from "../components/UploadField";
+import { PFPCollectionFormRow } from "./PGPCollectionFormRow";
 
 export const PFPCollectionForm : FC = () =>{
 
-    const onError = (error : Error) => {
-        window.alert(error.message);
-    }
-
-    const uploadAction = (media :{mediaUrl? : string, contentType? :string} )=>{
-
-    }
+    const rows = new Array(10).fill(1);
 
     return <div className="mt-10">
-    <UploadField id="upload1" onError={onError}/>
-    <button className="mt-4" onClick={()=>{
-       
-    }}></button>
+    {rows.map((i)=>{
+
+        return <PFPCollectionFormRow index={i}/>
+    })
+    }
+
     </div>
 }
