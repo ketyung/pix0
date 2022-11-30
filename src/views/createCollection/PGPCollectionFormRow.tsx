@@ -10,9 +10,9 @@ export const PFPCollectionFormRow : FC <Props> = ({
 }) =>{
 
 
-    const uploadAction = (media :{mediaUrl? : string, contentType? :string} )=>{
+   /* const uploadAction = (media :{mediaUrl? : string, contentType? :string} )=>{
         
-    }
+    }*/
 
 
     const onError = (error : Error) => {
@@ -21,7 +21,6 @@ export const PFPCollectionFormRow : FC <Props> = ({
 
     return <div className="mt-2">
         <span className="mr-2">{(index ?? 0) + 1}.</span>
-        <UploadField id={`pfpRow_${index}`} onError={onError} 
-        uploadAction={uploadAction}/>
+        <UploadField id={`pfpRow_${index}`} onError={onError} withImagePreview={true}/>
     </div>
 }

@@ -18,12 +18,15 @@ type Props = {
     }) => void, 
 
     uploading? : boolean,
+
+    withImagePreview? : boolean,
 }
 
 
 export const UploadField : FC <Props> = ({
     id, label, allowedFileTypes, 
-    maxFileSize, onError, uploadAction, uploading
+    maxFileSize, onError, uploadAction, 
+    uploading, withImagePreview, 
 }) =>{
 
     const [mediaDataUrl, setMediaDataUrl] = useState<string>();
@@ -126,13 +129,12 @@ export const UploadField : FC <Props> = ({
         setContentType(undefined);
     }}/>
     </div>
+    {uploadAction && <>
     <button title="Upload..." disabled={uploading} 
     className={`text-sm ml-4 p-2 min-w-32 font-bold ml-4 p-2 mb-2 
     bg-gray-500 rounded-3xl text-white ${(mediaDataUrl ? 'opacity-100' : 'opacity-0')}`} 
     onClick={()=>{
-         if ( uploadAction ){
-            uploadAction({mediaDataUrl: mediaDataUrl, contentType : contentType});
-        }
+        uploadAction({mediaDataUrl: mediaDataUrl, contentType : contentType});
     }}>{uploading ? <Spinner/> : 
     <><i className="fa fa-cloud-upload mr-2" aria-hidden="true"/>Upload</>}</button>
 
@@ -143,7 +145,9 @@ export const UploadField : FC <Props> = ({
         setMediaDataUrl(undefined);
         setContentType(undefined);
     }}> 
-    <i className="fa fa-times" aria-hidden="true"/>Cancel</button>
+    <i className="fa fa-times" aria-hidden="true"/>Cancel</button></>}
+    { withImagePreview  && <img id={`img_${id}`}
+    className="ml-2 object-scale-down w-14 h-14 inline-block" src={mediaDataUrl} />}
     </div>
     
 }
