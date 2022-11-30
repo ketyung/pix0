@@ -162,7 +162,7 @@ export const UploadField : FC <Props> = ({
     }}> 
     <i className="fa fa-times" aria-hidden="true"/>Cancel</button></>}
     { withImagePreview  && <img id={`img_${id}`} placeholder={placeholder}
-    className="ml-2 object-scale-down w-14 h-14 inline-block" src={mediaDataUrl ?? placeholder} />}
+    className="ml-2 object-scale-down w-14 h-14 inline-block bg-gray-200" src={mediaDataUrl ?? placeholder} />}
     </div>
     
 }
