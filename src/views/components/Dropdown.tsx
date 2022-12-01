@@ -23,8 +23,8 @@ export const Dropdown : FC <Props> = ({
 }) =>{
 
     return <div className="dropdown max-w-lg mx-auto">
-    <button className="text-white bg-blue-700 hover:bg-blue-800 
-    focus:ring-4 focus:ring-blue-300 font-medium rounded-lg 
+    <button className="text-white bg-gray-700 hover:bg-gray-800 
+    focus:ring-4 focus:ring-gray-300 font-medium rounded-full 
     text-sm px-4 py-2.5 text-center inline-flex items-center" type="button">
     {button}</button>
     <div className="dropdown-content bg-white text-base z-50 list-none divide-y 
