@@ -8,7 +8,6 @@ module.exports = function override(config) {
         "http": require.resolve("stream-http"),
         "https": require.resolve("https-browserify"),
         "os": require.resolve("os-browserify"),
-        "path": require.resolve("path-browserify"),
         "stream": require.resolve("stream-browserify"),
         "url": require.resolve("url"),
         "ws": require.resolve('xrpl/dist/npm/client/WSWrapper'),
