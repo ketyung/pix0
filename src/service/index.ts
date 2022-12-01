@@ -40,6 +40,45 @@ export const addCollection = async  (collection : Collection,
     
 }
 
+export const updateCollection = async  (collection : Collection,
+    completion? : (res : Error|Collection) => void ) =>{
+
+    let url = `${REMOTE_URL}update_collection/`; 
+
+    try {
+
+        const response = await fetch(url, {
+            method: 'POST', 
+            mode: 'cors', 
+            cache: 'no-cache', 
+            //credentials: 'same-origin', // include, *same-origin, omit
+            headers: {
+             
+                'Content-Type': 'application/json',
+                'access_token': process.env.REACT_APP_SERVICE_ACCESS_TOKEN ?? "", 
+            },
+            redirect: 'follow', 
+            referrerPolicy: 'no-referrer', 
+            body: JSON.stringify(collection) 
+        });
+        
+        if ( completion) {
+
+            let return_collection = (await response.json()) as Collection;
+            completion( return_collection);
+        }
+    
+    }
+    catch(e : any ){
+
+        if ( completion )
+            completion( new Error(e.message));
+
+    }
+    
+}
+
+
 
 export const getCollectionsBy = async (creator : string, offset : number = 0, limit : number = 20 )
 : Promise<{res : Collection[], total? :number , offset? : number, limit? : number}> =>{

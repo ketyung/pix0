@@ -13,9 +13,11 @@ export const HeaderForm : FC = () =>{
 
     const [collection, setCollection] = useState<Collection>({name : "", created_by: ""});
 
+    const [isEditMode, setIsEditMode] = useState(false);
+
     const [message, setMessage] = useState<Message>();
 
-    const {addCollection, loading} = useService();
+    const {addCollection, loading, updateCollection} = useService();
 
 
     const setMessageNow = (message : Message) => {
@@ -26,7 +28,7 @@ export const HeaderForm : FC = () =>{
         }, 5000);
     }
 
-    const addCollectionNow = async () => {
+    const saveCollectionNow = async () => {
 
         setMessage(undefined);
 
@@ -49,17 +51,37 @@ export const HeaderForm : FC = () =>{
             return; 
         }
 
-        await addCollection(collection, (e)=>{
+        if ( isEditMode ) {
 
-            if (e instanceof Error) {
 
-                setMessageNow({ text : `Error: ${e.message}`, type : MessageType.Error});
-            }
-            else {
-                setMessageNow({ text : "Success", type : MessageType.Info});
-                console.log("res::", e, new Date());
-            }
-        });
+            await updateCollection(collection, (e)=>{
+
+                if (e instanceof Error) {
+    
+                    setMessageNow({ text : `Error: ${e.message}`, type : MessageType.Error});
+                }
+                else {
+                    setMessageNow({ text : "Success", type : MessageType.Info});
+                    setCollection(e);
+                }
+            });
+        }
+        else {
+
+            await addCollection(collection, (e)=>{
+
+                if (e instanceof Error) {
+    
+                    setMessageNow({ text : `Error: ${e.message}`, type : MessageType.Error});
+                }
+                else {
+                    setMessageNow({ text : "Success", type : MessageType.Info});
+                    setCollection(e);
+                    setIsEditMode(true);
+                }
+            });
+        }
+        
     }
 
 
@@ -108,8 +130,8 @@ export const HeaderForm : FC = () =>{
     className="text-sm w-64 font-bold p-2 mb-2 bg-gray-800 rounded text-white" 
     onClick={async (e)=>{
         e.preventDefault();
-        await addCollectionNow();
-    }}>{loading ? <Spinner/>  : <>Create Collection</>}</button>
+        await saveCollectionNow();
+    }}>{loading ? <Spinner/>  : <>{isEditMode ? "Update" : "Create"} Collection</>}</button>
     </div> 
 
     </form>
