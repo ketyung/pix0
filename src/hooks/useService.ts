@@ -32,7 +32,7 @@ export default function useService()  {
     }
 
     const getCollectionsBy = async (offset : number = 0, limit : number = 20 )
-    : Promise<Collection[]> => {
+    : Promise<{res : Collection[], total? :number , offset? : number, limit? : number}> => {
 
         if ( selectedWalletPubkey) {
             setLoading(true);
@@ -42,7 +42,7 @@ export default function useService()  {
             return c; 
         }
 
-        return [];
+        return {res: []};
     }
 
 

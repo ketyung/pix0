@@ -42,7 +42,7 @@ export const addCollection = async  (collection : Collection,
 
 
 export const getCollectionsBy = async (creator : string, offset : number = 0, limit : number = 20 )
-: Promise<Collection[]> =>{
+: Promise<{res : Collection[], total? :number , offset? : number, limit? : number}> =>{
 
     let url = `${REMOTE_URL}collections/${encodeURIComponent(creator)}/${offset}/${limit}`;
     
@@ -54,13 +54,13 @@ export const getCollectionsBy = async (creator : string, offset : number = 0, li
                 'access_token': process.env.REACT_APP_SERVICE_ACCESS_TOKEN ?? "", 
             },
             
-        }))).json() as Collection[];
+        }))).json() ;
         return c;
     }
     catch (e : any) {
 
         console.error("error@getCollectionsBy", e);
-        return [];
+        return { res :[] };
     }
 
 
