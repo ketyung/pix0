@@ -21,7 +21,7 @@ export const List : FC = () =>{
         fetchCollections();
     },[]);
 
-    return <div className="flex flex-col justify-center items-center p-2">
+    return <div className="flex flex-col justify-center items-center p-2 z-20">
     <table className="table-auto m-2 shadow-2xl rounded" cellPadding={3} cellSpacing={3}>
     <thead>
       <tr className="bg-gray-300">

@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { dateToTimeAgo } from "../../utils";
+import { Dropdown } from "../components/Dropdown";
 import { Collection } from "../../models/collection";
 
 type Props = {
@@ -22,6 +23,11 @@ export const ListRow : FC <Props> = ({
     <td></td>
     <td title={timeAgo.long} className="text-left pl-10">
     {timeAgo.short}</td>
-    <td><i className="fa fa-cog" aria-hidden="true"/></td>
+    <td>
+        <Dropdown button={<i className="fa fa-cog" aria-hidden="true"/>}
+        items={[{label:<><i className="fa fa-edit mr-2"/> Edit</>},
+        {label:<><i className="fa fa-remove mr-2"/> Remove?</>}]} id={`rowdd_${index}`}/>
+        
+    </td>
   </tr>
 }
