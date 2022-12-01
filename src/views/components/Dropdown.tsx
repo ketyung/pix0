@@ -29,15 +29,15 @@ export const Dropdown : FC <Props> = ({
     {button}</button>
     <div className="dropdown-content bg-white text-base z-50 list-none divide-y 
     divide-gray-100 rounded shadow z-50" id={id ?? "dd1"}>
-    <ul className="py-1 text-left" aria-labelledby={id ?? "dd1"}>
+    <ul className="text-left" aria-labelledby={id ?? "dd1"}>
         {
             items?.map((a,i)=>{
 
                 return <li key={`dd_${id}_ch_${i}`}>
                     <a className="dropdown-item text-sm
-                    py-2 px-4 font-normal block
+                    p-2 font-normal block
                     w-full whitespace-nowrap
-                    bg-transparent text-gray-700 hover:bg-gray-100"
+                    bg-transparent text-gray-700 hover:bg-gray-200"
                     onClick={(e)=>{
                         e.preventDefault();
                         if (a.action) {

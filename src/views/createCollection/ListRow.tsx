@@ -16,6 +16,12 @@ export const ListRow : FC <Props> = ({
 
     const timeAgo = dateToTimeAgo(collection?.date_created);
 
+    const remove = () => {
+        if (window.confirm("Are you to remove this?")) {
+
+        }
+    }
+
     return <tr className="hover:bg-gray-200 hover:cursor-pointer p-4">
     <td>{((index ?? 0) +1)}</td>
     <td style={{width:"25%"}} className="pl-2 text-left text-ellipsis">{collection?.name}</td>
@@ -26,7 +32,8 @@ export const ListRow : FC <Props> = ({
     <td>
         <Dropdown button={<i className="fa fa-cog" aria-hidden="true"/>}
         items={[{label:<><i className="fa fa-edit mr-2"/> Edit</>},
-        {label:<><i className="fa fa-remove mr-2"/> Remove?</>}]} id={`rowdd_${index}`}/>
+        {label:<><i className="fa fa-remove mr-2"/> Remove?</>
+        ,action:remove}]} id={`rowdd_${index}`}/>
         
     </td>
   </tr>
