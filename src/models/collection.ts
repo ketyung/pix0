@@ -29,6 +29,8 @@ export interface Collection {
 
     status? : Status,
 
+    item_name_prefix? : string, 
+
     layer_count? : number ,
 
     media_list? : CollectionMedia[],

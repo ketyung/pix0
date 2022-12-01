@@ -50,7 +50,7 @@ export const View : FC = () =>{
             setViewType(ViewType.CreateCollection);
         }}><i className="fa fa-plus mr-2" aria-hidden="true"/> Create New Collection</button>
         }
-        </div>
+    </div>
         
 
     return <div className="mt-10 text-center">

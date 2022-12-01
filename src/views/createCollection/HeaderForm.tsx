@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { TextField } from "../components/TextField";
+import { TextField, commonTextfieldClassName } from "../components/TextField";
 import { Select } from "../components/Select";
 import { Spinner } from "../components/Spinner";
 import { Message, MessageType } from "../../models";
@@ -89,10 +89,23 @@ export const HeaderForm : FC = () =>{
     ]} firstItem={{name : "Status", value: "-"}} id="status" onChange={(e)=>{
         setCollection({...collection, status : e.target.value});
     }}/>
+
+    <div className="inline ml-2 text-right">
+    <TextField label="Item Name Prefix" 
+    className={commonTextfieldClassName("w-64 ml-4 inline-block")}
+    labelInline={true} id="name" type="text" placeholder="Item name prefix"
+        onChange={(e)=>{
+            setCollection({...collection, item_name_prefix : e.target.value});
+        }}/>
+    {/*<div className="inline text-xs mt-1 break-words"
+    style={{maxWidth:"200px"}}>This will be useful, e.g. if you have a collection of Helmets, 
+        which the item has a name prefix "Helmet" followed by a number e.g. Helmet #001, Helmet #002 etc</div>
+        */}
+    </div> 
     </div>
     <div className="mt-2">
     <button title="Create Collection" disabled={loading} 
-    className="text-sm min-w-32 font-bold p-2 mb-2 bg-gray-500 rounded text-white" 
+    className="text-sm w-64 font-bold p-2 mb-2 bg-gray-800 rounded text-white" 
     onClick={async (e)=>{
         e.preventDefault();
         await addCollectionNow();
