@@ -30,6 +30,7 @@ export const ListRow : FC <RProps> = ({
 
             setViewType({viewType : ViewType.EditCollection, param: collection?._id});
         }
+        //window.alert(setViewType === undefined ? "setViewType.is.null" : "hhh");
     }
 
     return <tr className="hover:bg-gray-200 hover:cursor-pointer p-4">

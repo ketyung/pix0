@@ -12,6 +12,8 @@ type Props = {
  
     label? : string, 
 
+    defaultValue? : string,
+
     autoComplete? : string,
 
     onChange? : (e: any ) => void,
@@ -32,14 +34,14 @@ export const commonTextfieldClassName = (w? : string ) =>{
 
 
 export const TextField : FC <Props>= ({
-    className, id, type, placeholder, label, 
+    className, id, type, placeholder, label, defaultValue,
     onChange, onClick, onDoubleClick, autoComplete, labelInline
 }) =>{
 
     return  <><label className={
     `text-gray-700 text-sm font-bold mb-2${(labelInline ? " inline-block" : " block")}`} 
     htmlFor={id}>{label}</label><input className={ className ?? 
-    commonTextfieldClassName()}
+    commonTextfieldClassName()} defaultValue={defaultValue}
     id={id} type={type ?? "text"} placeholder={placeholder ?? ""} autoComplete={autoComplete}
     onChange={onChange} onClick={onClick} onDoubleClick={onDoubleClick}/></>
 

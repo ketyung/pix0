@@ -29,6 +29,7 @@ export const HeaderForm : FC <Props> = ({
 
     const fetchCollectionForEdit = useCallback(async ()=>{
 
+        console.log("id::", collectionId, new Date());
         if ( collectionId && toEdit ){
 
             let c = await getCollectionBy(collectionId);
@@ -123,13 +124,13 @@ export const HeaderForm : FC <Props> = ({
         <TextField label="Name" labelInline={true} id="name" type="text" placeholder="Name"
         onChange={(e)=>{
             setCollection({...collection, name : e.target.value});
-        }}/>
+        }} defaultValue={collection.name}/>
     </div>
     <div className="mb-4">
         <TextField label="Description" labelInline={true} id="description" type="text" placeholder="Description"
         onChange={(e)=>{
             setCollection({...collection, description : e.target.value});
-        }}/>
+        }} defaultValue={collection.description}/>
     </div>
     <div className="mb-4">
         <Select items={[
@@ -141,7 +142,7 @@ export const HeaderForm : FC <Props> = ({
     }}/>
 
     <div className="inline ml-2 text-right">
-    <TextField label="Item Name Prefix" 
+    <TextField label="Item Name Prefix" defaultValue={collection.item_name_prefix}
     className={commonTextfieldClassName("w-64 ml-4 inline-block")}
     labelInline={true} id="name" type="text" placeholder="Item name prefix"
         onChange={(e)=>{
