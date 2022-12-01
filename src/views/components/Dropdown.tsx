@@ -1,4 +1,5 @@
-import { FC, ReactElement, useState } from "react";
+import { FC, ReactElement } from "react";
+import './css/Dropdown.css';
 
 export interface DropdownItem {
 
@@ -21,20 +22,13 @@ export const Dropdown : FC <Props> = ({
     id, button, items, 
 }) =>{
 
-    const [show, setShow] = useState(false);
-
-
-    return <div className="max-w-lg mx-auto">
+    return <div className="dropdown max-w-lg mx-auto">
     <button className="text-white bg-blue-700 hover:bg-blue-800 
     focus:ring-4 focus:ring-blue-300 font-medium rounded-lg 
-    text-sm px-4 py-2.5 text-center inline-flex items-center" 
-    type="button" data-dropdown-toggle={id ?? "dd1"} onClick={(e)=>{
-        e.preventDefault();
-        setShow(!show);
-    }}>
+    text-sm px-4 py-2.5 text-center inline-flex items-center" type="button">
     {button}</button>
-    <div className={`${show ? "" : "hidden "}bg-white text-base z-50 list-none divide-y 
-    divide-gray-100 rounded shadow my-4 z-50`} id={id ?? "dd1"}>
+    <div className="dropdown-content bg-white text-base z-50 list-none divide-y 
+    divide-gray-100 rounded shadow z-50" id={id ?? "dd1"}>
     <ul className="py-1 text-left" aria-labelledby={id ?? "dd1"}>
         {
             items?.map((a,i)=>{
