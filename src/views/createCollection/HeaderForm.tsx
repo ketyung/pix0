@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect, useCallback } from "react";
 import { TextField, commonTextfieldClassName } from "../components/TextField";
 import { Select } from "../components/Select";
 import { Spinner } from "../components/Spinner";
@@ -7,9 +7,16 @@ import { MessageView } from "../components/MessageView";
 import { Status, Collection } from "../../models/collection";
 import useService from "../../hooks/useService";
 
+type Props = {
 
+    collectionId? : string,
 
-export const HeaderForm : FC = () =>{
+    toEdit? : boolean,
+}
+
+export const HeaderForm : FC <Props> = ({
+    collectionId, toEdit
+}) =>{
 
     const [collection, setCollection] = useState<Collection>({name : "", created_by: ""});
 
@@ -17,8 +24,29 @@ export const HeaderForm : FC = () =>{
 
     const [message, setMessage] = useState<Message>();
 
-    const {addCollection, loading, updateCollection} = useService();
+    const {addCollection, loading, updateCollection, getCollectionBy} = useService();
 
+
+    const fetchCollectionForEdit = useCallback(async ()=>{
+
+        if ( collectionId && toEdit ){
+
+            let c = await getCollectionBy(collectionId);
+            if ( c)
+                setCollection(c);
+
+        } 
+
+    },[getCollectionBy]);
+
+
+    useEffect(()=>{
+
+        if ( toEdit ) {
+            setIsEditMode(true);
+            fetchCollectionForEdit();
+        }
+    },[toEdit]);
 
     const setMessageNow = (message : Message) => {
 
@@ -89,7 +117,7 @@ export const HeaderForm : FC = () =>{
     <form className="bg-white shadow-md rounded-2xl px-8 pt-6 pb-8 mb-4 mt-4">
     {message && <MessageView message={message}/>}
     <div className="mt-2 mb-4 font-bold">
-    Create Your Collection
+    {isEditMode ? "Update" : "Create"} Your Collection
     </div>
     <div className="mb-4">
         <TextField label="Name" labelInline={true} id="name" type="text" placeholder="Name"

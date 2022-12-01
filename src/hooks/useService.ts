@@ -68,6 +68,22 @@ export default function useService()  {
     }
 
 
-    return {getCollectionsBy, addCollection, loading, updateCollection} as const ;
+    const getCollectionBy = async (id : string )
+    : Promise<Collection|undefined> =>{
+
+
+        if ( selectedWalletPubkey) {
+            setLoading(true);
+            
+            let c = await service.getCollectionBy(selectedWalletPubkey , id);
+            setLoading(false);
+            return c; 
+        }
+
+        return undefined;
+
+    }
+
+    return {getCollectionsBy, addCollection, loading, updateCollection, getCollectionBy} as const ;
 
 }

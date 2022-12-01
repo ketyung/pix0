@@ -3,8 +3,17 @@ import useService from "../../hooks/useService";
 import { Spinner } from "../components/Spinner";
 import { Collection } from "../../models/collection";
 import { ListRow } from "./ListRow";
+import { ViewTypeAndParam } from "./View";
 
-export const List : FC = () =>{
+export type Props = {
+
+    setViewType? : (viewType : ViewTypeAndParam) => void,
+
+}
+
+export const List : FC <Props> = ({
+    setViewType
+}) =>{
 
     const {getCollectionsBy, loading} = useService();
 
@@ -36,7 +45,7 @@ export const List : FC = () =>{
     <tbody>
     {
         collections.map((c,i)=>{
-            return <ListRow key={`coll_${i}`} collection={c} index={i}/>
+            return <ListRow key={`coll_${i}`} collection={c} index={i} setViewType={setViewType}/>
         })
     }
     {loading ? <tr><td colSpan={6} className="p-10"><Spinner/></td></tr> : <></>}

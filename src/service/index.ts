@@ -102,6 +102,30 @@ export const getCollectionsBy = async (creator : string, offset : number = 0, li
         console.error("error@getCollectionsBy", e);
         return { res :[] };
     }
+}
+
+
+export const getCollectionBy = async (creator : string, id : string )
+: Promise<Collection|undefined> =>{
+
+    let url = `${REMOTE_URL}collection_by/${encodeURIComponent(creator)}/${encodeURIComponent(id)}`;
+    
+    try {
+
+        let c = await ((await fetch(url,{
+            headers: { 
+                'Content-Type': 'application/json',
+                'access_token': process.env.REACT_APP_SERVICE_ACCESS_TOKEN ?? "", 
+            },
+            
+        }))).json() ;
+        return c;
+    }
+    catch (e : any) {
+
+        console.error("error@getCollectionsBy", e);
+        return undefined;
+    }
 
 
 }

@@ -19,6 +19,8 @@ export interface Collection {
     
     id? : string, 
 
+    _id? : string,
+
     name : string , 
 
     description? : string,
