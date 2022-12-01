@@ -26,8 +26,8 @@ export const addCollection = async  (collection : Collection,
         
         if ( completion) {
 
-            let return_collection = (await response.json()) as Collection;
-            completion( return_collection);
+            let return_collection = (await response.json()) ;
+            completion( {...collection, id: return_collection._id});
         }
     
     }
@@ -64,8 +64,9 @@ export const updateCollection = async  (collection : Collection,
         
         if ( completion) {
 
-            let return_collection = (await response.json()) as Collection;
-            completion( return_collection);
+            let return_collection = (await response.json()) ;
+            completion( {...collection, id: return_collection._id});
+      
         }
     
     }
