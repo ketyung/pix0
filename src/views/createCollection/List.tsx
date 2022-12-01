@@ -1,18 +1,18 @@
 import { FC, useEffect, useCallback, useState } from "react";
 import useService from "../../hooks/useService";
+import { Spinner } from "../components/Spinner";
 import { Collection } from "../../models/collection";
 import { ListRow } from "./ListRow";
 
 export const List : FC = () =>{
 
-    const {getCollectionsBy} = useService();
+    const {getCollectionsBy, loading} = useService();
 
     const [collections, setCollections] = useState<Collection[]>([]);
 
     const fetchCollections = useCallback (async ()=>{
 
         let c = await getCollectionsBy();
-        console.log("ccc", c);
         setCollections(c.res);
 
     },[getCollectionsBy]);
@@ -29,6 +29,7 @@ export const List : FC = () =>{
         <th style={{width:"25%"}} className="pl-2 text-left">Name</th>
         <th style={{width:"35%"}} className="pl-2 text-left">Description</th>
         <th style={{width:"10%"}}>No. of media</th>
+        <th style={{width:"10%"}}>Date</th>
         <th style={{width:"10%"}}>Actions</th>
       </tr>
     </thead>
@@ -38,6 +39,7 @@ export const List : FC = () =>{
             return <ListRow key={`coll_${i}`} collection={c} index={i}/>
         })
     }
+    {loading ? <tr><td colSpan={6} className="p-10"><Spinner/></td></tr> : <></>}
     </tbody>
     </table></div>
 }
