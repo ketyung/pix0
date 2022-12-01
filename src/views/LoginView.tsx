@@ -34,7 +34,7 @@ export const LoginView : FC <Props>= ({
             </div>
             <div className="mb-4">
                 <button title="Login" 
-                className="text-sm min-w-35 font-bold ml-4 p-2 mb-2 bg-gray-500 rounded text-white" 
+                className="text-sm min-w-32 font-bold ml-4 p-2 mb-2 bg-gray-500 rounded text-white" 
                 onClick={()=>{
                     createPassword();
                 }}>Login</button>

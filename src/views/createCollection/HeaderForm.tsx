@@ -9,7 +9,7 @@ import useService from "../../hooks/useService";
 
 
 
-export const PFPCollectionHeaderForm : FC = () =>{
+export const HeaderForm : FC = () =>{
 
     const [collection, setCollection] = useState<Collection>({name : "", created_by: ""});
 
