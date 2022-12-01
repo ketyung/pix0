@@ -2,6 +2,8 @@ import { FC, useState } from "react";
 import { TextField } from "../components/TextField";
 import { Select } from "../components/Select";
 import { Spinner } from "../components/Spinner";
+import { Message, MessageType } from "../../models";
+import { MessageView } from "../components/MessageView";
 import { Status, Collection } from "../../models/collection";
 import useService from "../../hooks/useService";
 
@@ -11,19 +13,39 @@ export const PFPCollectionHeaderForm : FC = () =>{
 
     const [collection, setCollection] = useState<Collection>({name : "", created_by: ""});
 
+    const [message, setMessage] = useState<Message>();
+
     const {addCollection, loading} = useService();
+
+
+    const setMessageNow = (message : Message) => {
+
+        setMessage(message);
+        setTimeout(()=>{
+            setMessage(undefined);
+        }, 5000);
+    }
 
     const addCollectionNow = async () => {
 
+        setMessage(undefined);
+
         if ( collection.name.trim() === "") {
 
-            window.alert("Collection name is blank!");
+            setMessageNow({
+                text : "Name is blank!",
+                type : MessageType.Error,
+            });
             return; 
         }
 
-        if ( collection.status?.trim() === "") {
+        if (collection.status === undefined || collection.status?.trim() === "-") {
 
-            window.alert("Please choose a status for the collection!");
+            
+            setMessageNow({
+                text : "Please choose a status for the collection!",
+                type : MessageType.Error,
+            });
             return; 
         }
 
@@ -31,11 +53,10 @@ export const PFPCollectionHeaderForm : FC = () =>{
 
             if (e instanceof Error) {
 
-                window.alert(`Error: ${e.message}`);
-
+                setMessageNow({ text : `Error: ${e.message}`, type : MessageType.Error});
             }
             else {
-                window.alert('Success!');
+                setMessageNow({ text : "Success", type : MessageType.Info});
                 console.log("res::", e, new Date());
             }
         });
@@ -44,7 +65,8 @@ export const PFPCollectionHeaderForm : FC = () =>{
 
     return <div className="m-auto p-10 mt-4 border-2 border-gray-200 rounded-3xl w-5/6 text-left">
     <form className="bg-white shadow-md rounded-2xl px-8 pt-6 pb-8 mb-4 mt-4">
-    <div className="mb-4 font-bold">
+    {message && <MessageView message={message}/>}
+    <div className="mt-2 mb-4 font-bold">
     Create Your Collection
     </div>
     <div className="mb-4">
@@ -64,14 +86,15 @@ export const PFPCollectionHeaderForm : FC = () =>{
             {value : Status.NEW, name : "New"},
             {value : Status.PUBLISHED, name : "Published"},
             {value : Status.DEACTIVATED, name : "Deactivated"},
-    ]} firstItem={{name : "Status"}} id="status" onChange={(e)=>{
+    ]} firstItem={{name : "Status", value: "-"}} id="status" onChange={(e)=>{
         setCollection({...collection, status : e.target.value});
     }}/>
     </div>
     <div className="mt-2">
     <button title="Create Collection" disabled={loading} 
     className="text-sm min-w-32 font-bold p-2 mb-2 bg-gray-500 rounded text-white" 
-    onClick={async ()=>{
+    onClick={async (e)=>{
+        e.preventDefault();
         await addCollectionNow();
     }}>{loading ? <Spinner/>  : <>Create Collection</>}</button>
     </div> 

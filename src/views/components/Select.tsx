@@ -30,7 +30,7 @@ export const Select : FC <Props> = ({
     rounded transition ease-in-out m-0
     focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" 
     aria-label="Default select example" onChange={onChange}>
-      <option key={`selOpt_${id}_0`}  
+      <option key={`selOpt_${id}_0`} value={firstItem?.value}
       selected>{firstItem?.name ?? "Please select"}</option>
       {
         items?.map((e, i) =>{
