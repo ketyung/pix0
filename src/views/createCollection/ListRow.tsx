@@ -15,7 +15,7 @@ export const ListRow : FC <Props> = ({
 
     const timeAgo = dateToTimeAgo(collection?.date_created);
 
-    return <tr className="hover:bg-gray-200 hover:cursor-pointer">
+    return <tr className="hover:bg-gray-200 hover:cursor-pointer p-4">
     <td>{((index ?? 0) +1)}</td>
     <td style={{width:"25%"}} className="pl-2 text-left text-ellipsis">{collection?.name}</td>
     <td className="pl-2 text-left text-ellipsis max-w-32">{collection?.description}</td>
