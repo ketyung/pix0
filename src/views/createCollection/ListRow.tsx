@@ -22,6 +22,6 @@ export const ListRow : FC <Props> = ({
     <td></td>
     <td title={timeAgo.long} className="text-left pl-10">
     {timeAgo.short}</td>
-    <td></td>
+    <td><i className="fa fa-cog" aria-hidden="true"/></td>
   </tr>
 }
