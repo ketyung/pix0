@@ -15,8 +15,9 @@ export const addCollection = async  (collection : Collection,
             cache: 'no-cache', 
             //credentials: 'same-origin', // include, *same-origin, omit
             headers: {
-              'Content-Type': 'application/json'
-              // 'Content-Type': 'application/x-www-form-urlencoded',
+             
+                'Content-Type': 'application/json',
+                'access_token': process.env.REACT_APP_SERVICE_ACCESS_TOKEN ?? "", 
             },
             redirect: 'follow', 
             referrerPolicy: 'no-referrer', 
@@ -47,7 +48,13 @@ export const getCollectionsBy = async (creator : string, offset : number = 0, li
     
     try {
 
-        let c = await ((await fetch(url))).json() as Collection[];
+        let c = await ((await fetch(url,{
+            headers: { 
+                'Content-Type': 'application/json',
+                'access_token': process.env.REACT_APP_SERVICE_ACCESS_TOKEN ?? "", 
+            },
+            
+        }))).json() as Collection[];
         return c;
     }
     catch (e : any) {
