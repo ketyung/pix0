@@ -28,12 +28,14 @@ type Props = {
         fileName? : string, 
     }, index? : number ) => void, 
 
-    index? : number 
+    index? : number,
+
+    notToShowError? : boolean,
 }
 
 
 export const UploadField : FC <Props> = ({
-    id, label, allowedFileTypes, 
+    id, label, allowedFileTypes, notToShowError, 
     maxFileSize, onError, uploadAction, 
     uploading, withImagePreview, setMediaCallback, index 
 }) =>{
@@ -42,13 +44,29 @@ export const UploadField : FC <Props> = ({
 
     const [contentType, setContentType] = useState<string>();
 
+    const [error, setError] = useState<Error>();
+
+
+    const setErrorNow= (e: Error) =>{
+
+        if ( !notToShowError) {
+
+            setError(e);
+            setTimeout(()=>{
+                setError(undefined);
+            },5000);
+      
+        }
+    }
 
     const checkIfFileValid = (file : any ) : boolean => {
 
         if ( file === undefined) {
 
+            let e = new Error("File is undefined!");
+            setErrorNow(e);
             if ( onError) {
-                onError( new Error("File is undefined!"));
+                onError(e );
                 return false;
             }
         }
@@ -58,8 +76,10 @@ export const UploadField : FC <Props> = ({
       
         if (!isValid ) {
 
+            let e = new Error(`Invalid file type ${file.type}`);
+            setErrorNow(e);
             if ( onError) {
-                onError( new Error(`Invalid file type ${file.type}`));
+                onError( e);
                 return false;
             }
         }
@@ -69,8 +89,10 @@ export const UploadField : FC <Props> = ({
       
         if (!isLtAllowed) {
        
+            let e = new Error(`File size ${file.size} has exceeded max ${allowedMax}`);
+            setErrorNow(e);
             if ( onError) {
-                onError( new Error(`File size ${file.size} has exceeded max ${allowedMax}`));
+                onError( e );
                 return false;
             }
        
@@ -132,6 +154,7 @@ export const UploadField : FC <Props> = ({
 
 
     return <div className="hover:bg-gray-300 hover:cursor-pointer inline-block p-4 rounded-2xl">
+    {error && <div className="text-red-500 text-xs text-left">{error.message}</div>}
     <div className="inline-block">{label &&<label htmlFor={id ?? "fileInput"} 
     className="form-label inline-block mb-2 text-gray-700">{label}</label>}
     <input className="form-control inline w-full px-3 py-1.5 text-base
