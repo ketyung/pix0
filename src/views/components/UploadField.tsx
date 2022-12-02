@@ -25,6 +25,7 @@ type Props = {
     setMediaCallback? : (media: {
         mediaDataUrl? : string,
         contentType?: string,
+        fileName? : string, 
     }, index? : number ) => void, 
 
     index? : number 
@@ -98,7 +99,7 @@ export const UploadField : FC <Props> = ({
             // convert image file to base64 string
             let res = reader.result;
             if ( typeof res === 'string') {
-                setMediaDataUrlNow(res);
+                setMediaDataUrlNow(res, file.type, file.name);
             }
         }, false);
 
@@ -107,11 +108,12 @@ export const UploadField : FC <Props> = ({
         }    
     }
 
-    const setMediaDataUrlNow = (dataUrl? : string) =>{
+    const setMediaDataUrlNow = (dataUrl? : string, _contentType? : string, fileName? : string  ) =>{
 
         setMediaDataUrl(dataUrl);
         if ( setMediaCallback) {
-            setMediaCallback({mediaDataUrl : dataUrl, contentType: contentType}, index);
+            setMediaCallback({mediaDataUrl : dataUrl, contentType: _contentType,
+            fileName : fileName}, index);
         }
     }
 

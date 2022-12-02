@@ -83,6 +83,8 @@ export interface Media {
 
     content_type? : string, 
 
+    file_name? : string, 
+
     attributes?: MediaAttribute[],
     
 }

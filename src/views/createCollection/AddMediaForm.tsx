@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import { UploadField } from "../components/UploadField";
 import { TextField, commonTextfieldClassName } from "../components/TextField";
-import { Collection, CollectionMedia, Media, MediaType } from "../../models/collection";
+import { Collection, CollectionMedia, MediaType } from "../../models/collection";
 
 
 type Props = {
@@ -17,7 +17,8 @@ export const AddMediaForm : FC <Props> = ({
         layer_num:0, medias: [], 
     });
 
-    const setMediaCallback = (media: {mediaDataUrl? : string,contentType?: string}, index? : number ) => {
+    const setMediaCallback = (media: {mediaDataUrl? : string,contentType?: string,
+    fileName?: string }, _index? : number ) => {
 
         if ( media.mediaDataUrl ) {
             let medias = collectionMedia.medias;
@@ -28,6 +29,7 @@ export const AddMediaForm : FC <Props> = ({
                 type : MediaType.data_uri,
                 data_url : mediaBuffer,
                 content_type : media.contentType,   
+                file_name : media.fileName, 
             };
 
             setCollectionMedia({...collectionMedia, medias: medias});
