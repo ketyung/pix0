@@ -1,8 +1,8 @@
 import { FC, useState } from "react";
 import { UploadField } from "../components/UploadField";
+import { MediaAttribRow } from "./MediaAttribRow";
 import { TextField, commonTextfieldClassName } from "../components/TextField";
-import { Collection, CollectionMedia, MediaType } from "../../models/collection";
-
+import { Collection, CollectionMedia, MediaType, Media, MediaAttribute } from "../../models/collection";
 
 type Props = {
 
@@ -25,7 +25,7 @@ export const AddMediaForm : FC <Props> = ({
 
             const mediaBuffer = Buffer.from(media.mediaDataUrl, 'base64');
     
-            medias[0]= {
+            medias[0]= {...medias[0], 
                 type : MediaType.data_uri,
                 data_url : mediaBuffer,
                 content_type : media.contentType,   
@@ -35,6 +35,47 @@ export const AddMediaForm : FC <Props> = ({
             setCollectionMedia({...collectionMedia, medias: medias});
 
         }
+    }
+
+    const addMediaAttribute = () => {
+
+        let medias = collectionMedia.medias;
+        if (medias === undefined || medias.length === 0 ){
+            medias = [];
+            let media : Media = {
+                type : MediaType.data_uri
+            };
+
+            media.attributes = [];
+
+            medias.push (media);
+        }
+        else {
+
+            let media = collectionMedia.medias[0];
+            if ( media.attributes === undefined ){
+                media.attributes = [];
+            }
+
+            media.attributes?.push({});
+            medias[0] = media;
+        }
+
+        setCollectionMedia({...collectionMedia, medias: medias});
+    }
+
+    const setMediaAttributeAt = (attribute : MediaAttribute, index? :number) => {
+
+        let medias = collectionMedia.medias;
+        let media = medias[0];
+
+        if (index && media?.attributes && media?.attributes[index] !== undefined ) {
+
+            media.attributes[index] = attribute;
+        }  
+
+        medias[0] = media;
+        setCollectionMedia({...collectionMedia, medias: medias});
     }
 
     const addMediaNow = () =>{
@@ -62,6 +103,25 @@ export const AddMediaForm : FC <Props> = ({
             <UploadField label="Upload Image/Media" withImagePreview={true}
             setMediaCallback={setMediaCallback}/>
         </div>
+        <div className="mb-4">
+            <div className="text-center">
+            <button title="Add Attributes/Traits" 
+                className="text-sm min-w-32 font-bold ml-4 p-2 mb-2 bg-gray-900 rounded-3xl text-white" 
+                onClick={(e)=>{
+                    e.preventDefault();
+                    addMediaAttribute();
+                }}><i className="fa fa-plus mr-2"/>Add Attributes/Traits</button> 
+            {
+
+                collectionMedia.medias[0]?.attributes?.map((a,i)=>{
+                    
+                    return <MediaAttribRow index={i} attribute={a} key={`attrib_${i}`} 
+                    setMediaAttributeAt={setMediaAttributeAt}/>
+                })
+            }
+            </div>
+        </div>
+
         <div className="mt-2">
             <button title="Add media" 
             className="text-sm min-w-32 font-bold ml-4 p-2 mb-2 bg-gray-500 rounded text-white" 
@@ -69,7 +129,6 @@ export const AddMediaForm : FC <Props> = ({
                 e.preventDefault();
                 addMediaNow();
             }}>Add Media</button>
-
         </div>
         </form>
     </div>
