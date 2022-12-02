@@ -1,5 +1,7 @@
 import { FC } from "react";
+import { UploadField } from "../components/UploadField";
 import { Collection } from "../../models/collection";
+
 
 type Props = {
 
@@ -15,5 +17,8 @@ export const AddMediaForm : FC <Props> = ({
         <div className="mb-4">Add image to your collection <span className="font-bold">{
             collection?.name 
         }</span></div>
+        <div className="mb-4">
+            <UploadField label="Upload Image/Media" withImagePreview={true}/>
+        </div>
     </div>
 }
