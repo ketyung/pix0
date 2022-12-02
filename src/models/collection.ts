@@ -69,6 +69,7 @@ export enum MediaType {
 
 }
 
+
 export interface Media {
 
     type : MediaType,
@@ -77,8 +78,22 @@ export interface Media {
 
     data_url? : Buffer, 
 
+    // percentage of ocurrance
     poc? : number, 
+
+    attributes?: MediaAttribute[],
     
+}
+
+
+export interface MediaAttribute {
+
+    trait_type : string,
+
+    value : string|number,
+    
+    display_type? : string, 
+
 }
 
 
