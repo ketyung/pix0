@@ -16,7 +16,7 @@ export const ListRow : FC <RProps> = ({
     index, collection, setViewType
 }) =>{
 
-    const timeAgo = dateToTimeAgo(collection?.date_created);
+    const timeAgo = dateToTimeAgo(collection?.date_updated);
 
     const remove = () => {
         if (window.confirm("Are you to remove this?")) {
