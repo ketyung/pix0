@@ -129,6 +129,7 @@ export const HeaderForm : FC <Props> = ({
     </div>
     <div className="mb-4">
         <TextField label="Name" labelInline={true} id="name" type="text" placeholder="Name"
+        className={commonTextfieldClassName("w-96 block")}
         onChange={(e)=>{
             setCollection({...collection, name : e.target.value});
         }} defaultValue={collection.name}/>
