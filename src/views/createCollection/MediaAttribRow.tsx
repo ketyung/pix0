@@ -18,7 +18,7 @@ export const MediaAttribRow : FC <Props> = ({
     index, attribute, setMediaAttributeAt, removeMediaAttributeAt
 }) =>{
 
-    return <div className="hover:bg-gray-300 p-4 text-left">
+    return <div className="hover:bg-gray-300 p-4 text-left rounded-2xl">
         <div className="inline-block mr-2">
             <TextField label="Attribute/Trait" className={commonTextfieldClassName("w-64 ml-2")}
             labelInline={true} id={`trait_type_${index}`} value={attribute?.trait_type}

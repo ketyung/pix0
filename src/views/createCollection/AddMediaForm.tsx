@@ -118,7 +118,7 @@ export const AddMediaForm : FC <Props> = ({
             setMediaCallback={setMediaCallback}/>
         </div>
         <div className="mb-4">
-            <div className="text-center">
+            <div className="text-left">
             <button title="Add Attributes/Traits" 
                 className="text-sm min-w-32 font-bold ml-4 p-2 mb-2 bg-gray-900 rounded-3xl text-white" 
                 onClick={(e)=>{
