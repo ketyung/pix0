@@ -29,13 +29,20 @@ export const HeaderForm : FC <Props> = ({
 
     const fetchCollectionForEdit = useCallback(async ()=>{
 
-        console.log("id::", collectionId, new Date());
         if ( collectionId && toEdit ){
 
             let c = await getCollectionBy(collectionId);
-            if ( c)
+            if ( c) {
+                /**
+                 * Need to swap this for the server-side update
+                 */
+                if ( c._id !== undefined) {
+                    c.id = c._id ;
+                    c._id = undefined;    
+                }
                 setCollection(c);
-
+            }
+           
         } 
 
     },[getCollectionBy]);
