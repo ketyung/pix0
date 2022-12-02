@@ -153,7 +153,7 @@ export const UploadField : FC <Props> = ({
     }
 
 
-    return <div className="hover:bg-gray-300 hover:cursor-pointer inline-block p-4 rounded-2xl">
+    return <div className="hover:bg-gray-300 hover:cursor-pointer inline-block p-4 rounded">
     {error && <div className="text-red-500 text-xs text-left">{error.message}</div>}
     <div className="inline-block">{label &&<label htmlFor={id ?? "fileInput"} 
     className="form-label inline-block mb-2 text-gray-700">{label}</label>}
