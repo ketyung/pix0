@@ -47,7 +47,8 @@ export const AddMediaForm : FC <Props> = ({
             };
 
             media.attributes = [];
-
+            media.attributes?.push({});
+            
             medias.push (media);
         }
         else {
@@ -110,8 +111,8 @@ export const AddMediaForm : FC <Props> = ({
                 setCollectionMedia({...collectionMedia, name: e.target.value});
             }}
             value={collectionMedia.name}
-            className={commonTextfieldClassName("w-64 inline-block")}
-            defaultValue={`${collection?.item_name_prefix} #001`}/>
+            className={commonTextfieldClassName("w-64 inline-block ml-2")}
+            defaultValue={`${collection?.item_name_prefix ?? "Item"} #001`}/>
         </div>
         <div className="mb-4">
             <UploadField label="Upload Image/Media" withImagePreview={true}
