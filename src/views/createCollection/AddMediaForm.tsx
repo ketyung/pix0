@@ -111,7 +111,7 @@ export const AddMediaForm : FC <Props> = ({
                 setCollectionMedia({...collectionMedia, name: e.target.value});
             }}
             value={collectionMedia.name}
-            className={commonTextfieldClassName("w-64 inline-block ml-2")}
+            className={commonTextfieldClassName("w-72 inline-block ml-2")}
             defaultValue={`${collection?.item_name_prefix ?? "Item"} #001`}/>
         </div>
         <div className="mb-4">
