@@ -10,6 +10,8 @@ export enum ViewType {
 
     EditCollection,
 
+    AddMedia,
+
 }
 
 export interface ViewTypeAndParam {
