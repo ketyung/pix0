@@ -17,6 +17,30 @@ export const AddMediaForm : FC <Props> = ({
         layer_num:0, medias: [], 
     });
 
+    const setMediaCallback = (media: {mediaDataUrl? : string,contentType?: string}, index? : number ) => {
+
+        if ( media.mediaDataUrl ) {
+            let medias = collectionMedia.medias;
+
+            const mediaBuffer = Buffer.from(media.mediaDataUrl, 'base64');
+    
+            medias[0]= {
+                type : MediaType.data_uri,
+                data_url : mediaBuffer,
+                content_type : media.contentType,   
+            };
+
+            setCollectionMedia({...collectionMedia, medias: medias});
+
+        }
+    }
+
+    const addMediaNow = () =>{
+
+        console.log("collection.media@xx::", collectionMedia, new Date());
+    }
+
+
     return <div className="m-auto p-10 mt-4 border-2 border-gray-300 rounded-3xl w-5/6 text-center">
         <div className="mb-4">Add image to your collection <span className="font-bold">{
             collection?.name 
@@ -33,9 +57,18 @@ export const AddMediaForm : FC <Props> = ({
             defaultValue={`${collection?.item_name_prefix} #001`}/>
         </div>
         <div className="mb-4">
-            <UploadField label="Upload Image/Media" withImagePreview={true}/>
+            <UploadField label="Upload Image/Media" withImagePreview={true}
+            setMediaCallback={setMediaCallback}/>
         </div>
-       
+        <div className="mt-2">
+            <button title="Add media" 
+            className="text-sm min-w-32 font-bold ml-4 p-2 mb-2 bg-gray-500 rounded text-white" 
+            onClick={(e)=>{
+                e.preventDefault();
+                addMediaNow();
+            }}>Add Media</button>
+
+        </div>
         </form>
     </div>
 }
