@@ -69,13 +69,27 @@ export const AddMediaForm : FC <Props> = ({
         let medias = collectionMedia.medias;
         let media = medias[0];
 
-        if (index && media?.attributes && media?.attributes[index] !== undefined ) {
+        if (index !== undefined && media?.attributes && media?.attributes[index] !== undefined ) {
 
             media.attributes[index] = attribute;
         }  
 
         medias[0] = media;
         setCollectionMedia({...collectionMedia, medias: medias});
+    }
+
+    const removeMediaAttributeAt = (index? : number) => {
+
+        let medias = collectionMedia.medias;
+        let media = medias[0];
+
+        if (index !== undefined && media?.attributes && media?.attributes[index] !== undefined ) {
+
+            media.attributes.splice(index, 1);
+        }
+        medias[0] = media;
+        setCollectionMedia({...collectionMedia, medias: medias});
+
     }
 
     const addMediaNow = () =>{
@@ -116,7 +130,7 @@ export const AddMediaForm : FC <Props> = ({
                 collectionMedia.medias[0]?.attributes?.map((a,i)=>{
                     
                     return <MediaAttribRow index={i} attribute={a} key={`attrib_${i}`} 
-                    setMediaAttributeAt={setMediaAttributeAt}/>
+                    setMediaAttributeAt={setMediaAttributeAt} removeMediaAttributeAt={removeMediaAttributeAt}/>
                 })
             }
             </div>
