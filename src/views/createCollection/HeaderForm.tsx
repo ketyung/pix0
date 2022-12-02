@@ -132,13 +132,14 @@ export const HeaderForm : FC <Props> = ({
         className={commonTextfieldClassName("w-96 block")}
         onChange={(e)=>{
             setCollection({...collection, name : e.target.value});
-        }} defaultValue={collection.name}/>
+        }} value={collection.name}/>
     </div>
     <div className="mb-4">
-        <TextField label="Description" labelInline={true} id="description" type="text" placeholder="Description"
+        <TextField label="Description" labelInline={true} id="description" type="text" 
+        placeholder="Description"
         onChange={(e)=>{
             setCollection({...collection, description : e.target.value});
-        }} defaultValue={collection.description}/>
+        }} value={collection.description}/>
     </div>
     <div className="mb-4">
         <Select defaultValue={collection.status} items={[
@@ -150,7 +151,7 @@ export const HeaderForm : FC <Props> = ({
     }}/>
 
     <div className="inline ml-2 text-right">
-    <TextField label="Item Name Prefix" defaultValue={collection.item_name_prefix}
+    <TextField label="Item Name Prefix" value={collection.item_name_prefix}
     className={commonTextfieldClassName("w-64 ml-4 inline-block")}
     labelInline={true} id="name" type="text" placeholder="Item name prefix"
         onChange={(e)=>{
