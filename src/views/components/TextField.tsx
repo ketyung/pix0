@@ -23,6 +23,8 @@ type Props = {
     onDoubleClick? : (e: React.FormEvent<HTMLInputElement>) => void,
 
     labelInline? : boolean,
+
+    value? : string, 
  
 }
 
@@ -35,13 +37,13 @@ export const commonTextfieldClassName = (w? : string ) =>{
 
 export const TextField : FC <Props>= ({
     className, id, type, placeholder, label, defaultValue,
-    onChange, onClick, onDoubleClick, autoComplete, labelInline
+    onChange, onClick, onDoubleClick, autoComplete, labelInline, value 
 }) =>{
 
     return  <><label className={
     `text-gray-700 text-sm font-bold mb-2${(labelInline ? " inline-block" : " block")}`} 
     htmlFor={id}>{label}</label><input className={ className ?? 
-    commonTextfieldClassName()} defaultValue={defaultValue}
+    commonTextfieldClassName()} defaultValue={defaultValue} value={value}
     id={id} type={type ?? "text"} placeholder={placeholder ?? ""} autoComplete={autoComplete}
     onChange={onChange} onClick={onClick} onDoubleClick={onDoubleClick}/></>
 

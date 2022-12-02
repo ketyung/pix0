@@ -23,7 +23,12 @@ export const AddMediaForm : FC <Props> = ({
         }</span></div>
          <form className="bg-white shadow-md rounded-2xl px-8 pt-6 pb-8 mb-4 mt-4 text-left">
         <div className="mb-4">
-            <TextField label="Name" labelInline={true}
+            <TextField label="Name" labelInline={true} 
+            onChange={(e)=>{
+                e.preventDefault();
+                setCollectionMedia({...collectionMedia, name: e.target.value});
+            }}
+            value={collectionMedia.name}
             className={commonTextfieldClassName("w-64 inline-block")}
             defaultValue={`${collection?.item_name_prefix} #001`}/>
         </div>
