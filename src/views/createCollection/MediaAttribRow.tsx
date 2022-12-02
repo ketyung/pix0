@@ -18,7 +18,7 @@ export const MediaAttribRow : FC <Props> = ({
     index, attribute, setMediaAttributeAt, removeMediaAttributeAt
 }) =>{
 
-    return <div className="hover:bg-gray-300 pt-2 text-left rounded-2xl">
+    return <div className="hover:bg-gray-300 pt-2 text-left rounded">
         <div className="inline-block mr-2">
             <TextField className={commonTextfieldClassName("w-64 ml-2")}
             placeholder="Trait/Attribute"
@@ -46,7 +46,7 @@ export const MediaAttribRow : FC <Props> = ({
         </div>
 
         <div className="inline-block mr-2">
-            <TextField placeholder="value..." className={commonTextfieldClassName("w-64 ml-2")}
+            <TextField placeholder="Value..." className={commonTextfieldClassName("w-64 ml-2")}
             labelInline={true} id={`value_${index}`} value={attribute?.value}
             onChange={(e)=>{
                 e.preventDefault();
