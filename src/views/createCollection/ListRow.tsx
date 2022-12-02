@@ -54,7 +54,7 @@ export const ListRow : FC <RProps> = ({
     <td style={{width:"25%"}} className="pl-2 text-left text-ellipsis">{collection?.name}</td>
     <td className="pl-2 text-left text-ellipsis max-w-32">{collection?.description}</td>
     <td>{collection?.media_list?.length ?? 0}</td>
-    <td title={timeAgo.long} className="text-left pl-10">
+    <td title={timeAgo.long} className="text-center">
     {timeAgo.short}</td>
     <td>
         <Dropdown button={<i className="fa fa-cog" aria-hidden="true"/>}
