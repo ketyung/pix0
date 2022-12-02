@@ -30,15 +30,23 @@ export const ListRow : FC <RProps> = ({
 
             setViewType({viewType : ViewType.EditCollection, param: collection?._id});
         }
-        //window.alert(setViewType === undefined ? "setViewType.is.null" : "hhh");
     }
+
+
+    const addMediaForm = () =>{
+
+        if( setViewType ){
+
+            setViewType({viewType : ViewType.AddMedia, param: collection});
+        }
+      
+    }
+
 
     const dropdownItems : DropdownItem[] = [
     {label:<><i className="fa fa-edit mr-2"/> Edit</>, action : edit},
     {label:<><i className="fa fa-remove mr-2"/> Remove?</>,action:remove},
-    {label:<><i className="fa fa-plus mr-2"/> Add Images/Media</>,action:remove},
-
-    ];
+    {label:<><i className="fa fa-plus mr-2"/> Add Images/Media</>,action:addMediaForm}];
 
 
     return <tr className="hover:bg-gray-200 hover:cursor-pointer p-4">

@@ -1,6 +1,7 @@
 import { FC, useState } from "react";
 import { HeaderForm } from "./HeaderForm";
 import { List } from "./List";
+import { AddMediaForm } from "./AddMediaForm";
 
 export enum ViewType {
 
@@ -18,7 +19,7 @@ export interface ViewTypeAndParam {
 
     viewType : ViewType,
 
-    param? : string, 
+    param? : any, 
 }
 
 
@@ -39,6 +40,9 @@ export const View : FC = () =>{
                 
                 case ViewType.EditCollection :
                         return <HeaderForm toEdit={true} collectionId={viewType?.param}/>
+
+                case ViewType.AddMedia :
+                        return <AddMediaForm collection={viewType?.param}/>
     
                 default :
                     return <List setViewType={setViewType}/>
@@ -52,7 +56,8 @@ export const View : FC = () =>{
     const buttonsView = <div className="mb-2 text-right mr-40">
 
         {(viewType?.viewType === ViewType.CreateCollection || 
-        viewType?.viewType === ViewType.EditCollection) ?
+        viewType?.viewType === ViewType.EditCollection || 
+        viewType?.viewType === ViewType.AddMedia) ?
         <button title="Cancel" 
         className="text-sm w-32 font-bold mb-4 mt-4 ml-4 p-2 mb-2 bg-gray-800 
         rounded-3xl text-white" onClick={()=>{
