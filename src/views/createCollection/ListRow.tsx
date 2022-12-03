@@ -56,7 +56,7 @@ export const ListRow : FC <RProps> = ({
     const [mediaCount, setMediaCount] = useState<number>();
 
     const fetchMediaCount = useCallback(async ()=>{
-        let c = await getCollectionsMediaCountBy(collection?.id ?? "");
+        let c = await getCollectionsMediaCountBy(collection?._id ?? "");
         setMediaCount(c.count);
     },[getCollectionsMediaCountBy]);
 

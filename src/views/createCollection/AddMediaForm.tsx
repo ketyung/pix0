@@ -1,6 +1,9 @@
 import { FC, useState } from "react";
 import { UploadField } from "../components/UploadField";
 import { MediaAttribRow } from "./MediaAttribRow";
+import { MessageView } from "../components/MessageView";
+import { Message, MessageType } from "../../models";
+import useService from "../../hooks/useService";
 import { TextField, commonTextfieldClassName } from "../components/TextField";
 import { Collection, CollectionMedia, MediaType, Media, MediaAttribute } from "../../models/collection";
 
@@ -97,9 +100,34 @@ export const AddMediaForm : FC <Props> = ({
 
     }
 
-    const addMediaNow = () =>{
+    const {addCollectionMedia} = useService();
 
-        console.log("collection.media@xx::", collectionMedia, new Date());
+    const [message, setMessage] = useState<Message>();
+
+    const setMessageNow = (message : Message) => {
+
+        setMessage(message);
+        setTimeout(()=>{
+            setMessage(undefined);
+        }, 5000);
+    }
+
+    const addMediaNow = async () =>{
+
+        //console.log("collection.media@xx::", collectionMedia, new Date());
+        if ( collection?.id ) {
+
+            await addCollectionMedia(collectionMedia, collection?.id, (e)=>{
+                if ( e instanceof Error) {
+
+                    setMessageNow( {type: MessageType.Error, text : e.message});
+                }
+                else {
+                    setMessageNow( {type: MessageType.Info, text : "Success"});
+                }
+            });
+        }
+       
     }
 
 
@@ -107,6 +135,7 @@ export const AddMediaForm : FC <Props> = ({
         <div className="mb-4">Add image to your collection <span className="font-bold">{
             collection?.name 
         }</span></div>
+        {message && <MessageView message={message}/>}
          <form className="bg-white shadow-md rounded-2xl px-8 pt-6 pb-8 mb-4 mt-4 text-left">
         <div className="mb-4">
             <TextField label="Name" labelInline={true} 

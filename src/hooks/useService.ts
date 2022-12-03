@@ -102,23 +102,39 @@ export default function useService()  {
     }
 
     const getCollectionsMediaCountBy = async (
-        collection_id : string,     
-        offset : number = 0, limit : number = 20 )
+        collection_id : string)
         : Promise<{count : number}> => {
     
-            if ( selectedWalletPubkey) {
-                setLoading(true);
-                
-                let c = await service.getCollectionsMediaCountBy(
-                    collection_id, selectedWalletPubkey);
-                setLoading(false);
-                return c; 
-            }
-    
-            return {count: 0};
+        if ( selectedWalletPubkey) {
+            setLoading(true);
+            
+            let c = await service.getCollectionsMediaCountBy(
+                collection_id, selectedWalletPubkey);
+            setLoading(false);
+            return c; 
         }
 
+        return {count: 0};
+    }
+
+    const addCollectionMedia = async  (
+        media : CollectionMedia,collection_id : string,
+        completion? : (res : Error|Collection) => void ) =>{
+
+        if ( selectedWalletPubkey ) {
+
+            setLoading(true);
+            await service.addCollectionMedia({
+                media : media,
+                collection_id : collection_id,
+                creator : selectedWalletPubkey,
+            }, completion);
+
+            setLoading(false);
+        }
+    }
+
     return {getCollectionsBy, addCollection, loading, updateCollection, getCollectionBy
-    ,getCollectionsMediaBy, getCollectionsMediaCountBy} as const ;
+    ,getCollectionsMediaBy, getCollectionsMediaCountBy, addCollectionMedia} as const ;
 
 }
