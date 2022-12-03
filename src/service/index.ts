@@ -26,6 +26,16 @@ export const addCollection = async  (collection : Collection,
             body: JSON.stringify(collection) 
         });
         
+        if ( response.status !== 200) {
+
+            let return_err = (await response.json()) ;
+
+            if ( completion ){
+                completion( new Error(`${return_err.error} : ${return_err.details}`));
+                return ;
+            }
+        }
+
         if ( completion) {
 
             let return_collection = (await response.json()) ;
@@ -58,6 +68,17 @@ export const updateCollection = async  (collection : Collection,
             referrerPolicy: 'no-referrer', 
             body: JSON.stringify(collection) 
         });
+
+        if ( response.status !== 200) {
+
+            let return_err = (await response.json()) ;
+
+            if ( completion ){
+                completion( new Error(`${return_err.error} : ${return_err.details}`));
+                return ;
+            }
+        }
+
         
         if ( completion) {
 
@@ -137,6 +158,17 @@ export const addCollectionMedia = async  (
             referrerPolicy: 'no-referrer', 
             body: JSON.stringify(media) 
         });
+
+        if ( response.status !== 200) {
+
+            let return_err = (await response.json()) ;
+
+            if ( completion ){
+                completion( new Error(`${return_err.error} : ${return_err.details}`));
+                return ;
+            }
+        }
+
         
         if ( completion) {
 
@@ -175,6 +207,17 @@ export const updateCollectionMedia = async  (
             body: JSON.stringify(media) 
         });
         
+        if ( response.status !== 200) {
+            
+            let return_err = (await response.json()) ;
+
+            if ( completion ){
+                completion( new Error(`${return_err.error} : ${return_err.details}`));
+                return ;
+            }
+        }
+
+
         if ( completion) {
 
             let return_collection = (await response.json()) ;
