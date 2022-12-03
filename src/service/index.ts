@@ -1,6 +1,12 @@
-import { Collection } from "../models/collection"
+import { Collection, CollectionMedia } from "../models/collection"
 
 const REMOTE_URL = `${process.env.REACT_APP_SERVICE_API_URL ?? "http://localhost:3338/"}`;
+
+const commonHeaders = {           
+    'Content-Type': 'application/json',
+    'access_token': process.env.REACT_APP_SERVICE_ACCESS_TOKEN ?? "", 
+};
+
 
 export const addCollection = async  (collection : Collection,
     completion? : (res : Error|Collection) => void ) =>{
@@ -14,11 +20,7 @@ export const addCollection = async  (collection : Collection,
             mode: 'cors', 
             cache: 'no-cache', 
             //credentials: 'same-origin', // include, *same-origin, omit
-            headers: {
-             
-                'Content-Type': 'application/json',
-                'access_token': process.env.REACT_APP_SERVICE_ACCESS_TOKEN ?? "", 
-            },
+            headers:commonHeaders,
             redirect: 'follow', 
             referrerPolicy: 'no-referrer', 
             body: JSON.stringify(collection) 
@@ -51,12 +53,7 @@ export const updateCollection = async  (collection : Collection,
             method: 'POST', 
             mode: 'cors', 
             cache: 'no-cache', 
-            //credentials: 'same-origin', // include, *same-origin, omit
-            headers: {
-             
-                'Content-Type': 'application/json',
-                'access_token': process.env.REACT_APP_SERVICE_ACCESS_TOKEN ?? "", 
-            },
+            headers: commonHeaders,
             redirect: 'follow', 
             referrerPolicy: 'no-referrer', 
             body: JSON.stringify(collection) 
@@ -89,11 +86,7 @@ export const getCollectionsBy = async (creator : string, offset : number = 0, li
     try {
 
         let c = await ((await fetch(url,{
-            headers: { 
-                'Content-Type': 'application/json',
-                'access_token': process.env.REACT_APP_SERVICE_ACCESS_TOKEN ?? "", 
-            },
-            
+            headers:commonHeaders,
         }))).json() ;
         return c;
     }
@@ -113,11 +106,7 @@ export const getCollectionBy = async (creator : string, id : string )
     try {
 
         let c = await ((await fetch(url,{
-            headers: { 
-                'Content-Type': 'application/json',
-                'access_token': process.env.REACT_APP_SERVICE_ACCESS_TOKEN ?? "", 
-            },
-            
+            headers: commonHeaders,
         }))).json() ;
 
         return c;
@@ -127,6 +116,78 @@ export const getCollectionBy = async (creator : string, id : string )
         console.error("error@getCollectionsBy", e);
         return undefined;
     }
+}
 
 
+export const addCollectionMedia = async  (
+    media : {media : CollectionMedia,collection_id : string, creator : string},
+    completion? : (res : Error|Collection) => void ) =>{
+
+    let url = `${REMOTE_URL}add_collection_media/`; 
+
+    try {
+
+        const response = await fetch(url, {
+            method: 'POST', 
+            mode: 'cors', 
+            cache: 'no-cache', 
+            //credentials: 'same-origin', // include, *same-origin, omit
+            headers:commonHeaders,
+            redirect: 'follow', 
+            referrerPolicy: 'no-referrer', 
+            body: JSON.stringify(media) 
+        });
+        
+        if ( completion) {
+
+            let return_collection = (await response.json()) ;
+            completion(return_collection);
+      
+        }
+    
+    }
+    catch(e : any ){
+
+        if ( completion )
+            completion( new Error(e.message));
+
+    }
+    
+}
+
+
+export const updateCollectionMedia = async  (
+    media : {media : CollectionMedia,collection_id : string, creator : string},
+    completion? : (res : Error|Collection) => void ) =>{
+
+    let url = `${REMOTE_URL}update_collection_media/`; 
+
+    try {
+
+        const response = await fetch(url, {
+            method: 'POST', 
+            mode: 'cors', 
+            cache: 'no-cache', 
+            //credentials: 'same-origin', // include, *same-origin, omit
+            headers:commonHeaders,
+            redirect: 'follow', 
+            referrerPolicy: 'no-referrer', 
+            body: JSON.stringify(media) 
+        });
+        
+        if ( completion) {
+
+            let return_collection = (await response.json()) ;
+            completion(return_collection);
+      
+        }
+    
+    }
+    catch(e : any ){
+
+        if ( completion )
+            completion( new Error(e.message));
+
+    }
+    
 }
