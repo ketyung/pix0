@@ -14,7 +14,7 @@ export const AddMediaForm : FC <Props> = ({
 }) =>{
     
     const [collectionMedia, setCollectionMedia] = useState<CollectionMedia>({
-        layer_num:1, medias: [], name : "", collection_id : collection?.id ?? ""
+        medias: [], name : "", collection_id : collection?.id ?? ""
     });
 
     const setMediaCallback = (media: {mediaDataUrl? : string,contentType?: string,
@@ -26,6 +26,7 @@ export const AddMediaForm : FC <Props> = ({
             const mediaBuffer = Buffer.from(media.mediaDataUrl, 'base64');
     
             medias[0]= {...medias[0], 
+                layer_num : 1,
                 type : MediaType.data_uri,
                 data_url : mediaBuffer,
                 content_type : media.contentType,   
@@ -43,6 +44,7 @@ export const AddMediaForm : FC <Props> = ({
         if (medias === undefined || medias.length === 0 ){
             medias = [];
             let media : Media = {
+                layer_num : 1,
                 type : MediaType.data_uri
             };
 

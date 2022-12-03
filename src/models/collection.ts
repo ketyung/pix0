@@ -32,11 +32,7 @@ export interface Collection {
     status? : Status,
 
     item_name_prefix? : string, 
-
-    layer_count? : number ,
-
-    media_list? : CollectionMedia[],
-    
+  
     created_by : string, 
 
     date_created? : Date,
@@ -52,8 +48,6 @@ export interface CollectionMedia {
     name : string, 
 
     created_by? : string, 
-
-    layer_num : number, 
 
     max_num_of_media? : number, 
     
@@ -83,6 +77,8 @@ export interface Media {
 
     type : MediaType,
 
+    layer_num : number, 
+
     value? : string, // value can be uri or another JSON string
 
     data_url? : Buffer, 
@@ -94,8 +90,7 @@ export interface Media {
 
     file_name? : string, 
 
-    attributes?: MediaAttribute[],
-    
+    attributes?: MediaAttribute[],    
 }
 
 
