@@ -194,10 +194,11 @@ export const updateCollectionMedia = async  (
 
 
 export const getCollectionsMediaCountBy = async (
-    collection_id : string, created_by : string  )
+    collection_id : string, created_by : string )
 : Promise<{count : number}> =>{
 
-    let url = `${REMOTE_URL}collection_media_count/${encodeURIComponent(collection_id)}/${encodeURIComponent(created_by)}`;
+    let url = 
+    `${REMOTE_URL}collection_media_count/${encodeURIComponent(collection_id)}/${encodeURIComponent(created_by)}`;
     
     try {
 
@@ -210,5 +211,27 @@ export const getCollectionsMediaCountBy = async (
 
         console.error("error@getCollectionsBy", e);
         return { count : 0 };
+    }
+}
+
+export const getCollectionsMediaBy = async (
+    collection_id : string, created_by : string,
+    offset : number = 0, limit : number = 20  )
+    : Promise<{res : CollectionMedia[], total? :number , offset? : number, limit? : number}> =>{
+
+    let url = 
+    `${REMOTE_URL}collection_media/${encodeURIComponent(collection_id)}/${encodeURIComponent(created_by)}/${offset}/${limit}`;
+    
+    try {
+
+        let c = await ((await fetch(url,{
+            headers:commonHeaders,
+        }))).json() ;
+        return c;
+    }
+    catch (e : any) {
+
+        console.error("error@getCollectionsBy", e);
+        return { res : [] };
     }
 }

@@ -1,5 +1,5 @@
 import * as service from "../service";
-import { Collection } from "../models/collection";
+import { Collection, CollectionMedia } from "../models/collection";
 import useWalletState from "./useWalletState";
 import { useState } from "react";
 
@@ -84,6 +84,25 @@ export default function useService()  {
 
     }
 
-    return {getCollectionsBy, addCollection, loading, updateCollection, getCollectionBy} as const ;
+    const getCollectionsMediaBy = async (
+    collection_id : string,     
+    offset : number = 0, limit : number = 20 )
+    : Promise<{res : CollectionMedia[], total? :number , offset? : number, limit? : number}> => {
+
+        if ( selectedWalletPubkey) {
+            setLoading(true);
+            
+            let c = await service.getCollectionsMediaBy(
+                collection_id, selectedWalletPubkey , offset, limit);
+            setLoading(false);
+            return c; 
+        }
+
+        return {res: []};
+    }
+
+
+    return {getCollectionsBy, addCollection, loading, updateCollection, getCollectionBy
+    ,getCollectionsMediaBy} as const ;
 
 }
