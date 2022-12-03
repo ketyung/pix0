@@ -75,7 +75,6 @@ export const ListRow : FC <RProps> = ({
     <td>
         <Dropdown button={<i className="fa fa-cog" aria-hidden="true"/>}
         items={dropdownItems} id={`rowdd_${index}`}/>
-        
     </td>
   </tr>
 }
