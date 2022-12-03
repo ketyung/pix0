@@ -3,6 +3,7 @@ import { UploadField } from "../components/UploadField";
 import { MediaAttribRow } from "./MediaAttribRow";
 import { MessageView } from "../components/MessageView";
 import { Message, MessageType } from "../../models";
+import { Spinner } from "../components/Spinner";
 import useService from "../../hooks/useService";
 import { TextField, commonTextfieldClassName } from "../components/TextField";
 import { Collection, CollectionMedia, MediaType, Media, MediaAttribute } from "../../models/collection";
@@ -17,7 +18,7 @@ export const AddMediaForm : FC <Props> = ({
 }) =>{
     
     const [collectionMedia, setCollectionMedia] = useState<CollectionMedia>({
-        medias: [], name : "", collection_id : collection?.id ?? ""
+        medias: [], name : `${collection?.item_name_prefix ?? "Item"} #001`, collection_id : collection?.id ?? ""
     });
 
     const setMediaCallback = (media: {mediaDataUrl? : string,contentType?: string,
@@ -100,7 +101,7 @@ export const AddMediaForm : FC <Props> = ({
 
     }
 
-    const {addCollectionMedia} = useService();
+    const {addCollectionMedia, loading} = useService();
 
     const [message, setMessage] = useState<Message>();
 
@@ -143,9 +144,8 @@ export const AddMediaForm : FC <Props> = ({
                 e.preventDefault();
                 setCollectionMedia({...collectionMedia, name: e.target.value});
             }}
-            value={collectionMedia.name}
-            className={commonTextfieldClassName("w-72 inline-block ml-2")}
-            defaultValue={`${collection?.item_name_prefix ?? "Item"} #001`}/>
+            value={collectionMedia.name }
+            className={commonTextfieldClassName("w-72 inline-block ml-2")}/>
         </div>
         <div className="mb-4">
             <UploadField label="Upload Image/Media" withImagePreview={true}
@@ -171,12 +171,12 @@ export const AddMediaForm : FC <Props> = ({
         </div>
 
         <div className="mt-2">
-            <button title="Add media" 
+            <button title="Add media" disabled={loading}
             className="text-sm min-w-32 font-bold ml-4 p-2 mb-2 bg-gray-500 rounded text-white" 
             onClick={(e)=>{
                 e.preventDefault();
                 addMediaNow();
-            }}>Add Media</button>
+            }}>{loading ? <Spinner/> : <>Add Media</>}</button>
         </div>
         </form>
     </div>

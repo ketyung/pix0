@@ -5,7 +5,6 @@ import { Collection } from "../../models/collection";
 import useService from "../../hooks/useService";
 import { Props } from "./List";
 import { ViewType } from "./View";
-import { getCollectionsMediaCountBy } from "../../service";
 
 type RProps = Props & {
 
