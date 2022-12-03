@@ -2,6 +2,7 @@ import { FC, useState } from "react";
 import { HeaderForm } from "./HeaderForm";
 import { List } from "./List";
 import { AddMediaForm } from "./AddMediaForm";
+import { CollectionMediaView } from "./CollectionMediaView";
 
 export enum ViewType {
 
@@ -12,6 +13,8 @@ export enum ViewType {
     EditCollection,
 
     AddMedia,
+
+    CollectionMedia,
 
 }
 
@@ -43,6 +46,9 @@ export const View : FC = () =>{
 
                 case ViewType.AddMedia :
                         return <AddMediaForm collection={viewType?.param}/>
+
+                case ViewType.CollectionMedia :
+                        return <CollectionMediaView collectionId={viewType?.param}/>
     
                 default :
                     return <List setViewType={setViewType}/>
