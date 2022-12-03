@@ -101,8 +101,24 @@ export default function useService()  {
         return {res: []};
     }
 
+    const getCollectionsMediaCountBy = async (
+        collection_id : string,     
+        offset : number = 0, limit : number = 20 )
+        : Promise<{count : number}> => {
+    
+            if ( selectedWalletPubkey) {
+                setLoading(true);
+                
+                let c = await service.getCollectionsMediaCountBy(
+                    collection_id, selectedWalletPubkey);
+                setLoading(false);
+                return c; 
+            }
+    
+            return {count: 0};
+        }
 
     return {getCollectionsBy, addCollection, loading, updateCollection, getCollectionBy
-    ,getCollectionsMediaBy} as const ;
+    ,getCollectionsMediaBy, getCollectionsMediaCountBy} as const ;
 
 }

@@ -1,9 +1,11 @@
-import { FC } from "react";
+import { FC, useEffect, useCallback, useState } from "react";
 import { dateToTimeAgo } from "../../utils";
 import { Dropdown, DropdownItem } from "../components/Dropdown";
 import { Collection } from "../../models/collection";
+import useService from "../../hooks/useService";
 import { Props } from "./List";
 import { ViewType } from "./View";
+import { getCollectionsMediaCountBy } from "../../service";
 
 type RProps = Props & {
 
@@ -49,11 +51,25 @@ export const ListRow : FC <RProps> = ({
     {label:<><i className="fa fa-plus mr-2"/> Add Images/Media</>,action:addMediaForm}];
 
 
+    const {getCollectionsMediaCountBy} = useService();
+
+    const [mediaCount, setMediaCount] = useState<number>();
+
+    const fetchMediaCount = useCallback(async ()=>{
+        let c = await getCollectionsMediaCountBy(collection?.id ?? "");
+        setMediaCount(c.count);
+    },[getCollectionsMediaCountBy]);
+
+
+    useEffect(()=>{
+        fetchMediaCount();
+    },[]);
+
     return <tr className="hover:bg-gray-200 hover:cursor-pointer p-4">
     <td>{((index ?? 0) +1)}</td>
     <td style={{width:"25%"}} className="pl-2 text-left text-ellipsis">{collection?.name}</td>
     <td className="pl-2 text-left text-ellipsis max-w-32">{collection?.description}</td>
-    <td>{}</td>
+    <td>{mediaCount}</td>
     <td title={timeAgo.long} className="text-center">
     {timeAgo.short}</td>
     <td>
