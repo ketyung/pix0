@@ -27,6 +27,7 @@ export const AddMediaForm : FC <Props> = ({
     
             medias[0]= {...medias[0], 
                 layer_num : 1,
+                layer_name : "image",
                 type : MediaType.data_uri,
                 data_url : mediaBuffer,
                 content_type : media.contentType,   
@@ -45,6 +46,7 @@ export const AddMediaForm : FC <Props> = ({
             medias = [];
             let media : Media = {
                 layer_num : 1,
+                layer_name : "image",
                 type : MediaType.data_uri
             };
 
