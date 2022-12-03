@@ -53,7 +53,7 @@ export const ListRow : FC <RProps> = ({
     <td>{((index ?? 0) +1)}</td>
     <td style={{width:"25%"}} className="pl-2 text-left text-ellipsis">{collection?.name}</td>
     <td className="pl-2 text-left text-ellipsis max-w-32">{collection?.description}</td>
-    <td>{collection?.media_list?.length ?? 0}</td>
+    <td>{}</td>
     <td title={timeAgo.long} className="text-center">
     {timeAgo.short}</td>
     <td>
