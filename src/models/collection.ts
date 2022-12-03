@@ -47,7 +47,7 @@ export interface Collection {
 
 export interface CollectionMedia {
 
-    name? : string, 
+    name : string, 
 
     layer_num : number, 
 
