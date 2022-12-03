@@ -14,7 +14,7 @@ export const AddMediaForm : FC <Props> = ({
 }) =>{
     
     const [collectionMedia, setCollectionMedia] = useState<CollectionMedia>({
-        layer_num:1, medias: [], name : "",
+        layer_num:1, medias: [], name : "", collection_id : collection?.id ?? ""
     });
 
     const setMediaCallback = (media: {mediaDataUrl? : string,contentType?: string,

@@ -47,7 +47,11 @@ export interface Collection {
 
 export interface CollectionMedia {
 
+    collection_id : string, 
+
     name : string, 
+
+    created_by? : string, 
 
     layer_num : number, 
 
@@ -55,7 +59,12 @@ export interface CollectionMedia {
     
     medias : Media[],
 
+    date_created? : Date,
+
+    date_updated? : Date,
+
 }
+
 
 export enum MediaType {
 
@@ -99,20 +108,3 @@ export interface MediaAttribute {
     display_type? : string, 
 
 }
-
-
-export const NEW_PFP_MEDIA : CollectionMedia = {
-    name : "profile_pricture",
-    layer_num : 0,
-    medias : [{
-        type : MediaType.data_uri,
-    }],
-    max_num_of_media : 1,
-};
-
-
-export const NEW_COLLECTION : Collection = {
-
-    name : "", created_by : "",
-    media_list : [NEW_PFP_MEDIA,NEW_PFP_MEDIA,NEW_PFP_MEDIA]
-};
