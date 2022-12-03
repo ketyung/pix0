@@ -172,7 +172,7 @@ export const AddMediaForm : FC <Props> = ({
 
         <div className="mt-2">
             <button title="Add media" disabled={loading}
-            className="text-sm min-w-32 font-bold ml-4 p-2 mb-2 bg-gray-500 rounded text-white" 
+            className="text-sm w-64 font-bold ml-4 p-2 mb-2 bg-gray-500 rounded text-white" 
             onClick={(e)=>{
                 e.preventDefault();
                 addMediaNow();
