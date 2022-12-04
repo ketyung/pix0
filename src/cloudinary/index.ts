@@ -23,6 +23,8 @@ export const singleUpload = async ( data_url : string,
 }
 
 
+// refer here 
+// https://cloudinary.com/documentation/upload_images#manual_signature_generation
 const shaSignature = ( api_key : string, folder : string ,pub_id : string, tags: string, secret_key : string ) =>{
 
     let tt = Date.now();
