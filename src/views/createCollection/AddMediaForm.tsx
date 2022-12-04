@@ -119,8 +119,17 @@ export const AddMediaForm : FC <Props> = ({
         //console.log("collection.media@xx::", collectionMedia, new Date());
         if ( collection?.id ) {
 
+            if (mediaDataUrl === undefined ){
+
+                setMessageNow({text:"Please upload an image", type : MessageType.Error});
+                return;
+            }
+
             await addCollectionMedia(collectionMedia, collection?.id, 
                 mediaDataUrl, (e)=>{
+
+                setMediaDataUrl(undefined);
+
                 if ( e instanceof Error) {
 
                     setMessageNow( {type: MessageType.Error, text : e.message});
@@ -164,6 +173,7 @@ export const AddMediaForm : FC <Props> = ({
             }}
             value={collectionMedia.name }
             className={commonTextfieldClassName("w-72 inline-block ml-2")}/>
+            <p className="text-xs text-red-800 mt-1"><i className="fa fa-info mr-2"/> Item name must be unique within the collection</p>
         </div>
         <div className="mb-4">
             <UploadField label="Upload Image/Media" withImagePreview={true}
