@@ -1,9 +1,8 @@
 import { CloudParam } from "../models";
-import { randomInt } from "../utils";
+import { randomInt, shortenStringTo } from "../utils";
+const CryptoJS = require('crypto-js');
 
-
-
-export const singleUpload = ( data_url : string,
+export const singleUpload = async ( data_url : string,
     creator : string, 
     completion? : (res : Error| string) =>void) =>{
 
@@ -12,8 +11,8 @@ export const singleUpload = ( data_url : string,
 
         let prm = prms[ randomInt(0, prms.length -1)];
       
-        singleUploadNow({data_url : data_url, cloudName : prm.name, api: prm.api_key,creator: creator,
-        upload_folder : prm.upload_folder},
+        await singleUploadNow({data_url : data_url, cloudName : prm.name, api: prm.api_key,creator: creator,
+        upload_folder : prm.upload_folder, secret_key : prm.secret},
             completion);
     }
     else {
@@ -24,13 +23,35 @@ export const singleUpload = ( data_url : string,
 }
 
 
-const singleUploadNow = (param : {data_url : string, cloudName? : string, api? :string,
-    creator? : string,  upload_folder? : string }, completion? : (res : Error| string) =>void   ) =>{
+const shaSignature = (pub_id : string, secret_key : string ) =>{
+
+    let timestamp = (new Date()).getTime();
+
+    let pubid = `${pub_id}${timestamp}`;
+
+    let s = `public_id=${pubid}&timestamp=${timestamp}${secret_key}`;
+
+    let ss = CryptoJS.SHA1(s).toString();
+
+    console.log("signtaure.is,", ss , s, new Date());
+    return {timestamp : `${timestamp}`, signature : ss, public_id : pubid};
+
+}
+
+
+const singleUploadNow = async (param : {data_url : string, cloudName? : string, api? :string,
+    creator? : string,  upload_folder? : string, secret_key? : string }, completion? : (res : Error| string) =>void   ) =>{
 
     try {
 
+        const signData = shaSignature(`${shortenStringTo(param.creator ?? "", 16, "")}`, 
+        param.secret_key ?? "");
+    
+
         var url = `https://api.cloudinary.com/v1_1/${param.cloudName}/upload`;
 
+        //const url = "https://api.cloudinary.com/v1_1/" + signData.cloudname + "/auto/upload";
+   
         console.log("upload.url::", url, new Date());
         var xhr = new XMLHttpRequest();
         var fd = new FormData();
@@ -50,17 +71,20 @@ const singleUploadNow = (param : {data_url : string, cloudName? : string, api? :
                 if ( completion)
                     completion(url);
             }
-            else if ( xhr.status === 400) {
+            else  {
 
                 if ( completion )
-                    completion(new Error(`Error 400! ${xhr.statusText}`));
+                    completion(new Error(`Error ${xhr.status} : ${xhr.statusText}`));
             }
         }
 
-        fd.append('upload_preset', unsignedUploadPreset);
+        fd.append("timestamp", signData.timestamp);
+        fd.append("signature", signData.signature);
+       // fd.append('upload_preset', unsignedUploadPreset);
         fd.append("api_key", param.api ?? "");
         fd.append('tags', param.creator ?? ""); // Optional - add tag for image admin in Cloudinary
         fd.append('file', param.data_url);
+        fd.append('public_id', signData.public_id);
         fd.append("folder", param.upload_folder ?? "");
     
 
