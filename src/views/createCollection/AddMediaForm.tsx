@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect, useCallback } from "react";
 import { UploadField } from "../components/UploadField";
 import { MediaAttribRow } from "./MediaAttribRow";
 import { MessageView } from "../components/MessageView";
@@ -102,7 +102,7 @@ export const AddMediaForm : FC <Props> = ({
 
     }
 
-    const {addCollectionMedia, loading} = useService();
+    const {addCollectionMedia, loading, getCollectionsMediaCountBy} = useService();
 
     const [message, setMessage] = useState<Message>();
 
@@ -133,6 +133,22 @@ export const AddMediaForm : FC <Props> = ({
        
     }
 
+
+    const obtainNextItemName = useCallback(async ()=>{
+
+        if ( collection?._id ) {
+
+            let mediaCount = await getCollectionsMediaCountBy(collection?._id);
+            
+            let nextItemName = `${collection?.item_name_prefix ?? "Item"} #00${(mediaCount.count+1)}`;
+
+            setCollectionMedia({...collectionMedia, name : nextItemName});
+        }
+    },[getCollectionsMediaCountBy]);
+
+    useEffect(()=>{
+        obtainNextItemName();
+    },[]);
 
     return <div className="m-auto p-10 mt-4 border-2 border-gray-300 rounded-3xl w-5/6 text-center">
         <div className="mb-4">Add image to your collection <span className="font-bold">{
