@@ -3,22 +3,19 @@ import { randomInt, shortenStringTo } from "../utils";
 const CryptoJS = require('crypto-js');
 
 export const singleUpload = async ( data_url : string,
-    creator : string, 
-    completion? : (res : Error| string) =>void) =>{
+    creator : string): Promise<string|Error> =>{
 
     let prms = getAllCloudParams();
     if ( prms ){
 
         let prm = prms[ randomInt(0, prms.length -1)];
       
-        await singleUploadNow({data_url : data_url, cloudName : prm.name, api: prm.api_key,creator: creator,
-        upload_folder : prm.upload_folder, secret_key : prm.secret},
-            completion);
+        return await singleUploadNow({data_url : data_url, cloudName : prm.name, api: prm.api_key,creator: creator,
+        upload_folder : prm.upload_folder, secret_key : prm.secret});
     }
     else {
-        if ( completion){
-            completion(new Error("Undefined cloud params!"));
-        }
+
+        return new Error("Undefined cloud params!");
     }
 }
 
@@ -44,7 +41,7 @@ const shaSignature = ( api_key : string, folder : string ,pub_id : string, tags:
 
 
 const singleUploadNow = async (param : {data_url : string, cloudName? : string, api? :string,
-    creator? : string,  upload_folder? : string, secret_key? : string }, completion? : (res : Error| string) =>void   ) =>{
+    creator? : string,  upload_folder? : string, secret_key? : string }) : Promise<string|Error>=>{
 
     try {
 
@@ -70,41 +67,28 @@ const singleUploadNow = async (param : {data_url : string, cloudName? : string, 
         fd.append('file', param.data_url);
        
        
-        fetch(url, {
+        let response = await fetch(url, {
             method: "POST",
             body: fd
-        })
-        .then( async (response) => {
-            
-            if (response.status === 200 ){
-
-                let txt = JSON.parse((await response.text()));
-                //console.log("resp.ytext::",txt.secure_url, txt   , new Date());
-
-                if (completion)
-                    completion( txt.secure_url);
-            }
-            else {
-
-                if ( completion ) {
-
-                    completion(new Error(`Error ${response.status} : ${(await response.text())}`));
-                }
-            }
-        })
-        .catch((e) => {
-
-            if (completion)
-                completion(e);
-
         });
+
+        if (response.status === 200 ){
+
+            let txt = await response.json();
+          
+            return txt.secure_url;
+        }
+        else {
+
+            let err = new Error(`Error ${response.status} : ${(await response.text())}`);
+            return err;
+        }
     }
     catch(e : any ) {
 
-        if (completion) {
-
-            completion( new Error(`Error : ${e.message}`));
-        }
+        let err = new Error(`Error : ${e.message}`);
+           
+        return err; 
     }
 }
 

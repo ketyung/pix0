@@ -11,7 +11,7 @@ export const TestUploadForm : FC = () =>{
 
     const {selectedWalletPubkey} = useWalletState();
 
-    const uploadAction = (media: {
+    const uploadAction = async (media: {
         mediaDataUrl? : string,
         contentType?: string,
     }) =>{
@@ -19,16 +19,16 @@ export const TestUploadForm : FC = () =>{
         if ( media.mediaDataUrl) {
 
             setUploading(true);
-            singleUpload(media.mediaDataUrl, selectedWalletPubkey ?? "xxxx0", (e)=>{
-
-                if (e instanceof Error){
-                    window.alert(e.message);
-                }
-                else {
-                    setImageUrl(e);
-                }
-                setUploading(false);
-            });
+            let e = await singleUpload(media.mediaDataUrl, selectedWalletPubkey ?? "xxxx0");
+            
+            if (e instanceof Error){
+                window.alert(e.message);
+            }
+            else {
+                setImageUrl(e);
+            }
+            setUploading(false);
+        
         }
         else {
             window.alert("Undefined media data url");
