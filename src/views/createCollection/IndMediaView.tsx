@@ -36,11 +36,11 @@ export const IndMediaView : FC <Props> = ({
     
     return <div className="flex-1 w-64 p-4 inline-block border-2 border-gray-200 m-4 
     rounded-2xl hover:bg-gray-200 hover:cursor-pointer">
-       <div className="p-2 rounded-t-xl bg-gray-600 text-white mb-1">{(index ?? 0) +1}. 
+       <div className="p-2 rounded-t-xl bg-gray-600 text-white">{(index ?? 0) +1}. 
        &nbsp;{media?.name}</div> 
        {media &&
         <img src={uriOrDataUrl(media)} placeholder={placeholder}
-        className="object-scale-down h-64 w-64"/>} 
+        className="object-scale-down h-64 w-64 bg-sky-200 p-2 rounded-b-xl"/>} 
     </div>
 
 
