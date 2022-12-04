@@ -2,6 +2,7 @@ import { FC, useEffect, useCallback, useState } from "react";
 import { dateToTimeAgo } from "../../utils";
 import { Dropdown, DropdownItem } from "../components/Dropdown";
 import { Collection } from "../../models/collection";
+import { MoreIcon } from "../components/icons/MoreIcon";
 import useService from "../../hooks/useService";
 import { Props } from "./List";
 import { ViewType } from "./View";
@@ -78,7 +79,8 @@ export const ListRow : FC <RProps> = ({
     <td title={timeAgo.long} className="text-center">
     {timeAgo.short}</td>
     <td>
-        <Dropdown button={<i className="fa fa-cog" aria-hidden="true"/>}
+        <Dropdown button={<MoreIcon 
+        textColorClassName="text-gray-900 bg-gray-200 hover:bg-gray-300 rounded-full p-1"/>}
         items={dropdownItems} id={`rowdd_${index}`}/>
     </td>
   </tr>
