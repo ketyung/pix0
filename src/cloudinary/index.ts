@@ -23,19 +23,21 @@ export const singleUpload = async ( data_url : string,
 }
 
 
-const shaSignature = (pub_id : string, secret_key : string ) =>{
+const shaSignature = ( api_key : string, folder : string ,pub_id : string, tags: string, secret_key : string ) =>{
 
-    let timestamp = (new Date()).getTime();
+    let tt = Date.now();
+    let timestamp = Math.floor( tt / 1000);
 
-    let pubid = `${pub_id}${timestamp}`;
+    let pubid = `${pub_id}${tt}`;
 
-    let s = `public_id=${pubid}&timestamp=${timestamp}${secret_key}`;
+    let s = `api_key=${api_key}&folder=${folder}&public_id=${pubid}&tags=${tags}timestamp=${timestamp}${secret_key}`;
 
     let ss = CryptoJS.SHA1(s).toString();
 
-    console.log("signtaure.is,", ss , s, new Date());
-    return {timestamp : `${timestamp}`, signature : ss, public_id : pubid};
-
+    let rt = {timestamp : `${timestamp}`, signature : ss, public_id : pubid, tags : tags,
+    folder : folder , api_key : api_key};
+    
+    return rt; 
 }
 
 
@@ -44,7 +46,10 @@ const singleUploadNow = async (param : {data_url : string, cloudName? : string, 
 
     try {
 
-        const signData = shaSignature(`${shortenStringTo(param.creator ?? "", 16, "")}`, 
+        const signData = shaSignature( param.api ?? "",
+        param.upload_folder ?? "",    
+        `${shortenStringTo(param.creator ?? "", 16, "")}`, 
+        param.creator ?? "", 
         param.secret_key ?? "");
     
 
@@ -52,43 +57,42 @@ const singleUploadNow = async (param : {data_url : string, cloudName? : string, 
 
         //const url = "https://api.cloudinary.com/v1_1/" + signData.cloudname + "/auto/upload";
    
-        console.log("upload.url::", url, new Date());
-        var xhr = new XMLHttpRequest();
         var fd = new FormData();
-        xhr.open('POST', url, true);
-        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-        const unsignedUploadPreset = `upload-by-${param.creator}`;
-
-        xhr.onreadystatechange = function(e) {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                // File uploaded successfully
-                var response = JSON.parse(xhr.responseText);
-                var url = response.secure_url;
-                // Create a thumbnail of the uploaded image, with 150px width
-                console.log("uploaded.url::", url, new Date());
-
-                if ( completion)
-                    completion(url);
-            }
-            else  {
-
-                if ( completion )
-                    completion(new Error(`Error ${xhr.status} : ${xhr.statusText}`));
-            }
-        }
-
-        fd.append("timestamp", signData.timestamp);
-        fd.append("signature", signData.signature);
-       // fd.append('upload_preset', unsignedUploadPreset);
-        fd.append("api_key", param.api ?? "");
-        fd.append('tags', param.creator ?? ""); // Optional - add tag for image admin in Cloudinary
-        fd.append('file', param.data_url);
+        fd.append("api_key", signData.api_key );
+        fd.append("folder", signData.folder);
         fd.append('public_id', signData.public_id);
-        fd.append("folder", param.upload_folder ?? "");
-    
+        fd.append('tags', signData.tags ); // Optional - add tag for image admin in Cloudinary
+        fd.append("timestamp", signData.timestamp);
+       
+        fd.append("signature", signData.signature);
+        fd.append('file', param.data_url);
+       
+       
+        fetch(url, {
+            method: "POST",
+            body: fd
+        })
+        .then( async (response) => {
+            
+            if (response.status === 200 ){
 
-        xhr.send(fd);
+                if (completion)
+                    completion( ( await response.text()));
+            }
+            else {
+
+                if ( completion ) {
+
+                    completion(new Error(`Error ${response.status} : ${(await response.text())}`));
+                }
+            }
+        })
+        .catch((e) => {
+
+            if (completion)
+                completion(e);
+
+        });
     }
     catch(e : any ) {
 
