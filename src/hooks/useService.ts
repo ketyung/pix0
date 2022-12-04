@@ -1,6 +1,7 @@
 import * as service from "../service";
 import { Collection, CollectionMedia } from "../models/collection";
 import useWalletState from "./useWalletState";
+import { singleUpload } from "../cloudUpload";
 import { useState } from "react";
 
 export default function useService()  {
@@ -118,12 +119,30 @@ export default function useService()  {
     }
 
     const addCollectionMedia = async  (
-        media : CollectionMedia,collection_id : string,
+        media : CollectionMedia,
+        collection_id : string,
+        mediaDataUrl? : string, 
         completion? : (res : Error|Collection) => void ) =>{
 
         if ( selectedWalletPubkey ) {
 
             setLoading(true);
+
+            if ( mediaDataUrl ) {
+
+                let uri = await singleUpload(mediaDataUrl, selectedWalletPubkey);
+
+                if (uri instanceof Error){
+
+                    if (completion){
+                        completion(uri);
+                    }
+                }
+                else {
+                    media.medias[0].value = uri;
+                }
+            }
+
             await service.addCollectionMedia({
                 media : media,
                 collection_id : collection_id,

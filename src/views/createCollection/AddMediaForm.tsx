@@ -17,6 +17,8 @@ export const AddMediaForm : FC <Props> = ({
     collection
 }) =>{
     
+    const [mediaDataUrl, setMediaDataUrl] = useState<string>();
+
     const [collectionMedia, setCollectionMedia] = useState<CollectionMedia>({
         medias: [], name : `${collection?.item_name_prefix ?? "Item"} #001`, collection_id : collection?.id ?? ""
     });
@@ -27,12 +29,12 @@ export const AddMediaForm : FC <Props> = ({
         if ( media.mediaDataUrl ) {
             let medias = collectionMedia.medias;
 
-            
+            setMediaDataUrl(media.mediaDataUrl);
+
             medias[0]= {...medias[0], 
                 layer_num : 0,
                 layer_name : "image",
                 type : MediaType.media_uri,
-                value : media.mediaDataUrl,
                 content_type : media.contentType,   
                 file_name : media.fileName, 
             };
@@ -117,7 +119,8 @@ export const AddMediaForm : FC <Props> = ({
         //console.log("collection.media@xx::", collectionMedia, new Date());
         if ( collection?.id ) {
 
-            await addCollectionMedia(collectionMedia, collection?.id, (e)=>{
+            await addCollectionMedia(collectionMedia, collection?.id, 
+                mediaDataUrl, (e)=>{
                 if ( e instanceof Error) {
 
                     setMessageNow( {type: MessageType.Error, text : e.message});
