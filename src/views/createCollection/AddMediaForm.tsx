@@ -27,13 +27,12 @@ export const AddMediaForm : FC <Props> = ({
         if ( media.mediaDataUrl ) {
             let medias = collectionMedia.medias;
 
-            const mediaBuffer = Buffer.from(media.mediaDataUrl, 'base64');
-    
+            
             medias[0]= {...medias[0], 
-                layer_num : 1,
+                layer_num : 0,
                 layer_name : "image",
-                type : MediaType.data_uri,
-                data_url : mediaBuffer,
+                type : MediaType.media_uri,
+                value : media.mediaDataUrl,
                 content_type : media.contentType,   
                 file_name : media.fileName, 
             };
@@ -49,9 +48,9 @@ export const AddMediaForm : FC <Props> = ({
         if (medias === undefined || medias.length === 0 ){
             medias = [];
             let media : Media = {
-                layer_num : 1,
+                layer_num : 0,
                 layer_name : "image",
-                type : MediaType.data_uri
+                type : MediaType.media_uri
             };
 
             media.attributes = [];

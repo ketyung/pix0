@@ -20,20 +20,6 @@ export const IndMediaView : FC <Props> = ({
 
         if (_media && _media?.medias?.length > 0 ) {
 
-            if ( _media.medias[0].type === MediaType.data_uri ){
-
-                let durl = _media?.medias[0]?.data_url ?
-                (Buffer.from(_media.medias[0].data_url).toString('base64').split('base64')[1]
-                ??
-                placeholder) : placeholder;
-
-              
-                durl = `data:${_media?.medias[0].content_type ?? 'image/png'};base64,${durl}`;
-
-                console.log("d.url::",_media.name, _media?.medias[0].content_type, durl);
-                return durl;
-            }
-            else
             if ( _media.medias[0].type === MediaType.media_uri){
             
                 return _media?.medias[0]?.value ?
