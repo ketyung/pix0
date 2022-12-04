@@ -78,8 +78,11 @@ const singleUploadNow = async (param : {data_url : string, cloudName? : string, 
             
             if (response.status === 200 ){
 
+                let txt = JSON.parse((await response.text()));
+                console.log("resp.ytext::",txt.secure_url, txt   , new Date());
+
                 if (completion)
-                    completion( ( await response.text()));
+                    completion( txt.secure_url);
             }
             else {
 
