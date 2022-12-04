@@ -45,7 +45,7 @@ export const IndMediaView : FC <Props> = ({
     return <div className="flex-1 w-48 p-2 inline-block 
     rounded-2xl hover:bg-gray-300 hover:cursor-pointer">
        <div className="p-2 rounded-t-xl bg-gray-600 text-white">{(index ?? 0) +1}. 
-       &nbsp;{media?.name} <Dropdown button={<MoreIcon 
+       <span className="ml-1 max-w-120 text-sm text-ellipsis overflow-hidden">{media?.name}</span> <Dropdown button={<MoreIcon 
         textColorClassName="ml-2 text-gray-900 bg-gray-100 hover:bg-gray-300 rounded-full"/>}
         items={dropdownItems} id={`rowdd_${index}`}/></div> 
        {media &&
