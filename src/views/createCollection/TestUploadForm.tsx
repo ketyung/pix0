@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import { UploadField } from "../components/UploadField";
-import { singleUpload } from "../../cloudinary";
+import { singleUpload } from "../../cloudUpload";
 import useWalletState from "../../hooks/useWalletState";
 
 export const TestUploadForm : FC = () =>{

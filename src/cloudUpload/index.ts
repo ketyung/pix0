@@ -20,25 +20,6 @@ export const singleUpload = async ( data_url : string,
 }
 
 
-// refer here 
-// https://cloudinary.com/documentation/upload_images#manual_signature_generation
-const shaSignature = ( api_key : string, folder : string ,pub_id : string, tags: string, secret_key : string ) =>{
-
-    let tt = Date.now();
-    let timestamp = Math.floor( tt / 1000);
-
-    let pubid = `${pub_id}${tt}`;
-
-    let s = `folder=${folder}&public_id=${pubid}&tags=${tags}&timestamp=${timestamp}${secret_key}`;
-
-    let ss = CryptoJS.SHA1(s).toString();
-
-    let rt = {timestamp : `${timestamp}`, signature : ss, public_id : pubid, tags : tags,
-    folder : folder , api_key : api_key};
-    
-    return rt; 
-}
-
 
 const singleUploadNow = async (param : {data_url : string, cloudName? : string, api? :string,
     creator? : string,  upload_folder? : string, secret_key? : string }) : Promise<string|Error>=>{
@@ -52,10 +33,14 @@ const singleUploadNow = async (param : {data_url : string, cloudName? : string, 
         param.secret_key ?? "");
     
 
-        var url = `https://api.cloudinary.com/v1_1/${param.cloudName}/upload`;
+        var url = process.env.REACT_APP_CLOUD_UPLOAD_URL;
 
-        //const url = "https://api.cloudinary.com/v1_1/" + signData.cloudname + "/auto/upload";
-   
+        if ( url === undefined ){
+            return new Error('Undefined cloud upload URL!!');
+        }
+
+        url = url.replace("cloudName",param.cloudName ?? "");
+
         var fd = new FormData();
         fd.append("api_key", signData.api_key );
         fd.append("folder", signData.folder);
@@ -91,6 +76,26 @@ const singleUploadNow = async (param : {data_url : string, cloudName? : string, 
         return err; 
     }
 }
+
+
+// refer here 
+const shaSignature = ( api_key : string, folder : string ,pub_id : string, tags: string, secret_key : string ) =>{
+
+    let tt = Date.now();
+    let timestamp = Math.floor( tt / 1000);
+
+    let pubid = `${pub_id}${tt}`;
+
+    let s = `folder=${folder}&public_id=${pubid}&tags=${tags}&timestamp=${timestamp}${secret_key}`;
+
+    let ss = CryptoJS.SHA1(s).toString();
+
+    let rt = {timestamp : `${timestamp}`, signature : ss, public_id : pubid, tags : tags,
+    folder : folder , api_key : api_key};
+    
+    return rt; 
+}
+
 
 
 const getAllCloudParams = () : CloudParam[]|undefined =>{
