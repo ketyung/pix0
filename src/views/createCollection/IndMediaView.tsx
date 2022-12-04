@@ -34,7 +34,7 @@ export const IndMediaView : FC <Props> = ({
         }
     }
     
-    return <div className="flex-1 w-64 p-4 inline-block border-2 border-gray-200 m-4 
+    return <div className="flex-1 w-48 p-2 inline-block hover:border-2 hover:border-gray-200 m-2 
     rounded-2xl hover:bg-gray-200 hover:cursor-pointer">
        <div className="p-2 rounded-t-xl bg-gray-600 text-white">{(index ?? 0) +1}. 
        &nbsp;{media?.name}</div> 
