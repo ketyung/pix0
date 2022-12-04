@@ -3,6 +3,7 @@ import { HeaderForm } from "./HeaderForm";
 import { List } from "./List";
 import { AddMediaForm } from "./AddMediaForm";
 import { CollectionMediaView } from "./CollectionMediaView";
+import { TestUploadForm } from "./TestUploadForm";
 
 export enum ViewType {
 
@@ -55,7 +56,8 @@ export const View : FC = () =>{
             }
         }
 
-        return <List setViewType={setViewType}/>
+        return <TestUploadForm/>
+        //return <List setViewType={setViewType}/>
     }
 
 
