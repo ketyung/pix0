@@ -16,7 +16,7 @@ export const IndMediaView : FC <Props> = ({
 }) =>{
 
 
-    const uriOrDataUrl = (_media? : CollectionMedia) =>{
+    const imgUri = (_media? : CollectionMedia) =>{
 
         if (_media && _media?.medias?.length > 0 ) {
 
@@ -39,7 +39,7 @@ export const IndMediaView : FC <Props> = ({
        <div className="p-2 rounded-t-xl bg-gray-600 text-white">{(index ?? 0) +1}. 
        &nbsp;{media?.name}</div> 
        {media &&
-        <img src={uriOrDataUrl(media)} placeholder={placeholder}
+        <img src={imgUri(media)} placeholder={placeholder}
         className="object-scale-down h-64 w-64 bg-sky-100 p-2 rounded-b-xl"/>} 
     </div>
 
