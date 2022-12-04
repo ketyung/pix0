@@ -72,7 +72,7 @@ export const ListRow : FC <RProps> = ({
     title={`View media in the "${collection?.name}"`}
     className="text-blue-500" onClick={()=>{
         if( setViewType ){
-            setViewType({viewType : ViewType.CollectionMedia, param: collection?._id});
+            setViewType({viewType : ViewType.CollectionMedia, param: collection});
         }
     }}>{mediaCount}</a> : <>{mediaCount}</>}</td>
     <td title={timeAgo.long} className="text-center">

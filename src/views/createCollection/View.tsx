@@ -48,7 +48,7 @@ export const View : FC = () =>{
                         return <AddMediaForm collection={viewType?.param}/>
 
                 case ViewType.CollectionMedia :
-                        return <CollectionMediaView collectionId={viewType?.param}/>
+                        return <CollectionMediaView collection={viewType?.param}/>
     
                 default :
                     return <List setViewType={setViewType}/>

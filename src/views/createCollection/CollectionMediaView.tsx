@@ -1,5 +1,5 @@
 import { FC, useEffect, useCallback, useState } from "react";
-import { CollectionMedia } from "../../models/collection";
+import { Collection, CollectionMedia } from "../../models/collection";
 import useService from "../../hooks/useService";
 import { IndMediaView } from "./IndMediaView";
 import { Spinner } from "../components/Spinner";
@@ -7,11 +7,11 @@ import { Spinner } from "../components/Spinner";
 
 type Props = {
 
-    collectionId? : string, 
+    collection : Collection, 
 }
 
 export const CollectionMediaView : FC <Props> = ({
-    collectionId
+    collection
 }) =>{
 
     const [medias,setMedias] = useState<CollectionMedia[]>();
@@ -20,8 +20,8 @@ export const CollectionMediaView : FC <Props> = ({
 
     const fetchCollectionMedia = useCallback(async ()=>{
 
-        if ( collectionId ) {
-            let res = await getCollectionsMediaBy(collectionId);
+        if ( collection && collection._id ) {
+            let res = await getCollectionsMediaBy(collection._id);
             setMedias(res.res);
         }
      
@@ -32,6 +32,7 @@ export const CollectionMediaView : FC <Props> = ({
     },[]);
 
     return <div className="m-auto p-2 mt-4 border-2 border-gray-200 rounded-3xl w-5/6 text-center">
+    <div className="mb-2">Media in collection <span className="font-bold">{collection.name}</span></div>
     {
     loading ? <Spinner/> : 
     medias?.map((m,i)=>{
