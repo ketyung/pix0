@@ -1,5 +1,5 @@
 import { CollectionMedia, MediaType } from "../../models/collection";
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC} from "react";
 import placeholder from '../../images/placeholder100.svg';
 
 
@@ -22,10 +22,16 @@ export const IndMediaView : FC <Props> = ({
 
             if ( _media.medias[0].type === MediaType.data_uri ){
 
-                return _media?.medias[0]?.data_url ?
-                Buffer.from(_media.medias[0].data_url).toString('base64').split(",")[1]
-                 : placeholder;
+                let durl = _media?.medias[0]?.data_url ?
+                (Buffer.from(_media.medias[0].data_url).toString('base64').split('base64')[1]
+                ??
+                placeholder) : placeholder;
 
+              
+                durl = `data:${_media?.medias[0].content_type ?? 'image/png'};base64,${durl}`;
+
+                console.log("d.url::",_media.name, _media?.medias[0].content_type, durl);
+                return durl;
             }
             else
             if ( _media.medias[0].type === MediaType.media_uri){
@@ -44,9 +50,11 @@ export const IndMediaView : FC <Props> = ({
     
     return <div className="flex-1 w-64 p-4 inline-block border-2 border-gray-200 m-4 
     rounded-2xl hover:bg-gray-200 hover:cursor-pointer">
-       <div className="p-2 rounded-t-xl bg-gray-600 text-white">{(index ?? 0) +1}.</div> {media &&
+       <div className="p-2 rounded-t-xl bg-gray-600 text-white mb-1">{(index ?? 0) +1}. 
+       &nbsp;{media?.name}</div> 
+       {media &&
         <img src={uriOrDataUrl(media)} placeholder={placeholder}
-        className="object-scale-down h-64 w-64 rounded-b-xl"/>} 
+        className="object-scale-down h-64 w-64"/>} 
     </div>
 
 
