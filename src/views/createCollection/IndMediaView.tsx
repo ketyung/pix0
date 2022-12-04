@@ -50,7 +50,7 @@ export const IndMediaView : FC <Props> = ({
         items={dropdownItems} id={`rowdd_${index}`}/></div> 
        {media &&
         <img src={imgUri(media)} placeholder={placeholder}
-        className="object-scale-down h-64 w-64 bg-sky-100 p-2 pb-4 rounded-b-xl"/>} 
+        className="object-scale-down h-64 w-64 bg-gray-200 p-2 pb-4 rounded-b-xl"/>} 
     </div>
 
 
