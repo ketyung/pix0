@@ -32,7 +32,7 @@ const shaSignature = ( api_key : string, folder : string ,pub_id : string, tags:
 
     let pubid = `${pub_id}${tt}`;
 
-    let s = `api_key=${api_key}&folder=${folder}&public_id=${pubid}&tags=${tags}timestamp=${timestamp}${secret_key}`;
+    let s = `folder=${folder}&public_id=${pubid}&tags=${tags}&timestamp=${timestamp}${secret_key}`;
 
     let ss = CryptoJS.SHA1(s).toString();
 
