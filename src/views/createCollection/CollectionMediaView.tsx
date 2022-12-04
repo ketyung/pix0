@@ -31,7 +31,7 @@ export const CollectionMediaView : FC <Props> = ({
         fetchCollectionMedia();
     },[]);
 
-    return <div className="m-auto p-10 mt-4 border-2 border-gray-200 rounded-3xl w-5/6 text-center">
+    return <div className="m-auto p-2 mt-4 border-2 border-gray-200 rounded-3xl w-5/6 text-center">
     {
     loading ? <Spinner/> : 
     medias?.map((m,i)=>{
