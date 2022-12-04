@@ -61,9 +61,7 @@ export const View : FC = () =>{
 
     const buttonsView = <div className="mb-2 text-right mr-40">
 
-        {(viewType?.viewType === ViewType.CreateCollection || 
-        viewType?.viewType === ViewType.EditCollection || 
-        viewType?.viewType === ViewType.AddMedia) ?
+        {(viewType?.viewType !== ViewType.List && viewType?.viewType !== undefined) ?
         <button title="Cancel" 
         className="text-sm w-32 font-bold mb-4 mt-4 ml-4 p-2 mb-2 bg-gray-800 
         rounded-3xl text-white" onClick={()=>{

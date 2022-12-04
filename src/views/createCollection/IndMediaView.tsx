@@ -40,7 +40,7 @@ export const IndMediaView : FC <Props> = ({
        &nbsp;{media?.name}</div> 
        {media &&
         <img src={uriOrDataUrl(media)} placeholder={placeholder}
-        className="object-scale-down h-64 w-64 bg-sky-200 p-2 rounded-b-xl"/>} 
+        className="object-scale-down h-64 w-64 bg-sky-100 p-2 rounded-b-xl"/>} 
     </div>
 
 
