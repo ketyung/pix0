@@ -42,8 +42,8 @@ export const IndMediaView : FC <Props> = ({
     
     
     
-    return <div className="flex-1 w-48 p-2 inline-block hover:border-2 hover:border-gray-200 m-2 
-    rounded-2xl hover:bg-gray-200 hover:cursor-pointer">
+    return <div className="flex-1 w-48 p-2 inline-block 
+    rounded-2xl hover:bg-gray-300 hover:cursor-pointer">
        <div className="p-2 rounded-t-xl bg-gray-600 text-white">{(index ?? 0) +1}. 
        &nbsp;{media?.name} <Dropdown button={<MoreIcon 
         textColorClassName="ml-2 text-gray-900 bg-gray-100 hover:bg-gray-300 rounded-full"/>}
