@@ -58,8 +58,15 @@ export default function useXrp() {
 
                 let uri : string|Error = params.mediaURI ?? "";
               
-                if ( params.isDataUrl && params.dataUrl) {
+                if ( params.isDataUrl ) {
 
+                    if ( params.dataUrl === undefined || params.dataUrl.trim() === "" ){
+
+                        if ( completion)
+                            completion( new Error('Invalid data url!!'));
+                        return;
+                    }
+                    
                     uri = await uploadToArweave(params.dataUrl, params.contentType);
                     if ( uri instanceof Error){
                         if ( completion)

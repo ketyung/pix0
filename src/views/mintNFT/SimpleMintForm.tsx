@@ -6,7 +6,6 @@ import { MessageView } from "../components/MessageView";
 import { MetadataForm } from "./MetadataForm";
 import { Message, MessageType, NFTMetadata } from "../../models";
 import { Spinner } from "../components/Spinner";
-import { uriExists } from "../../utils";
 
 export const SimpleMintForm : FC = () =>{
 
