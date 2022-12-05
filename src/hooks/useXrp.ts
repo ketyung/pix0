@@ -38,6 +38,39 @@ export default function useXrp() {
             return await xrp.getBalance(w);
     }
 
+    const burnNft = async (tokenID : string,
+        completion? : (res : string|Error)=> void)  =>{
+
+        if ( selectedWalletPubkey ) {
+
+            let connectedWallet = WalletsStorage.get(selectedWalletPubkey);
+            if ( connectedWallet) {
+
+                let wallet = decryptStoredWallet(connectedWallet);
+
+                if ( wallet ) {
+
+                    await xrp.burnNft(wallet, tokenID,completion);
+                }
+                else {
+                    if ( completion ) {
+                        completion(new Error("Undefined wallet!"));
+                    }
+    
+                }
+            }
+        }
+        else {
+
+            if ( completion ) {
+
+                completion(new Error("No connected wallet!"));
+            }
+        }
+       
+    }
+
+
     const mintNft = async (
         params: {mediaURI? : string, 
         dataUrl? : string, 
@@ -159,6 +192,7 @@ export default function useXrp() {
 
 
     return {genWallet,getNftsOf,  
-        fundWallet,getBalance,mintNft, walletFromSeed} as const;
+        fundWallet,getBalance,mintNft, 
+        walletFromSeed, burnNft} as const;
 
 }

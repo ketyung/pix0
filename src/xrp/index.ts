@@ -179,23 +179,26 @@ export const burnNft = async (
             TransactionType: "NFTokenBurn",
             Account: wallet.classicAddress,
             NFTokenID: tokenID,
-            //"Amount" : "1",
         };
 
         const tx = await client.submitAndWait(txb,{wallet: wallet});
 
+        console.log("burn.tx:: ", tx, new Date());
+        
+        let res = tx.result.meta?.toString();
 
-        //let signerWallet = xrpl.Wallet.fromSeed(wallet.seed ?? "");
-       
-        //const nft_signed = signerWallet.sign(txb);
+        if ( completion ){
 
-       
-    
-        //const tx = await client.submitAndWait(txb,{wallet: wallet});
+            completion(res ?? "");
+        }
 
     }
     catch ( e : any) {
 
+        if ( completion ){
+
+            completion(new Error(e.message));
+        }
 
     }
 
