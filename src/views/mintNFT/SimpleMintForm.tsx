@@ -49,46 +49,37 @@ export const SimpleMintForm : FC = () =>{
 
         setMessage(undefined);
 
-        if (mediaURI){
+        setProcessing(true);
+    
+        let params = { mediaURI : mediaURI, 
+            dataUrl : mediaDataUrl?.mediaDataUrl,
+            contentType : mediaDataUrl?.contentType, 
+            isDataUrl : useUpload, 
+            metadata : metadata,
+            fee: 2, transferFee :undefined, isBurnable: true};
 
-            setProcessing(true);
-            if ( await uriExists(mediaURI) ){
-                await mintNft({ mediaURI : mediaURI, 
-                    dataUrl : mediaDataUrl?.mediaDataUrl,
-                    contentType : mediaDataUrl?.contentType, 
-                    isDataUrl : useUpload, 
-                    metadata : metadata,
-                    fee: 2, transferFee :undefined, isBurnable: true}
-                    , (e)=>{
+        await mintNft(params, (e)=>{
 
-                    if ( e instanceof Error) {
-                        setMessageNow ({
-                            text: e.message,
-                            type : MessageType.Error
-                        });
-                    }
-                    else {
-
-                        setMessageNow({
-                            text: "Success!",
-                            type: MessageType.Info,
-                            hash : e, 
-                        })
-                    }
-                    setProcessing(false);
-      
+            if ( e instanceof Error) {
+                setMessageNow ({
+                    text: e.message,
+                    type : MessageType.Error
                 });
             }
+            else {
+
+                setMessageNow({
+                    text: "Success!",
+                    type: MessageType.Info,
+                    hash : e, 
+                })
+            }
             setProcessing(false);
-        }
-        else {
 
-            setMessageNow ({
-                text: "Invalid URI",
-                type : MessageType.Error
-            });
+        });
 
-        }
+        setProcessing(false);
+        
     }
 
     return <div className="m-auto p-10 mt-4 border-2 border-gray-200 rounded-3xl w-5/6 text-left">

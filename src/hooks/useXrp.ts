@@ -3,6 +3,7 @@ import * as xrpl from 'xrpl';
 import { uploadToArweave, uploadMetadata } from "../arweave";
 import useWalletState from './useWalletState';
 import { decryptStoredWallet } from "../utils/enc";
+import { uriExists } from "../utils";
 import { StoredWallet, NFTResult, NFTMetadata } from "../models";
 import { WalletsStorage } from "../utils/local-storage";
 
@@ -64,6 +65,17 @@ export default function useXrp() {
                         if ( completion)
                             completion(uri);
                         return; 
+                    }
+                }
+                else {
+
+                    // check the validity of the uri
+                    if ( !(await uriExists(uri))) {
+                        if ( completion) {
+
+                            completion( new Error(`URL ${uri} isn't valid!`));
+                            return; 
+                        }
                     }
                 }
 
