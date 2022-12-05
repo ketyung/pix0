@@ -51,7 +51,6 @@ export const ListRow : FC <RProps> = ({
     {label:<><i className="fa fa-remove mr-2"/> Remove?</>,action:remove},
     {label:<><i className="fa fa-plus mr-2"/> Add Images/Media</>,action:addMediaForm}];
 
-
     const {getCollectionsMediaCountBy} = useService();
 
     const [mediaCount, setMediaCount] = useState<number>();
@@ -64,7 +63,7 @@ export const ListRow : FC <RProps> = ({
 
     useEffect(()=>{
         fetchMediaCount();
-    },[]);
+    },[]); 
 
     return <tr className="hover:bg-gray-200 hover:cursor-pointer p-4">
     <td>{((index ?? 0) +1)}</td>
@@ -77,7 +76,7 @@ export const ListRow : FC <RProps> = ({
         if( setViewType ){
             setViewType({viewType : ViewType.CollectionMedia, param: collection});
         }
-    }}>{mediaCount}</a> : <>{mediaCount}</>}</td>
+    }}>{collection?.media_count} ...</a> : <>{collection?.media_count}</>}</td>
     <td title={timeAgo.long} className="text-center">
     {timeAgo.short}</td>
     <td>

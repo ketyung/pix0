@@ -27,12 +27,12 @@ export interface Collection {
 
     category? : Category,
 
-    logo? : Buffer, 
-
     status? : Status,
 
     item_name_prefix? : string, 
   
+    media_count? : number, 
+
     created_by : string, 
 
     date_created? : Date,
