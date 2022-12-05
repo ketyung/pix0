@@ -59,7 +59,7 @@ export const NftDetailsView : FC <Props> = ({
     className="text-sm w-64 font-bold ml-4 text-2xl p-2 mb-2 bg-gray-900 rounded-3xl text-white" 
     onClick={(e)=>{
         e.preventDefault();
-    }}>Transfer</button> 
+    }}><i className="fa fa-exchange mr-2" aria-hidden="true"/>Transfer</button> 
     </div>
 
     {nftToken?.Flags === 1 && <div className="mb-4">
@@ -67,7 +67,7 @@ export const NftDetailsView : FC <Props> = ({
     className="text-sm w-64 font-bold ml-4 text-2xl p-2 mb-2 bg-red-800 rounded-3xl text-white" 
     onClick={(e)=>{
         e.preventDefault();
-    }}>Burn?</button> 
+    }}><i className="fa fa-fire mr-2" aria-hidden="true"/>Burn?&nbsp;&nbsp;&nbsp;&nbsp;</button> 
     </div>
     }
     </div>
