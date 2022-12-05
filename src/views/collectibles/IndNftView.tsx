@@ -12,6 +12,7 @@ type IProps = {
     index? : number, 
 
     nftToken? : AccountNFToken,
+    
 } & Props;
 
 
