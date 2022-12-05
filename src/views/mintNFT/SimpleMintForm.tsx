@@ -65,6 +65,10 @@ export const SimpleMintForm : FC = () =>{
                     text: e.message,
                     type : MessageType.Error
                 });
+
+                setMediaDataUrl(undefined);
+                setMediaURI(undefined);
+         
             }
             else {
 
@@ -73,13 +77,14 @@ export const SimpleMintForm : FC = () =>{
                     type: MessageType.Info,
                     hash : e, 
                 })
+
+                setMediaDataUrl(undefined);
+                setMediaURI(undefined);
             }
             setProcessing(false);
 
         });
-
-        setProcessing(false);
-        
+ 
     }
 
     return <div className="m-auto p-10 mt-4 border-2 border-gray-200 rounded-3xl w-5/6 text-left">
