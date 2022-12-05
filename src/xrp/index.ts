@@ -175,15 +175,14 @@ export const burnNft = async (
 
         await client.connect();
 
-        const transactionBlob = {
+        const txb : xrpl.NFTokenBurn = {
             TransactionType: "NFTokenBurn",
             Account: wallet.classicAddress,
             NFTokenID: tokenID,
-            Amount : 1, 
             //"Amount" : "1",
         };
 
-        // const tx = await client.submitAndWait(transactionBlob,{wallet: wallet});
+        const tx = await client.submitAndWait(txb,{wallet: wallet});
 
 
         //let signerWallet = xrpl.Wallet.fromSeed(wallet.seed ?? "");
