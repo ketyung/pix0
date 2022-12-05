@@ -147,24 +147,26 @@ export const HeaderForm : FC <Props> = ({
             setCollection({...collection, description : e.target.value});
         }} value={collection.description}/>
     </div>
+
+    <div className="mb-4">
+    <TextField label="Item Name Prefix" value={collection.item_name_prefix}
+    className={commonTextfieldClassName("w-80")} id="name" type="text" 
+    placeholder="Item name prefix"
+        onChange={(e)=>{
+            setCollection({...collection, item_name_prefix : e.target.value});
+        }}/>
+    <div className="text-xs mt-1">This will be useful, e.g. if you have a collection of Helmets, 
+        which the item has a name prefix "Helmet" followed by a number e.g. Helmet #001, Helmet #002 etc</div>
+    </div> 
     <div className="mb-4">
         <Select value={collection.status} items={statusItems} 
         firstItem={{name : "Status", value: "-"}} id="status" onChange={(e)=>{
         setCollection({...collection, status : e.target.value});
     }}/>
-
-    <div className="inline ml-2 text-right">
-    <TextField label="Item Name Prefix" value={collection.item_name_prefix}
-    className={commonTextfieldClassName("w-64 ml-4 inline-block")}
-    labelInline={true} id="name" type="text" placeholder="Item name prefix"
-        onChange={(e)=>{
-            setCollection({...collection, item_name_prefix : e.target.value});
-        }}/>
-    {/*<div className="inline text-xs mt-1 break-words"
-    style={{maxWidth:"200px"}}>This will be useful, e.g. if you have a collection of Helmets, 
-        which the item has a name prefix "Helmet" followed by a number e.g. Helmet #001, Helmet #002 etc</div>
-        */}
-    </div> 
+      <div className="text-xs mt-1">
+        Set the status to "Published" so this collection is viewable and can be minted by the /**
+        or from the neighborhood
+      </div>
     </div>
     <div className="mt-2">
     <button title="Create Collection" disabled={loading} 
