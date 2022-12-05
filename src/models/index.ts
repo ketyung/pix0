@@ -92,7 +92,7 @@ export interface NFTAttribute {
 
 export interface NFTMetadata {
 
-    name : string,
+    name? : string,
 
     description? : string,
 
