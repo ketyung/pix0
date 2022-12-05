@@ -22,21 +22,21 @@ export const View : FC = () =>{
 
                 case ViewType.List :
 
-                    return <List/>
+                    return <List setViewType={setViewType}/>
 
                 case ViewType.NftDetails :
 
                     return <NftDetailsView nftToken={viewType.param}/>
             
                 default :
-                    return <List/>
+                    return <List setViewType={setViewType}/>
 
 
             }
         }
         else {
 
-            return <List/>
+            return <List setViewType={setViewType}/>
         }
     }
 

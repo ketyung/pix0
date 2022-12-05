@@ -2,9 +2,17 @@ import { FC, useState, useEffect, useCallback } from "react";
 import { NFTResult } from "../../models";
 import {IndNftView } from "./IndNftView";
 import { Spinner } from "../components/Spinner";
+import { ViewType } from "./View";
 import useXrp from "../../hooks/useXrp";
 
-export const List : FC = () =>{
+export type Props = {
+
+    setViewType? : (viewType : { viewType : ViewType, param? : any}) => void, 
+}
+
+export const List : FC <Props> = ({
+    setViewType
+}) =>{
 
     const {getNftsOf} = useXrp();
 
@@ -28,7 +36,7 @@ export const List : FC = () =>{
     { loading ? <Spinner/> :
     nftResult?.nfts.map((n,i)=>{
 
-        return <IndNftView nftToken={n} index={i} key={`_media_${i}`}/>
+        return <IndNftView nftToken={n} index={i} key={`_media_${i}`} setViewType={setViewType}/>
     })} 
     </div>;
 
