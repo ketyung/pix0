@@ -1,5 +1,7 @@
 import { fetchAsNFTMedata } from "../../utils";
 import { FC , useState, useCallback, useEffect} from "react";
+import useXrp from "../../hooks/useXrp";
+import { Spinner } from "../components/Spinner";
 import { ViewType } from "./View";
 import * as xrpl from 'xrpl';
 
@@ -21,6 +23,8 @@ export const NftDetailsView : FC <Props> = ({
 
     const [mediaURI, setMediaURI] = useState<NFTMetadata>();
 
+    const [processing, setProcessing] = useState(false);
+
     const fetchURI = useCallback( async ()=>{
 
         let m = await fetchAsNFTMedata( xrpl.convertHexToString(nftToken?.URI ?? ""));
@@ -33,6 +37,45 @@ export const NftDetailsView : FC <Props> = ({
         fetchURI();
     
     },[nftToken?.URI]);
+
+
+    const {burnNft} = useXrp();
+
+
+    const burnNftNow = async () =>{
+
+        if ( window.confirm('To burn this NFT?')) {
+
+            if ( nftToken?.NFTokenID ) {
+
+                setProcessing(true);
+
+                await burnNft(nftToken?.NFTokenID, (e)=>{
+
+                    if ( e instanceof Error) {
+
+                        window.alert(`Error :${e.message}`);
+                    }
+                    else {
+
+                        window.alert('NFT successfully burned!');
+                        setTimeout(()=>{
+
+                            if (setViewType){
+                                setViewType({viewType : ViewType.List});
+                            }
+                        }, 2000);
+                    }
+
+                    setProcessing(false);
+                });
+            }
+            else {
+
+                window.alert('Undefined token ID');
+            }
+        }
+    }
 
 
     return <div className="mt-2 border-2 border-gray-200 mx-auto mb-10 shadow-lg w-8/12 rounded-2xl text-center">
@@ -55,7 +98,7 @@ export const NftDetailsView : FC <Props> = ({
     {mediaURI?.description && <div className="mb-4">{mediaURI?.description}</div>}
 
     <div className="mb-4">
-    <button title="Add Attributes/Traits" 
+    <button title="Add Attributes/Traits" disabled={processing}
     className="text-sm w-64 font-bold ml-4 text-2xl p-2 mb-2 bg-gray-900 rounded-3xl text-white" 
     onClick={(e)=>{
         e.preventDefault();
@@ -63,11 +106,13 @@ export const NftDetailsView : FC <Props> = ({
     </div>
 
     {nftToken?.Flags === 1 && <div className="mb-4">
-    <button title="Add Attributes/Traits" 
+    <button title="Add Attributes/Traits" disabled={processing}
     className="text-sm w-64 font-bold ml-4 text-2xl p-2 mb-2 bg-red-800 rounded-3xl text-white" 
-    onClick={(e)=>{
+    onClick={async (e)=>{
         e.preventDefault();
-    }}><i className="fa fa-fire mr-2" aria-hidden="true"/>Burn?&nbsp;&nbsp;&nbsp;&nbsp;</button> 
+        await burnNftNow();
+    }}>{processing ? <Spinner/> : <><i className="fa fa-fire mr-2" aria-hidden="true"/>
+    <span className="mr-6">Burn?</span></>}</button> 
     </div>
     }
     </div>

@@ -181,10 +181,12 @@ export const burnNft = async (
             NFTokenID: tokenID,
         };
 
-        const tx = await client.submitAndWait(txb,{wallet: wallet});
+        let signerWallet = xrpl.Wallet.fromSeed(wallet.seed ?? "");
+       
+        const tx = await client.submitAndWait(txb,{wallet: signerWallet});
 
         console.log("burn.tx:: ", tx, new Date());
-        
+
         let res = tx.result.meta?.toString();
 
         if ( completion ){
