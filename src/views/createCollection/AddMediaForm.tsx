@@ -6,7 +6,7 @@ import { Message, MessageType } from "../../models";
 import { Spinner } from "../components/Spinner";
 import useService from "../../hooks/useService";
 import { TextField, commonTextfieldClassName } from "../components/TextField";
-import { Collection, CollectionMedia, MediaType, Media, MediaAttribute } from "../../models/collection";
+import { Collection, CollectionMedia, MediaType, Media, Attribute as MediaAttribute } from "../../models/collection";
 
 type Props = {
 

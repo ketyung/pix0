@@ -37,8 +37,22 @@ export const MetadataForm : FC <Props> = ({
            
             setMetadataNow({...metadata, attributes : attrbs });
         }
-       
-      
+    }
+
+    const removeAttributeAt = (index? : number) => {
+
+        if ( metadata ) {
+
+            let attribs = metadata?.attributes;
+
+            if (index !== undefined && attribs && attribs[index] !== undefined ) {
+    
+                attribs.splice(index, 1);
+            }
+            setMetadataNow({...metadata, attributes : attribs });
+    
+        }
+ 
     }
 
   
@@ -75,7 +89,8 @@ export const MetadataForm : FC <Props> = ({
             {
                 metadata?.attributes?.map((a,i)=>{
 
-                    return <MediaAttribRow/>
+                    return <MediaAttribRow key={`attrb_${i}`} attribute={a} index={i} 
+                    removeMediaAttributeAt={removeAttributeAt}/>
                 })
             }
          </div>

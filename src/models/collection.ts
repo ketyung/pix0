@@ -86,11 +86,11 @@ export interface Media {
 
     file_name? : string, 
 
-    attributes?: MediaAttribute[],    
+    attributes?: Attribute[],    
 }
 
 
-export interface MediaAttribute {
+export interface Attribute {
 
     trait_type? : string,
 

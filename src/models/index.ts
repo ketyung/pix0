@@ -1,3 +1,5 @@
+import { Attribute } from "./collection"
+
 export interface CloudParam {
 
     name?: string,
@@ -80,15 +82,6 @@ export interface NFTResult {
 }
 
 
-export interface NFTAttribute {
-
-    trait_type? : string,
-
-    value? : string,
-    
-    display_type? : string, 
-
-}
 
 export interface NFTMetadata {
 
@@ -100,6 +93,6 @@ export interface NFTMetadata {
 
     external_url? : string, 
 
-    attributes?: NFTAttribute[],
+    attributes?: Attribute[],
 
 }

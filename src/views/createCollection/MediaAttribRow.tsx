@@ -1,5 +1,5 @@
 import { TextField, commonTextfieldClassName } from "../components/TextField";
-import { MediaAttribute } from "../../models/collection";
+import { Attribute as MediaAttribute } from "../../models/collection";
 import { FC } from "react";
 
 
