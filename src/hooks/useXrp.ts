@@ -1,9 +1,11 @@
 import * as xrp from "../xrp";
 import * as xrpl from 'xrpl';
+import { uploadToArweave, uploadMetadata } from "../arweave";
 import useWalletState from './useWalletState';
 import { decryptStoredWallet } from "../utils/enc";
-import { StoredWallet, NFTResult } from "../models";
+import { StoredWallet, NFTResult, NFTMetadata } from "../models";
 import { WalletsStorage } from "../utils/local-storage";
+
 
 export default function useXrp() {
 
@@ -36,10 +38,14 @@ export default function useXrp() {
     }
 
     const mintNft = async (
-        mediaURI : string, 
+        params: {mediaURI? : string, 
+        dataUrl? : string, 
+        isDataUrl? : boolean,
+        contentType? : string,
+        metadata? : NFTMetadata, 
         fee? : number, 
         transferFee? : number, 
-        isBurnable? : boolean,
+        isBurnable? : boolean }, 
         completion? : (res : string|Error)=> void) => {
 
         if ( selectedWalletPubkey ) {
@@ -48,11 +54,37 @@ export default function useXrp() {
             if ( connectedWallet) {
 
                 let wallet = decryptStoredWallet(connectedWallet);
+
+                let uri : string|Error = params.mediaURI ?? "";
+              
+                if ( params.isDataUrl && params.dataUrl) {
+
+                    uri = await uploadToArweave(params.dataUrl, params.contentType);
+                    if ( uri instanceof Error){
+                        if ( completion)
+                            completion(uri);
+                        return; 
+                    }
+                }
+
+                if (params.metadata ){
+
+                    let m = params.metadata;
+                    m.image = uri;
+                    uri = await uploadMetadata(m);
+
+                    if ( uri instanceof Error){
+                        if ( completion)
+                            completion(uri);
+                        return; 
+                    }
+                }
       
                 if ( wallet ) {
 
-                    await xrp.mintNft(wallet, mediaURI,fee, transferFee,
-                        isBurnable,completion);
+                    await xrp.mintNft(wallet, uri ,params.fee, 
+                        params.transferFee,
+                        params.isBurnable,completion);
                 }
                 else {
                     if ( completion ) {

@@ -42,7 +42,8 @@ export const SimpleMintForm : FC = () =>{
 
             setProcessing(true);
             if ( await uriExists(mediaURI) ){
-                await mintNft(mediaURI,2, undefined, true, (e)=>{
+                await mintNft({ mediaURI : mediaURI, fee: 2, transferFee :undefined, isBurnable: true}
+                    , (e)=>{
 
                     if ( e instanceof Error) {
                         setMessageNow ({
