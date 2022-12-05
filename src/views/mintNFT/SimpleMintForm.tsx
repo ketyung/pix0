@@ -16,7 +16,7 @@ export const SimpleMintForm : FC = () =>{
 
     const [useUpload, setUseUpload] = useState(false);
 
-    const [metadata, setMetadata] = useState<NFTMetadata>();
+    const [metadata, setMetadata] = useState<NFTMetadata>({});
 
     const [showMetadataForm, setShowMetadataForm] = useState(false);
 
@@ -101,7 +101,7 @@ export const SimpleMintForm : FC = () =>{
             let sh = !showMetadataForm;
             setShowMetadataForm(sh);
             if ( !sh ){
-                setMetadata(undefined);
+                setMetadata({});
             }
 
         }}>
