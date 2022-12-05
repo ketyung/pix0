@@ -55,12 +55,20 @@ export const NftDetailsView : FC <Props> = ({
     {mediaURI?.description && <div className="mb-4">{mediaURI?.description}</div>}
 
     <div className="mb-4">
-
     <button title="Add Attributes/Traits" 
     className="text-sm w-64 font-bold ml-4 text-2xl p-2 mb-2 bg-gray-900 rounded-3xl text-white" 
     onClick={(e)=>{
         e.preventDefault();
     }}>Transfer</button> 
     </div>
+
+    {nftToken?.Flags === 1 && <div className="mb-4">
+    <button title="Add Attributes/Traits" 
+    className="text-sm w-64 font-bold ml-4 text-2xl p-2 mb-2 bg-red-800 rounded-3xl text-white" 
+    onClick={(e)=>{
+        e.preventDefault();
+    }}>Burn?</button> 
+    </div>
+    }
     </div>
 }
