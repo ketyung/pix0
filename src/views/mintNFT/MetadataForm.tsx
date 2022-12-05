@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { NFTMetadata } from "../../models";
+import { Attribute } from "../../models/collection";
 import { MediaAttribRow } from "../createCollection/MediaAttribRow";
 import { TextField } from "../components/TextField";
 
@@ -52,8 +53,24 @@ export const MetadataForm : FC <Props> = ({
             setMetadataNow({...metadata, attributes : attribs });
     
         }
- 
     }
+
+    const setAttributeAt = (attribute : Attribute, index? :number) => {
+
+        if ( metadata ) {
+
+            let attribs = metadata?.attributes;
+
+            if (index !== undefined && attribs && attribs[index] !== undefined ) {
+    
+                attribs[index] = attribute;
+            }
+            setMetadataNow({...metadata, attributes : attribs });
+    
+        }
+
+    }
+
 
   
 
@@ -90,7 +107,7 @@ export const MetadataForm : FC <Props> = ({
                 metadata?.attributes?.map((a,i)=>{
 
                     return <MediaAttribRow key={`attrb_${i}`} attribute={a} index={i} 
-                    removeMediaAttributeAt={removeAttributeAt}/>
+                    removeMediaAttributeAt={removeAttributeAt} setMediaAttributeAt={setAttributeAt}/>
                 })
             }
          </div>
