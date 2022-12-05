@@ -25,6 +25,8 @@ export const NftDetailsView : FC <Props> = ({
 
     const [processing, setProcessing] = useState(false);
 
+    const [isBurned, setIsBurned] = useState(false);
+
     const fetchURI = useCallback( async ()=>{
 
         let m = await fetchAsNFTMedata( xrpl.convertHexToString(nftToken?.URI ?? ""));
@@ -57,8 +59,9 @@ export const NftDetailsView : FC <Props> = ({
                         window.alert(`Error :${e.message}`);
                     }
                     else {
-
+                        setIsBurned(true);
                         window.alert('NFT successfully burned!');
+                        
                         setTimeout(()=>{
 
                             if (setViewType){
@@ -98,14 +101,14 @@ export const NftDetailsView : FC <Props> = ({
     {mediaURI?.description && <div className="mb-4">{mediaURI?.description}</div>}
 
     <div className="mb-4">
-    <button title="Add Attributes/Traits" disabled={processing}
+    { !isBurned && <button title="Add Attributes/Traits" disabled={processing}
     className="text-sm w-64 font-bold ml-4 text-2xl p-2 mb-2 bg-gray-900 rounded-3xl text-white" 
     onClick={(e)=>{
         e.preventDefault();
-    }}><i className="fa fa-exchange mr-2" aria-hidden="true"/>Transfer</button> 
+    }}><i className="fa fa-exchange mr-2" aria-hidden="true"/>Transfer</button>}
     </div>
 
-    {nftToken?.Flags === 1 && <div className="mb-4">
+    {(nftToken?.Flags === 1 && !isBurned) && <div className="mb-4">
     <button title="Add Attributes/Traits" disabled={processing}
     className="text-sm w-64 font-bold ml-4 text-2xl p-2 mb-2 bg-red-800 rounded-3xl text-white" 
     onClick={async (e)=>{
