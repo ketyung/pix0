@@ -39,7 +39,6 @@ export const IndNftView : FC <Props> = ({
         : mediaURI.image } 
         className="object-scale-down h-64 w-64 rounded-b-xl bg-gray-100 p-2"
         title={mediaURI?.description ? mediaURI.description : "image..."}/>
-
     </div>
 
 
