@@ -36,8 +36,9 @@ export const List : FC <Props> = ({
       <tr className="bg-gray-300">
         <th style={{width:"5%"}}>No</th>
         <th style={{width:"25%"}} className="pl-2 text-left">Name</th>
-        <th style={{width:"35%"}} className="pl-2 text-left">Description</th>
-        <th style={{width:"10%"}}>No. of media</th>
+        <th style={{width:"35%"}} className="pl-2 text-left text-ellipsis max-w-32">Description</th>
+        <th style={{width:"10%"}} className="pl-2 text-left">Status</th>
+        <th style={{width:"10%"}}>Media count</th>
         <th style={{width:"10%"}}>Date</th>
         <th style={{width:"10%"}}>Actions</th>
       </tr>

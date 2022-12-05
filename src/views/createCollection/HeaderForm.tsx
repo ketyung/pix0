@@ -7,6 +7,12 @@ import { MessageView } from "../components/MessageView";
 import { Status, Collection } from "../../models/collection";
 import useService from "../../hooks/useService";
 
+export const statusItems = [
+    {value : Status.NEW, name : "New"},
+    {value : Status.PUBLISHED, name : "Published"},
+    {value : Status.DEACTIVATED, name : "Deactivated"},
+];
+
 type Props = {
 
     collectionId? : string,
@@ -142,11 +148,8 @@ export const HeaderForm : FC <Props> = ({
         }} value={collection.description}/>
     </div>
     <div className="mb-4">
-        <Select value={collection.status} items={[
-            {value : Status.NEW, name : "New"},
-            {value : Status.PUBLISHED, name : "Published"},
-            {value : Status.DEACTIVATED, name : "Deactivated"},
-    ]} firstItem={{name : "Status", value: "-"}} id="status" onChange={(e)=>{
+        <Select value={collection.status} items={statusItems} 
+        firstItem={{name : "Status", value: "-"}} id="status" onChange={(e)=>{
         setCollection({...collection, status : e.target.value});
     }}/>
 

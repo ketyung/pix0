@@ -5,6 +5,7 @@ import { Collection } from "../../models/collection";
 import { MoreIcon } from "../components/icons/MoreIcon";
 import useService from "../../hooks/useService";
 import { Props } from "./List";
+import { statusItems } from "./HeaderForm";
 import { ViewType } from "./View";
 
 type RProps = Props & {
@@ -67,9 +68,9 @@ export const ListRow : FC <RProps> = ({
 
     return <tr className="hover:bg-gray-200 hover:cursor-pointer p-4">
     <td>{((index ?? 0) +1)}</td>
-    <td style={{maxWidth:"120px", textOverflow:"ellipsis"}} 
-    className="pl-2 text-left text-ellipsis">{collection?.name}</td>
-    <td className="pl-2 text-left text-ellipsis max-w-32">{collection?.description}</td>
+    <td  className="pl-2 text-left max-w-32 overflow-hidden text-ellipsis">{collection?.name}</td>
+    <td className="pl-2 text-left max-w-32 overflow-hidden text-ellipsis">{collection?.description}</td>
+    <td className="pl-2 text-left">{statusItems.filter(s=>{return s.value === collection?.status})[0]?.name}</td>
     <td>{((mediaCount ?? 0) > 0) ? <a 
     title={`View media in the "${collection?.name}"`}
     className="text-blue-500" onClick={()=>{
