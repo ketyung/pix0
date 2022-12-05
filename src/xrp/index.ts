@@ -162,6 +162,48 @@ export const getBalance = async ( wallet : xrpl.Wallet) =>{
     
 }
 
+export const burnNft = async (
+    wallet : xrpl.Wallet,
+    tokenID : string, 
+    completion? : (res : string|Error)=> void) => {
+
+    try {
+
+        let net = getNetwork();
+
+        const client = new xrpl.Client(net);
+
+        await client.connect();
+
+        const transactionBlob = {
+            TransactionType: "NFTokenBurn",
+            Account: wallet.classicAddress,
+            NFTokenID: tokenID,
+            Amount : 1, 
+            //"Amount" : "1",
+        };
+
+        // const tx = await client.submitAndWait(transactionBlob,{wallet: wallet});
+
+
+        //let signerWallet = xrpl.Wallet.fromSeed(wallet.seed ?? "");
+       
+        //const nft_signed = signerWallet.sign(txb);
+
+       
+    
+        //const tx = await client.submitAndWait(txb,{wallet: wallet});
+
+    }
+    catch ( e : any) {
+
+
+    }
+
+
+
+}
+
 
 // refer here 
 // https://js.xrpl.org/interfaces/NFTokenMint.html
