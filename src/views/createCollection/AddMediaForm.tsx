@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, useCallback } from "react";
+import { FC, useState } from "react";
 import { UploadField } from "../components/UploadField";
 import { MediaAttribRow } from "./MediaAttribRow";
 import { MessageView } from "../components/MessageView";
@@ -20,7 +20,7 @@ export const AddMediaForm : FC <Props> = ({
     const [mediaDataUrl, setMediaDataUrl] = useState<string>();
 
     const [collectionMedia, setCollectionMedia] = useState<CollectionMedia>({
-        medias: [], name : `${collection?.item_name_prefix ?? "Item"} #001`, collection_id : collection?.id ?? ""
+        medias: [], name : `${collection?.item_name_prefix ?? "Item"} #00${(collection?.media_count ?? 0) +1}`, collection_id : collection?.id ?? ""
     });
 
     const setMediaCallback = (media: {mediaDataUrl? : string,contentType?: string,
@@ -142,22 +142,6 @@ export const AddMediaForm : FC <Props> = ({
        
     }
 
-
-    const obtainNextItemName = useCallback(async ()=>{
-
-        if ( collection?._id ) {
-
-            let mediaCount = await getCollectionsMediaCountBy(collection?._id);
-            
-            let nextItemName = `${collection?.item_name_prefix ?? "Item"} #00${(mediaCount.count+1)}`;
-
-            setCollectionMedia({...collectionMedia, name : nextItemName});
-        }
-    },[getCollectionsMediaCountBy]);
-
-    useEffect(()=>{
-        obtainNextItemName();
-    },[]);
 
     return <div className="m-auto p-10 mt-4 border-2 border-gray-300 rounded-3xl w-5/6 text-center">
         <div className="mb-4">Add image to your collection <span className="font-bold">{
