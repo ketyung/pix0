@@ -72,8 +72,6 @@ export const MetadataForm : FC <Props> = ({
     }
 
 
-  
-
     return <div className="mt-2">
          <h2 className="font-bold">Additional Metadata for your NFT</h2>
          <div className="mb-4">
