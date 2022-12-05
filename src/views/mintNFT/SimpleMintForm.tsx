@@ -117,7 +117,7 @@ export const SimpleMintForm : FC = () =>{
         type="button" disabled={processing} onClick={async ()=>{
             await mintNow();
         }}>
-        {processing ? <Spinner/> : <>Mint NFT</>}
+        {processing ? <Spinner/> : <>Mint NFT (2 XRP)</>}
         </button>
         </div>
         </form> 
