@@ -99,7 +99,7 @@ export const SimpleMintForm : FC = () =>{
             onChange={(e)=>{
                 setMediaURI(e.target.value);
             }}/>} 
-            or<button 
+            or<button disabled={processing}
             onClick={(e)=>{
                 e.preventDefault();
                 let useUpl = !useUpload;
