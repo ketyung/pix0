@@ -137,6 +137,7 @@ export default function useService()  {
                     if (completion){
                         completion(uri);
                     }
+                    return;
                 }
                 else {
                     media.medias[0].value = uri;
