@@ -12,7 +12,7 @@ type Props = {
     index? : number, 
 }
 
-export const ListRow : FC <Props> = ({
+export const IndCollectible : FC <Props> = ({
     uri, index
 }) =>{
 

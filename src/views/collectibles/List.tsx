@@ -1,6 +1,6 @@
 import { FC, useState, useEffect, useCallback } from "react";
 import { NFTResult } from "../../models";
-import { ListRow } from "./ListRow";
+import {IndCollectible } from "./IndCollectible";
 import { Spinner } from "../components/Spinner";
 import useXrp from "../../hooks/useXrp";
 
@@ -28,7 +28,7 @@ export const List : FC = () =>{
     { loading ? <Spinner/> :
     nftResult?.nfts.map((n,i)=>{
 
-        return <ListRow uri={n.URI} index={i} key={`_media_${i}`}/>
+        return <IndCollectible uri={n.URI} index={i} key={`_media_${i}`}/>
     })} 
     </div>;
 
