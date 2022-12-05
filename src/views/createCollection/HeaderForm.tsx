@@ -142,7 +142,7 @@ export const HeaderForm : FC <Props> = ({
         }} value={collection.description}/>
     </div>
     <div className="mb-4">
-        <Select defaultValue={collection.status} items={[
+        <Select value={collection.status} items={[
             {value : Status.NEW, name : "New"},
             {value : Status.PUBLISHED, name : "Published"},
             {value : Status.DEACTIVATED, name : "Deactivated"},
