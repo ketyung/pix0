@@ -3,8 +3,8 @@ import { List } from "./List";
 
 export const View : FC = () =>{
 
-    return <div className="mt-10">
-        <h2>Your collectibles</h2>
+    return <div className="mt-14">
+        <h2 className="mt-4 font-bold">Your collectibles</h2>
         <List/>
     </div>
 }

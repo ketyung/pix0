@@ -36,7 +36,9 @@ export const IndCollectible : FC <Props> = ({
        <div className={ mediaURI?.name ? "rounded-t-xl text-left pl-1 bg-gray-700 text-sky-100 p-1" : "text-center"}>
         {(index ?? 0) +1}. {mediaURI?.name && <span className="ml-2">{mediaURI.name}</span>}</div>
         <img src={mediaURI === undefined ? xrpl.convertHexToString(uri ?? "")
-        : mediaURI.image } className="object-scale-down h-64 w-64 rounded-b-xl bg-gray-100 p-2"/>
+        : mediaURI.image } 
+        className="object-scale-down h-64 w-64 rounded-b-xl bg-gray-100 p-2"
+        title={mediaURI?.description ? mediaURI.description : "image..."}/>
 
     </div>
 
