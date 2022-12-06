@@ -8,33 +8,30 @@ export enum ViewType {
 
     CollectionsView, 
 
+    None,
 }
 
 export const View : FC = () =>{
 
-    const [viewType, setViewType] = useState<ViewType>();
+    const [viewType, setViewType] = useState<ViewType>(ViewType.None);
 
     const switchView = () =>{
 
-        if ( viewType ){
+        switch(+viewType){
 
-            switch(+viewType){
+            case ViewType.CollectionsView :
 
-                case ViewType.CollectionsView :
+                return <CollectionView/>
 
-                    return <CollectionView/>
+            case ViewType.SimpleMint :
 
-                case ViewType.SimpleMint :
+                return <SimpleMintForm/>
+            default :
 
-                    return <SimpleMintForm/>
-                default :
-
-                    return infoView;
-                
-            }
+                return infoView;
+            
         }
-        else        
-            return infoView;
+            
     }
 
     const infoView = <>
@@ -45,12 +42,13 @@ export const View : FC = () =>{
         onClick={(e)=>{
             e.preventDefault();
             setViewType(ViewType.SimpleMint);
-        }}>Let's Go</button>
+;        }}>Let's Go</button>
     </div>
     </>
 
     return <div className="mt-16 mx-auto text-center">
         <h1 className="font-bold mt-2">Mint your NFT</h1>
+        
         {switchView()}
     </div>
 }

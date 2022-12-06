@@ -102,7 +102,7 @@ export const AddMediaForm : FC <Props> = ({
 
     }
 
-    const {addCollectionMedia, loading, getCollectionsMediaCountBy} = useService();
+    const {addCollectionMedia, loading} = useService();
 
     const [message, setMessage] = useState<Message>();
 
