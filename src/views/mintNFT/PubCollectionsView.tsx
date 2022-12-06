@@ -20,7 +20,7 @@ export const PubCollectionsView : FC = () =>{
         fetchPublishedCollections();
     },[]);
 
-    return <div className="m-auto p-10 mt-4 border-2 border-gray-200 rounded-3xl w-5/6 text-left">
+    return <div className="mx-auto p-10 mt-4 border-2 border-gray-200 rounded-3xl w-5/6 text-left">
     {
         collections?.map((c,i)=>{
             return <CollectionView collection={c} key={`coll_${i}`}/>

@@ -29,7 +29,8 @@ export const CollectionView : FC <Props> = ({
     },[]);
 
 
-    return <div className="flex-1 w-48 p-2 inline-block rounded-2xl bg-gray-200 hover:bg-gray-300 hover:cursor-pointer">
+    return <div className="flex-1 mx-auto w-48 p-2 inline-block rounded-2xl 
+    bg-gray-200 hover:bg-gray-300 hover:cursor-pointer">
         <div className="mb-2 text-left pl-4 font-bold text-sm">{collection?.name}</div>
         {media && <div className="mb-2">
         <img src={media} className="object-scale-down h-64 w-64 bg-gray-100 p-2 pb-4 rounded-xl"/>
