@@ -59,8 +59,8 @@ export const View : FC = () =>{
         <h1 className="font-bold mt-2">Mint your NFT</h1>
         {(viewType !== ViewType.None) &&
         <button title="Cancel" 
-        className="w-6 h-6 font-bold mb-4 mt-4 ml-44 pb-1 mb-2 bg-gray-800 
-        rounded-3xl text-white float-left clear-both" onClick={()=>{
+        className="w-6 h-6 font-bold mb-4 mt-10 mr-32 pb-1 mb-2 bg-gray-800 
+        rounded-3xl text-white float-right clear-both" onClick={()=>{
             setViewType(ViewType.None);
         }}><i className="fa fa-times" aria-hidden="true"/></button>}
         
