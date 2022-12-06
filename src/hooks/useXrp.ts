@@ -110,7 +110,7 @@ export default function useXrp() {
                 else {
 
                     // check the validity of the uri
-                    if ( !(await uriExists(uri))) {
+                    if ( uri.trim() === "" || !(await uriExists(uri))) {
                         if ( completion) {
 
                             completion( new Error(`URL ${uri} isn't valid!`));
