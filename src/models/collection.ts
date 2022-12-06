@@ -41,6 +41,15 @@ export interface Collection {
 }
 
 
+export interface MintInfo {
+
+    minted? : boolean,
+
+    minted_by? : string,
+
+    date_minted : Date, 
+}
+
 export interface CollectionMedia {
 
     collection_id : string, 
@@ -52,6 +61,8 @@ export interface CollectionMedia {
     max_num_of_media? : number, 
     
     medias : Media[],
+
+    mint_info? : MintInfo,
 
     date_created? : Date,
 
