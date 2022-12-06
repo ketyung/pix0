@@ -52,8 +52,12 @@ export const ListRow : FC <RProps> = ({
 
     return <tr className="hover:bg-gray-200 hover:cursor-pointer p-4">
     <td>{((index ?? 0) +1)}</td>
-    <td  className="pl-2 text-left max-w-32 overflow-hidden text-ellipsis">{collection?.name}</td>
-    <td className="pl-2 text-left max-w-32 overflow-hidden text-ellipsis">{collection?.description}</td>
+    <td style={{width:"20%",textAlign:"justify",
+        whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis",maxWidth:"80px"}}
+        title={collection?.name}
+        >{collection?.name}</td>
+    <td title={collection?.description} style={{width:"20%",textAlign:"justify",
+        whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis",maxWidth:"120px"}}>{collection?.description}</td>
     <td className="pl-2 text-left">{statusItems.filter(s=>{return s.value === collection?.status})[0]?.name}</td>
     <td>{((collection?.media_count ?? 0) > 0) ? <a 
     title={`View media in the "${collection?.name}"`}
