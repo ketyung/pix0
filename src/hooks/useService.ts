@@ -69,6 +69,18 @@ export default function useService()  {
     }
 
 
+
+    const getPublishedCollections = async (offset : number = 0, limit : number = 20 )
+    : Promise<{res : Collection[], total? :number , offset? : number, limit? : number}> => {
+
+        setLoading(true);
+        
+        let c = await service.getCollectionsByStatus("P" , offset, limit);
+        setLoading(false);
+        return c; 
+    
+    }
+
     const getCollectionBy = async (id : string )
     : Promise<Collection|undefined> =>{
 
@@ -155,6 +167,7 @@ export default function useService()  {
     }
 
     return {getCollectionsBy, addCollection, loading, updateCollection, getCollectionBy
-    ,getCollectionsMediaBy, getCollectionsMediaCountBy, addCollectionMedia} as const ;
+    ,getCollectionsMediaBy, getCollectionsMediaCountBy, addCollectionMedia,
+    getPublishedCollections} as const ;
 
 }

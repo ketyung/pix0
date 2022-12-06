@@ -119,6 +119,26 @@ export const getCollectionsBy = async (creator : string, offset : number = 0, li
 }
 
 
+
+export const getCollectionsByStatus = async (status : string , offset : number = 0, limit : number = 20 )
+: Promise<{res : Collection[], total? :number , offset? : number, limit? : number}> =>{
+
+    let url = `${REMOTE_URL}collections_by_status/${encodeURIComponent(status)}/${offset}/${limit}`;
+    
+    try {
+
+        let c = await ((await fetch(url,{
+            headers:commonHeaders,
+        }))).json() ;
+        return c;
+    }
+    catch (e : any) {
+
+        console.error("error@getCollectionsBy", e);
+        return { res :[] };
+    }
+}
+
 export const getCollectionBy = async (creator : string, id : string )
 : Promise<Collection|undefined> =>{
 
