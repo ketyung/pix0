@@ -1,5 +1,6 @@
 import { NFTMetadata, StoredWallet } from "../models";
 import { decryptStoredWallet } from "./enc";
+import * as xrpl from 'xrpl';
 
 export const shortenStringTo = (str : string, length : number = 32, strInBetween : string = "...") => {
 
@@ -48,9 +49,16 @@ export const pubkeyOrAddress = (wallet? : StoredWallet, _type : string = "addres
     }
 
     if ( wallet ) {
-        let w = decryptStoredWallet(wallet);
+        /* 
+		let w = decryptStoredWallet(wallet);
    
         return w?.classicAddress;
+		*/
+		let addr = xrpl.deriveAddress(wallet.pubkey);
+
+		return addr;
+		//return xrpl.xAddressToClassicAddress(xAddr.accountId.toString()).classicAddress;
+
     }
 
     return "";

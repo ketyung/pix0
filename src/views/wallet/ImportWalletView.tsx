@@ -48,7 +48,7 @@ export const ImportWalletView : FC <Props> = ({
         <form className="bg-white shadow-md rounded-2xl px-8 pt-6 pb-8 mb-4 mt-4">
         <div className="mb-4">
             <TextField id="mediaURI" label="Import wallet from seed" 
-            autoComplete="off" type="text" placeholder="Seed phrase"
+            autoComplete="off" type="password" placeholder="Seed phrase"
             onChange={(e)=>{
                 setSeed(e.target.value);
             }}/>
