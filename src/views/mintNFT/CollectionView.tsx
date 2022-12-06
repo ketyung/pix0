@@ -35,6 +35,11 @@ export const CollectionView : FC <Props> = ({
         {media && <div className="mb-2">
         <img src={media} className="object-scale-down h-64 w-64 bg-gray-100 p-2 pb-4 rounded-xl"/>
         </div>}
+
+        { collection?.std_price &&
+        <div className="mb-2 text-center mt-4 pl-4 font-bold w-100 rounded-xl bg-gray-600 p-2 text-gray-100">
+        {collection?.std_price.toFixed(2)} XRP</div>}
+       
         <div className="mb-2 text-left pl-4 line-clamp-3 w-100">{collection?.description}</div>
     </div>
 }

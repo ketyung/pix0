@@ -29,6 +29,8 @@ export interface Collection {
 
     status? : Status,
 
+    std_price? : number, 
+
     item_name_prefix? : string, 
   
     media_count? : number, 
