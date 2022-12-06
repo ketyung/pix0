@@ -111,8 +111,7 @@ export const SimpleMintForm : FC = () =>{
             {useUpload? "input the URL?" : "upload a file?"}</button>
         </div>
         <div className="mb-4">
-        <button style={{minWidth:"150px"}}
-        className="shadow bg-gray-900 hover:bg-gray-700 w-64 rounded-3xl p-1 text-gray-100 mb-2" 
+        <button className="m-150 shadow bg-gray-900 hover:bg-gray-700 w-64 rounded-3xl p-1 text-gray-100 mb-2" 
         type="button" disabled={processing} onClick={async ()=>{
             let sh = !showMetadataForm;
             setShowMetadataForm(sh);
@@ -127,14 +126,14 @@ export const SimpleMintForm : FC = () =>{
         </div>
         { showMetadataForm && <MetadataForm setMetadata={setMetadata} metadata={metadata}/>}
         <div className="mb-4">
-        <button style={{minWidth:"150px"}}
-        className="shadow bg-gray-800 hover:bg-purple-700 
+        <button className="shadow bg-gray-800 hover:bg-purple-700 w-1/2 mt-4
         focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" 
         type="button" disabled={processing} onClick={async ()=>{
             await mintNow();
         }}>
-        {processing ? <Spinner/> : <>Mint NFT (2 XRP)</>}
+        {processing ? <Spinner/> : <>Mint NFT</>}
         </button>
+        <p className="text-xs mt-1">You'll be charged 2 XRP for using Simple Mint to mint</p>
         </div>
         </form> 
     </div>
