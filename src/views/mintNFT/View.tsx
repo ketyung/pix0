@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { CollectionView } from "./CollectionView";
+import { PubCollectionsView } from "./PubCollectionsView";
 import { SimpleMintForm } from "./SimpleMintForm";
 
 export enum ViewType {
@@ -21,7 +21,7 @@ export const View : FC = () =>{
 
             case ViewType.CollectionsView :
 
-                return <CollectionView/>
+                return <PubCollectionsView/>
 
             case ViewType.SimpleMint :
 
@@ -42,12 +42,27 @@ export const View : FC = () =>{
         onClick={(e)=>{
             e.preventDefault();
             setViewType(ViewType.SimpleMint);
-;        }}>Let's Go</button>
+        }}>Let's Go</button>
+    </div>
+
+    <div className="bg-white hover:bg-sky-200 shadow-md rounded-2xl px-8 pt-6 pb-8 mb-4 mt-10 text-left w-4/5 mx-auto">
+        Or mint from any collections in your neighborhood <button className="shadow bg-gray-800 hover:bg-purple-700 w-200 ml-4 mt-4
+        focus:shadow-outline focus:outline-none text-white font-bold py-1 px-8 rounded"
+        onClick={(e)=>{
+            e.preventDefault();
+            setViewType(ViewType.CollectionsView);
+        }}>Let's Go</button>
     </div>
     </>
 
     return <div className="mt-16 mx-auto text-center">
         <h1 className="font-bold mt-2">Mint your NFT</h1>
+        {(viewType !== ViewType.None) &&
+        <button title="Cancel" 
+        className="w-6 h-6 font-bold mb-4 mt-4 ml-44 pb-1 mb-2 bg-gray-800 
+        rounded-3xl text-white float-left clear-both" onClick={()=>{
+            setViewType(ViewType.None);
+        }}><i className="fa fa-times" aria-hidden="true"/></button>}
         
         {switchView()}
     </div>
