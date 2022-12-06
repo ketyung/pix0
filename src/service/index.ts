@@ -298,3 +298,26 @@ export const getCollectionsMediaBy = async (
         return { res : [] };
     }
 }
+
+
+
+export const getOneCollectionMedia = async (
+    collection_id : string )
+    : Promise<CollectionMedia|undefined> =>{
+
+    let url = 
+    `${REMOTE_URL}one_collection_media/${encodeURIComponent(collection_id)}`;
+    
+    try {
+
+        let c = await ((await fetch(url,{
+            headers:commonHeaders,
+        }))).json() ;
+        return c;
+    }
+    catch (e : any) {
+
+        return undefined;
+        
+    }
+}

@@ -114,6 +114,20 @@ export default function useService()  {
         return {res: []};
     }
 
+
+    const getOneCollectionMedia = async (
+        collection_id : string )
+        : Promise<CollectionMedia|undefined> => {
+
+        setLoading(true);
+        
+        let c = await service.getOneCollectionMedia(collection_id);
+
+        setLoading(false);
+        
+        return c; 
+    }
+
     const getCollectionsMediaCountBy = async (
         collection_id : string)
         : Promise<{count : number}> => {
@@ -168,6 +182,6 @@ export default function useService()  {
 
     return {getCollectionsBy, addCollection, loading, updateCollection, getCollectionBy
     ,getCollectionsMediaBy, getCollectionsMediaCountBy, addCollectionMedia,
-    getPublishedCollections} as const ;
+    getPublishedCollections, getOneCollectionMedia} as const ;
 
 }
