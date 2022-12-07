@@ -38,6 +38,8 @@ export const List : FC <Props> = ({
 
         return <IndNftView nftToken={n} index={i} key={`_media_${i}`} setViewType={setViewType}/>
     })} 
+    { (!loading && nftResult?.nfts.length === 0) && <div className="mt-2 text-lg">You do NOT have any collectable,
+        mint some or buy them from the market place</div>}
     </div>;
 
 }
