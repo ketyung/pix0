@@ -1,6 +1,7 @@
 import * as enc from './enc';
 import { Wallet } from 'xrpl';
 import { shortenStringTo } from '.';
+import { WalletPasswordStorage } from './sess-storage';
 import { StoredWallet } from '../models';
 
 export class LocalStorage {
@@ -18,51 +19,6 @@ export class LocalStorage {
 	}
 }
 
-
-export class WalletPasswordStorage {
-
-    private static key : string = "LocalPasswordKey";
-
-    private static getPassEncKey() {
-
-        return process.env.REACT_APP_LOCAL_WALLET_PASS_KEY ?? 
-        "Vfaf42X6273#nMAj93HAJkxwPv66253XA3355x53HBA345XxJKad233";
-    }
-
-    static hasPass() {
-
-        let p = LocalStorage.get(this.key);
-        return ( p !== null && p!==undefined);
-    }
-
-    static get() {
-
-        let p = LocalStorage.get(this.key);
-        if ( p !== null && p!==undefined) {
-
-            return enc.decrypt(p, this.getPassEncKey());
-        }
-
-        return 'my-default-password';
-    }
-
-    static set(password : string) {
-
-        LocalStorage.set(this.key, enc.encrypt(password, this.getPassEncKey()));
-    }
-
-    static get_encrypted() {
-
-        let p = LocalStorage.get(this.key);
-        return p;
-    }   
-
-
-    static remove(){
-        LocalStorage.remove(this.key);
-    }
-
-}
 
 
 const encryptWallet = (wallet : Wallet) =>{

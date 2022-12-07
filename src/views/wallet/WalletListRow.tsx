@@ -75,6 +75,8 @@ export const WalletListRow : FC <Props> = ({
             let dw = decryptStoredWallet(w);
             if ( dw )
                 setSeed(dw.seed);
+            else 
+                window.alert(`Failed to decrypt wallet ${wallet.pubkey}`);
         
             setTimeout(()=>{
                 setSeed(undefined);

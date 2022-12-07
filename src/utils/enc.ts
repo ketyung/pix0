@@ -1,6 +1,6 @@
 import { StoredWallet } from "../models";
 import { Wallet } from "xrpl";
-import { WalletPasswordStorage } from "./local-storage";
+import { WalletPasswordStorage } from "./sess-storage";
 import { shortenStringTo } from ".";
 const CryptoJS = require('crypto-js');
 

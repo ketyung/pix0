@@ -58,7 +58,7 @@ export const ListRow : FC <RProps> = ({
     {label:<><i className="fa fa-edit mr-2"/> Edit</>, action : edit},
     {label:<><i className="fa fa-remove mr-2"/> Remove?</>,action:remove},
     {label:<><i className="fa fa-plus mr-2"/> Add Images/Media</>,action:addMediaForm},
-    {label:<><i className="fa fa-user mr-2"/> Add a minter group</>,action:addMinterGroup}];
+    {label:<><i className="fa fa-user mr-2"/> Add minter groups</>,action:addMinterGroup}];
 
     return <tr className="hover:bg-gray-200 hover:cursor-pointer p-4">
     <td>{((index ?? 0) +1)}</td>

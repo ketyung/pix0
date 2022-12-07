@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import logo from '../images/pix0_logo1.png';
-import { WalletPasswordStorage } from "../utils/local-storage";
+import { WalletPasswordStorage } from "../utils/sess-storage";
 import { TextField } from "./components/TextField";
 
 type Props = {

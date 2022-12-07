@@ -1,7 +1,7 @@
 import { FC, useEffect, useState} from "react";
 import { SideBar } from "./SideBar";
 import { LoginView } from "./LoginView";
-import { WalletPasswordStorage } from '../utils/local-storage';
+import { WalletPasswordStorage } from '../utils/sess-storage';
 import { MainView } from "./MainView";
 
 
