@@ -1,6 +1,7 @@
 import { FC } from "react";
 import usePage from "../hooks/usePage";
 import { Page } from "../models";
+import logo from '../images/pix0_logo1.png';
 
 
 export const SideBar : FC = () =>{
@@ -18,6 +19,10 @@ export const SideBar : FC = () =>{
     return <div className=" min-h-0 flex-1 flex overflow-hidden">
     <nav aria-label="Sidebar" className="hidden lg:block flex-shrink-0 bg-gray-800 overflow-y-auto">
         <div className="relative w-30 flex space-y-16 flex-col p-3">
+
+            <div className="m-1">
+                <img src={logo} className="w-24 h-auto mx-auto"/>
+            </div>
 
             <a onClick={()=>{
                 setPage(Page.Wallet);
