@@ -342,8 +342,10 @@ export const createNftSellOffer = async (tokenId : string, price: number,
             Flags: 1,
         };
     
+        let signerWallet = xrpl.Wallet.fromSeed(sellerWallet.seed ?? "");
+       
         // submit tx
-        const tx = await client.submitAndWait(transactionBlob,{wallet: sellerWallet})
+        const tx = await client.submitAndWait(transactionBlob,{wallet: signerWallet});
         
         if ( completion) {
             completion(tx.result.hash);
