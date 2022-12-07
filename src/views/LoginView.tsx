@@ -27,8 +27,16 @@ export const LoginView : FC <Props>= ({
         if ( pass ) {
 
             WalletPasswordStorage.set(pass);
-            if ( setPasswordCreated)
-                setPasswordCreated(true);
+            if ( WalletsStorage.testIfPassValid()) {
+                if ( setPasswordCreated)
+                   setPasswordCreated(true);
+     
+            }
+            else {
+                window.alert("Login failed!");
+                WalletPasswordStorage.remove();
+
+            }
         }
        
     }

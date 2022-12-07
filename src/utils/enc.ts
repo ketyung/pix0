@@ -86,6 +86,6 @@ export const decryptStoredWallet = (storedWallet : StoredWallet) : Wallet|undefi
     }
     catch(e : any) {
 
-
+        return undefined;
     }
 }

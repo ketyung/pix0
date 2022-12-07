@@ -132,6 +132,18 @@ export class WalletsStorage {
     }
 
 
+    static testIfPassValid () : boolean {
+
+        let sw = this.storedWallets();
+        if ( sw.length > 0 ){
+
+            return ( enc.decryptStoredWallet(sw[0]) !== undefined);
+        }
+
+        return true;
+    }
+
+
     static get(pubkey? : string) : StoredWallet|undefined {
 
         if ( pubkey ) {
