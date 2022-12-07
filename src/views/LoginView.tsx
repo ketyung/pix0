@@ -27,7 +27,7 @@ export const LoginView : FC <Props>= ({
     }
 
     return <div className="m-auto p-10 mt-20 border-1 border-gray-300 rounded-3xl w-3/5 
-    shadow-2xl text-center">
+    shadow-2xl text-center mb-10">
           <div className="m-2 text-center mx-auto">
             <img src={logo} className="w-64 h-auto mx-auto" title="Pix0 Logo"/>
           </div>
