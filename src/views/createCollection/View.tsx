@@ -3,6 +3,7 @@ import { HeaderForm } from "./HeaderForm";
 import { List } from "./List";
 import { AddMediaForm } from "./AddMediaForm";
 import { CollectionMediaView } from "./CollectionMediaView";
+import { MinterGroupForm } from "./MinterGroupForm";
 
 export enum ViewType {
 
@@ -15,6 +16,8 @@ export enum ViewType {
     AddMedia,
 
     CollectionMedia,
+
+    AddMinterGroup,
 
 }
 
@@ -50,6 +53,9 @@ export const View : FC = () =>{
                 case ViewType.CollectionMedia :
                         return <CollectionMediaView collection={viewType?.param}/>
     
+                case ViewType.AddMinterGroup :
+                    return <MinterGroupForm collection={viewType?.param}/>
+        
                 default :
                     return <List setViewType={setViewType}/>
             }
