@@ -73,10 +73,11 @@ export const Modal : FC <Props> = ({
 
 type Props2 = {
 
-    title? : string, 
+    title? : string|React.ReactElement, 
 
     modalId? : string, 
 }
+
 export const ModalTriggerButton : FC <Props2> = ({
     title, modalId
 }) =>{
@@ -90,3 +91,12 @@ export const ModalTriggerButton : FC <Props2> = ({
     transition duration-150 ease-in-out" data-bs-toggle="modal" 
     data-bs-target={`#${modalId}`}>{title}</button>
 }
+
+
+export const TestModalView : FC = () =>{
+
+    return <div className="m-4">
+        <ModalTriggerButton title="Click" modalId="MyTestModal"/>
+        <Modal title="My Modal" id="MyTestModal">Hello world what's up??</Modal>
+    </div>
+} 
