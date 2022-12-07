@@ -1,5 +1,6 @@
 import { FC, useState } from "react";
 import logo from '../images/pix0_logo1.png';
+import { isPwStrong } from "../utils";
 import { WalletPasswordStorage } from "../utils/sess-storage";
 import { TextField } from "./components/TextField";
 
@@ -26,9 +27,39 @@ export const LoginView : FC <Props>= ({
             WalletPasswordStorage.set(pass);
             if ( setPasswordCreated)
                 setPasswordCreated(true);
+            
+            setPass(undefined);
         }
        
     }
+
+    const createNew = () =>{
+
+        if ( pass && rpass){
+
+            if ( pass !== rpass){
+                window.alert("Passwords unmatched!");
+                return;
+            }
+
+            if ( !isPwStrong(pass) ){
+
+                window.alert("Password must be at least 8 char in length with big and small cap and numbers!");
+                return; 
+            }
+
+            WalletPasswordStorage.set(pass);
+            if ( setPasswordCreated)
+                setPasswordCreated(true);
+            
+            setPass(undefined);
+            setRpass(undefined);
+
+        }
+    }
+  
+
+
 
 
     const signInForm = <>
@@ -58,7 +89,7 @@ export const LoginView : FC <Props>= ({
     </div>
     <div className="mb-4 text-left">
         <TextField label="Password Again" id="rpw" type="password" onChange={(e)=>{
-            setPass(e.target.value);
+            setRpass(e.target.value);
         }}/>
     </div>
     <div className="mb-4">
@@ -66,7 +97,7 @@ export const LoginView : FC <Props>= ({
         className="text-sm w-32 font-bold ml-4 p-2 mb-2 bg-gray-500 rounded text-white" 
         onClick={(e)=>{
             e.preventDefault();
-            
+            createNew();
         }}>Create Account</button>
     </div>
     </>
@@ -76,17 +107,20 @@ export const LoginView : FC <Props>= ({
           <div className="m-2 text-center mx-auto">
             <img src={logo} className="w-64 h-auto mx-auto" title="Pix0 Logo"/>
           </div>
-          <div className="m-2 text-left pl-4">
+          <div className="mt-4 text-left pl-4">
             <b>Pix0</b> - is an all-in-one NFT wallet and marketplace on the <b>XRP Ledger</b>, 
             which you can use to create, mint NFTs and trade them on the marketplace.
           </div>
           <form className="bg-white px-8 pt-6 pb-8 mb-4 mt-4">
             {mode === 1 ? createNewForm : signInForm}
           </form>
-          <div className="mt-2 text-sm">Haven't create an account yet? 
+          <div className="mt-2 text-sm">{mode === 0 ? <>Haven't create an account yet? 
           Click <a className="text-blue-500 cursor-pointer" onClick={(e)=>{
             e.preventDefault();
             setMode(1);
-          }}>here</a> to create one</div>
+          }}>here</a> to create one</> : <>Login <a className="text-blue-500 cursor-pointer" onClick={(e)=>{
+            e.preventDefault();
+            setMode(0);
+          }}>here</a></>}</div>
     </div>
 }

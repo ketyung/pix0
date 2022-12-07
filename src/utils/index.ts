@@ -128,3 +128,11 @@ export const randomInt = (min : number, max : number) =>{
 	max = Math.floor(max);
 	return Math.floor(Math.random() * (max - min) + min); 
 }
+
+
+export const isPwStrong = (pass : string) : boolean =>{
+
+	let strongPassword = new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})');
+
+	return strongPassword.test(pass);
+}
