@@ -29,8 +29,6 @@ export const LoginView : FC <Props>= ({
             WalletPasswordStorage.set(pass);
             if ( setPasswordCreated)
                 setPasswordCreated(true);
-            
-            setPass(undefined);
         }
        
     }
@@ -46,7 +44,7 @@ export const LoginView : FC <Props>= ({
 
             if ( !isPwStrong(pass) ){
 
-                window.alert("Password must be at least 8 char in length with big and small cap and numbers!");
+                window.alert("Password must be at least 8 char in length with big and small cap, numbers & symbols!");
                 return; 
             }
 
@@ -57,9 +55,6 @@ export const LoginView : FC <Props>= ({
             if ( setPasswordCreated)
                 setPasswordCreated(true);
 
-
-            
-            setPass(undefined);
             setRpass(undefined);
 
         }
@@ -91,7 +86,7 @@ export const LoginView : FC <Props>= ({
     <h2 className="text-2xl mb-4 font-bold">Create Account</h2>
     {WalletsStorage.storedWalletsCount() > 0 && <div 
     className="mb-4 bg-yellow-200 rounded-2xl p-4 text-sm text-left text-gray-900">
-    <i className="fa fa-warning mr-2 text-red-500 animate-ping"/> It's detected that this browser has created and account with wallets before. If you're 
+    <i className="fa fa-warning mr-2 text-red-500 animate-ping"/> It's detected that this browser has created an account with wallets before. If you're 
     creating a new account now, the previously stored wallets will be wiped off.
     You can only re-import them if you have your wallets' seeds. Please make sure 
     you have your wallets' seeds with you else you are not able to recover your old wallets.

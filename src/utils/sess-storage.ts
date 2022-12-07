@@ -35,16 +35,18 @@ export class WalletPasswordStorage {
     static get() {
 
         let p = SessionStorage.get(this.key);
-        if ( p !== null && p!==undefined) {
 
-            return enc.decrypt(p, this.getPassEncKey());
+       
+        if ( p !== null ) {
+
+            return  enc.decrypt(p, this.getPassEncKey());
+
         }
 
         return 'my-default-password';
     }
 
     static set(password : string) {
-
         SessionStorage.set(this.key, enc.encrypt(password, this.getPassEncKey()));
     }
 
