@@ -67,7 +67,6 @@ export const SaleForm : FC <Props> = ({
             let p = parseFloat(e.target.value);
             if ( !isNaN(p))
                 setPrice(p);
-        
         }} className={commonTextfieldClassName('ml-2 w-64')}/><span className="ml-2 font-bold">XRP</span>
         </div>
         <div className="mb-4">
