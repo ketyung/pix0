@@ -9,8 +9,8 @@ import { AccountNFToken } from "../../models";
 
 type Props = {
     nftToken? : AccountNFToken,
-
 }
+
 export const SaleForm : FC <Props> = ({
     nftToken
 }) =>{
@@ -23,6 +23,16 @@ export const SaleForm : FC <Props> = ({
 
     const {createNftSellOffer} = useXrp();
 
+    const setMessageNow = (message : Message) =>{
+
+        setMessage(message);
+
+        setTimeout(()=>{
+            setMessage(undefined);
+        },5000);
+
+    }
+
     const createSellOffer = async () =>{
 
         if ( nftToken?.NFTokenID) {
@@ -32,11 +42,11 @@ export const SaleForm : FC <Props> = ({
 
                 if (e instanceof Error){
 
-                    setMessage({text : e.message,type : MessageType.Error });
+                    setMessageNow({text : e.message,type : MessageType.Error });
                 }
                 else {
 
-                    setMessage({text : "Success", type : MessageType.Info, hash: e});
+                    setMessageNow({text : "Success", type : MessageType.Info, hash: e});
                 }
                 setProcessing(false);
             });
@@ -45,6 +55,7 @@ export const SaleForm : FC <Props> = ({
 
 
     return <div className="mt-2 text-left" style={{minWidth:"600px"}}>
+        {message && <MessageView message={message}/>}
         <div className="mb-4">
         <span className="font-bold mr-2">Token ID:</span>
         <span title={nftToken?.NFTokenID}>{ shortenStringTo(nftToken?.NFTokenID ?? "", 24)}</span>  
@@ -64,7 +75,7 @@ export const SaleForm : FC <Props> = ({
         className="text-sm w-64 font-bold ml-4 text-2xl p-2 mb-2 bg-gray-800 rounded-3xl text-white" 
         onClick={async (e)=>{
             e.preventDefault();
-            
+            await createSellOffer();
         }}>{processing ? <Spinner/> : <><i className="fa fa-flag mr-2" aria-hidden="true"/>
         <span className="mr-6">Create</span></>}</button> 
         </div>
