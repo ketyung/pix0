@@ -2,6 +2,7 @@ import { fetchAsNFTMedata } from "../../utils";
 import { FC , useState, useCallback, useEffect} from "react";
 import useXrp from "../../hooks/useXrp";
 import { Spinner } from "../components/Spinner";
+import { Modal } from "../components/Modal";
 import { ViewType } from "./View";
 import * as xrpl from 'xrpl';
 
@@ -101,15 +102,15 @@ export const NftDetailsView : FC <Props> = ({
     {mediaURI?.description && <div className="mb-4">{mediaURI?.description}</div>}
 
     <div className="mb-4">
-    { !isBurned && <button title="Add Attributes/Traits" disabled={processing}
-    className="text-sm w-64 font-bold ml-4 text-2xl p-2 mb-2 bg-gray-900 rounded-3xl text-white" 
-    onClick={(e)=>{
-        e.preventDefault();
-    }}><i className="fa fa-exchange mr-2" aria-hidden="true"/>Transfer</button>}
+    { !isBurned && 
+    <Modal title="Create Sell Offer for this NFT" triggerButton={
+    <><i className="fa fa-exchange mr-2" aria-hidden="true"/><span className="mr-6">Sell</span></>}
+    triggerButtonClassName="text-sm w-64 font-bold ml-4 text-2xl p-2 mb-2 bg-gray-900 rounded-3xl text-white ease-linear transition-all duration-250"
+    >Sell this NFT hello</Modal>}
     </div>
 
     {(nftToken?.Flags === 1 && !isBurned) && <div className="mb-4">
-    <button title="Add Attributes/Traits" disabled={processing}
+    <button title="Burn!!" disabled={processing}
     className="text-sm w-64 font-bold ml-4 text-2xl p-2 mb-2 bg-red-800 rounded-3xl text-white" 
     onClick={async (e)=>{
         e.preventDefault();
