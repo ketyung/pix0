@@ -33,7 +33,7 @@ export const LoginView : FC <Props>= ({
           </div>
           <div className="m-2 text-left pl-4">
             <b>Pix0</b> - is an all-in-one NFT wallet and marketplace on the <b>XRP Ledger</b>, 
-            which you can use to create, mint your collection of NFTs and trade them on the marketplace.
+            which you can use to create, mint NFTs and trade them on the marketplace.
           </div>
           <form className="bg-white shadow-md rounded-2xl px-8 pt-6 pb-8 mb-4 mt-4">
             <h2 className="text-2xl mb-4 font-bold">Sign In</h2>
