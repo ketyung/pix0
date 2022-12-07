@@ -320,3 +320,41 @@ export const getNftsOf = async (
     return res; 
 
 }
+
+
+export const createNftSellOffer = async (tokenId : string, price: number,
+    sellerWallet : xrpl.Wallet,
+    completion? : (res : string|Error)=> void) =>{
+
+    try {
+
+        let net = getNetwork();
+
+        const client = new xrpl.Client(net);
+    
+        await client.connect();
+        
+        let transactionBlob : xrpl.NFTokenCreateOffer =  {
+            TransactionType: "NFTokenCreateOffer",
+            Account: sellerWallet.classicAddress ,
+            NFTokenID: tokenId,
+            Amount : xrpl.xrpToDrops(`${price}`),
+            Flags: 1,
+        };
+    
+        // submit tx
+        const tx = await client.submitAndWait(transactionBlob,{wallet: sellerWallet})
+        
+        if ( completion) {
+            completion(tx.result.hash);
+        }
+    }
+    catch( e : any ) {
+
+        if ( completion)
+            completion(new Error(e.message));
+    }
+   
+
+
+}
