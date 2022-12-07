@@ -59,7 +59,7 @@ export const SideBar : FC = () =>{
                 <div className="flex-shrink-0 inline-flex items-center justify-center w-14">
                     <i className="fa fa-file-image-o"></i>
                 </div>
-                <div className="text-center text-xs font-normal ">Create Collection</div>
+                <div className="text-center text-xs font-normal ">Creator</div>
             </a>
 
             <a onClick={()=>{

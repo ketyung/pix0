@@ -10,7 +10,7 @@ export enum Network {
 }
 
 
-const defaultNet = Network.TestNet;
+const defaultNet = Network.DevNet;
 
 export const getNetwork = (network : Network = defaultNet) => {
 
