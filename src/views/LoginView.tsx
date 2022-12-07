@@ -1,7 +1,9 @@
 import { FC, useState } from "react";
 import logo from '../images/pix0_logo1.png';
 import { isPwStrong } from "../utils";
+import { WalletsStorage } from "../utils/local-storage";
 import { WalletPasswordStorage } from "../utils/sess-storage";
+import { SelectedWalletStorage } from "../utils/local-storage";
 import { TextField } from "./components/TextField";
 
 type Props = {
@@ -48,9 +50,14 @@ export const LoginView : FC <Props>= ({
                 return; 
             }
 
+            WalletsStorage.removeAll();
+            SelectedWalletStorage.remove();
             WalletPasswordStorage.set(pass);
+            
             if ( setPasswordCreated)
                 setPasswordCreated(true);
+
+
             
             setPass(undefined);
             setRpass(undefined);
@@ -82,6 +89,13 @@ export const LoginView : FC <Props>= ({
 
     const createNewForm = <>
     <h2 className="text-2xl mb-4 font-bold">Create Account</h2>
+    {WalletsStorage.storedWalletsCount() > 0 && <div 
+    className="mb-4 bg-yellow-200 rounded-2xl p-4 text-sm text-left text-gray-900">
+    <i className="fa fa-warning mr-2 text-red-500 animate-ping"/> It's detected that this browser has created and account with wallets before. If you're 
+    creating a new account now, the previously stored wallets will be wiped off.
+    You can only re-import them if you have your wallets' seeds. Please make sure 
+    you have your wallets' seeds with you else you are not able to recover your old wallets.
+    </div>}
     <div className="mb-4 text-left">
         <TextField label="Password" id="pw" type="password" onChange={(e)=>{
             setPass(e.target.value);
