@@ -29,6 +29,10 @@ export default function useWalletState() {
 
     const selectedWalletPubkey : string|undefined = walletState.selectedWalletPubkey;
 
+    const refreshWalletCount = () =>{
+
+        setWalletCount(WalletsStorage.storedWalletsCount());
+    }
 
     const signOut = () =>{
 
@@ -44,6 +48,7 @@ export default function useWalletState() {
     },[]);
     
    
-    return {setSelectedWallet, setWalletCount, walletsCount, selectedWalletPubkey, signOut} as const;
+    return {setSelectedWallet, setWalletCount, walletsCount, selectedWalletPubkey, 
+        signOut, refreshWalletCount} as const;
 
 }

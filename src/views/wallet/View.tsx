@@ -21,6 +21,8 @@ export const View : FC = () =>{
 
     const {genWallet} = useXrp();
 
+    const {refreshWalletCount} = useWalletState();
+
     const [viewType, setViewType] = useState<ViewType>(ViewType.IndWallet);
 
     const {selectedWalletPubkey, walletsCount} = useWalletState();
@@ -78,10 +80,16 @@ export const View : FC = () =>{
     }
 
 
+    const genWalletNow = () =>{
+
+        genWallet();
+        refreshWalletCount();
+    }
+
     const buttons =<div>
         <button
         onClick={()=>{
-            genWallet();
+            genWalletNow();
         }}
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 
         px-4 rounded-full min-w-200 mr-4">
