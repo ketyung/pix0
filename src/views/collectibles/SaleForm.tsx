@@ -9,7 +9,7 @@ export const SaleForm : FC <Props> = ({
     nftToken
 }) =>{
 
-    return <div className="mt-2" style={{minWidth:"600px"}}>
+    return <div className="mt-2 text-left" style={{minWidth:"600px"}}>
         <div className="mb-4">
         <TextField label="Price" type="number" labelInline={true} onChange={(e)=>{
             
