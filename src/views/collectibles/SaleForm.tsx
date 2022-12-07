@@ -1,6 +1,9 @@
 import { FC, useState } from "react";
 import { shortenStringTo } from "../../utils";
 import { Spinner } from "../components/Spinner";
+import { MessageView } from "../components/MessageView";
+import { Message, MessageType } from "../../models";
+import useXrp from "../../hooks/useXrp";
 import { TextField, commonTextfieldClassName } from "../components/TextField";
 import { AccountNFToken } from "../../models";
 
@@ -12,9 +15,33 @@ export const SaleForm : FC <Props> = ({
     nftToken
 }) =>{
 
-    const [ price, setPrice] = useState(1);
+    const [price, setPrice] = useState(1);
+
+    const [message, setMessage] = useState<Message>();
 
     const [processing,setProcessing] = useState(false);
+
+    const {createNftSellOffer} = useXrp();
+
+    const createSellOffer = async () =>{
+
+        if ( nftToken?.NFTokenID) {
+
+            setProcessing(true);
+            await createNftSellOffer(nftToken?.NFTokenID, price, (e)=>{
+
+                if (e instanceof Error){
+
+                    setMessage({text : e.message,type : MessageType.Error });
+                }
+                else {
+
+                    setMessage({text : "Success", type : MessageType.Info, hash: e});
+                }
+                setProcessing(false);
+            });
+        }
+    }
 
 
     return <div className="mt-2 text-left" style={{minWidth:"600px"}}>
