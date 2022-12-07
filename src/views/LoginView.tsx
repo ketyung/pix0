@@ -1,7 +1,6 @@
 import { FC, useState } from "react";
 import logo from '../images/pix0_logo1.png';
 import { isPwStrong } from "../utils";
-import { TestModalView } from "./components/Modal";
 import { WalletsStorage } from "../utils/local-storage";
 import { WalletPasswordStorage } from "../utils/sess-storage";
 import { SelectedWalletStorage } from "../utils/local-storage";
@@ -85,7 +84,6 @@ export const LoginView : FC <Props>= ({
             e.preventDefault();
             signIn();
         }}>Login</button>
-        <TestModalView/>
     </div>
     </>
 

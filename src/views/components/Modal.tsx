@@ -1,94 +1,100 @@
-import { FC } from "react";
+import { FC , useState} from "react";
 
 type Props = {
 
     title? : string, 
 
-    id?: string, 
-
     children?: React.ReactNode,
+
+    footer? : string, 
+
+    triggerButton? : string| React.ReactElement,
 
     actionButton? : {title? : string,
     action? : ()=>void },
 }
 
 export const Modal : FC <Props> = ({
-    children, title, id, actionButton 
+    children, title, actionButton , triggerButton
 }) =>{
 
-    return <div className="modal fade fixed top-0 left-0 hidden w-full h-full 
-    outline-none overflow-x-hidden overflow-y-auto"
-      id={ id ?? "exampleModal"} tabIndex={-1} aria-labelledby={`${id}Label`} aria-hidden="true">
-      <div className="modal-dialog relative w-auto pointer-events-none">
-        <div
-          className="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
-          <div
-            className="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
-            <h5 className="text-xl font-medium leading-normal text-gray-800">{title ?? "A Modal"}</h5>
-            <button type="button"
-              className="btn-close box-content w-4 h-4 p-1 text-black border-none rounded-none opacity-50 
-              focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline"
-              data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div className="modal-body relative p-4">
-            {children}
-          </div>
-          <div
-            className="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
-            <button type="button" className="px-6
-              py-2.5 bg-purple-600 text-white
-              font-medium text-xs leading-tight
-              uppercase rounded
-              shadow-md hover:bg-purple-700 hover:shadow-lg
-              focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0
-              active:bg-purple-800 active:shadow-lg
-              transition duration-150 ease-in-out" data-bs-dismiss="modal">Close</button>
-           { actionButton  && <button type="button" 
-           onClick={(e)=>{e.preventDefault();
-            
-                if ( actionButton.action){
-                    actionButton.action();
-                }
-           }}
-           className="px-6 py-2.5 bg-blue-600 text-white
-          font-medium text-xs leading-tight
-          uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg
-          focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
-          active:bg-blue-800 active:shadow-lg
-          transition duration-150 ease-in-out ml-1">{actionButton.title}</button>}
+
+    const [showModal, setShowModal] = useState(false);
+
+    return <>
+    <button className="bg-gray-500 text-white active:bg-gray-600 font-bold 
+    text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none 
+    focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+      type="button" onClick={() => setShowModal(true)}>
+      {triggerButton ?? "Open"}
+    </button>
+    {showModal ? (
+      <>
+        <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+          <div className="relative w-auto my-6 mx-auto max-w-3xl">
+            {/*content*/}
+            <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+              {/*header*/}
+              <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+                <h3 className="text-xl font-semibold uppercase">
+                {title ?? "Modal Title"}
+                </h3>
+                <button
+                  className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                  onClick={() => setShowModal(false)}>
+                  <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                    ×
+                  </span>
+                </button>
+              </div>
+              {/*body*/}
+              <div className="relative p-6 flex-auto">
+                {children}
+              </div>
+              {/*footer*/}
+              <div className="flex items-center justify-end p-1 border-t border-solid border-slate-200 rounded-b">
+                <button
+                  className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                  type="button"
+                  onClick={() => setShowModal(false)}>
+                  Close
+                </button>
+                {actionButton &&
+                <button className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if ( actionButton.action ){
+                        actionButton.action();
+                    }
+                    setShowModal(false);
+                  }}>
+                </button>}
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-}
-
-
-type Props2 = {
-
-    title? : string|React.ReactElement, 
-
-    modalId? : string, 
-}
-
-export const ModalTriggerButton : FC <Props2> = ({
-    title, modalId
-}) =>{
-
-    return <button type="button" className="px-6
-    py-2.5 bg-blue-600 text-white font-medium text-xs
-    leading-tight uppercase rounded
-    shadow-md hover:bg-blue-700 hover:shadow-lg
-    focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
-    active:bg-blue-800 active:shadow-lg
-    transition duration-150 ease-in-out" data-bs-toggle="modal" 
-    data-bs-target={`#${modalId}`}>{title}</button>
+        <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+      </>
+    ) : null}
+  </>
+    
 }
 
 
 export const TestModalView : FC = () =>{
 
     return <div className="m-4">
-        <ModalTriggerButton title="Click" modalId="MyTestModal"/>
-        <Modal title="My Modal" id="MyTestModal">Hello world what's up??</Modal>
+        <Modal title="My Modal">
+        <div style={{minWidth:"700px"}}>
+
+        <p>Hello world what's up??</p>
+        <p>Hello world what's up??</p>
+        <p>Hello world what's up??</p>
+        <p>Hello world what's up??</p>
+
+        </div>
+      
+        </Modal>
     </div>
 } 
