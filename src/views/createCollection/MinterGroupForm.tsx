@@ -49,7 +49,6 @@ export const MinterGroupForm : FC <Props> = ({
         primaryColor="blue" showShortcuts={true} 
         onChange={(e)=>{
 
-            console.log("e:::x", e);
             setGroup({...group, start_date : ( e?.startDate && typeof e?.startDate === 'string') 
             ? new Date(e?.startDate).getTime() : 0,
             end_date : ( e?.endDate && typeof e?.endDate === 'string') ? 
