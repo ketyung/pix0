@@ -25,6 +25,8 @@ export const NftDetailsView : FC <Props> = ({
 
     const [mediaURI, setMediaURI] = useState<NFTMetadata>();
 
+    const [salePrice, setSalePrice] = useState(1);
+
     const [processing, setProcessing] = useState(false);
 
     const [isBurned, setIsBurned] = useState(false);
@@ -107,7 +109,7 @@ export const NftDetailsView : FC <Props> = ({
     <Modal title="Create Sell Offer for this NFT" triggerButton={
     <><i className="fa fa-exchange mr-2" aria-hidden="true"/><span className="mr-6">Sell</span></>}
     triggerButtonClassName="text-sm w-64 font-bold ml-4 text-2xl p-2 mb-2 bg-gray-900 rounded-3xl text-white ease-linear transition-all duration-250"
-    ><SaleForm nftToken={nftToken}/></Modal>}
+    ><SaleForm nftToken={nftToken} setPrice={setSalePrice} price={salePrice}/></Modal>}
     </div>
 
     {(nftToken?.Flags === 1 && !isBurned) && <div className="mb-4">
