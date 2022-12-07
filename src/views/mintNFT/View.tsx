@@ -1,4 +1,5 @@
 import { FC, useState } from "react";
+import { CollectionDetailsView } from "./CollectionDetailsView";
 import { PubCollectionsView } from "./PubCollectionsView";
 import { SimpleMintForm } from "./SimpleMintForm";
 
@@ -8,24 +9,33 @@ export enum ViewType {
 
     CollectionsView, 
 
+    CollectionDetailsView,
+
     None,
 }
 
 export const View : FC = () =>{
 
-    const [viewType, setViewType] = useState<ViewType>(ViewType.None);
+    const [viewType, setViewType] = useState<{ viewType: ViewType,
+        param?: any}>({ viewType :ViewType.None});
 
     const switchView = () =>{
 
-        switch(+viewType){
+        switch(+viewType.viewType){
 
             case ViewType.CollectionsView :
 
-                return <PubCollectionsView/>
+                return <PubCollectionsView setViewType={setViewType}/>
 
             case ViewType.SimpleMint :
 
                 return <SimpleMintForm/>
+
+            
+            case ViewType.CollectionDetailsView :
+
+                return <CollectionDetailsView collection={viewType.param}/>
+
             default :
 
                 return infoView;
@@ -41,7 +51,7 @@ export const View : FC = () =>{
         focus:shadow-outline focus:outline-none text-white font-bold py-1 px-8 rounded"
         onClick={(e)=>{
             e.preventDefault();
-            setViewType(ViewType.SimpleMint);
+            setViewType({viewType : ViewType.SimpleMint});
         }}>Let's Go</button>
     </div>
 
@@ -50,18 +60,18 @@ export const View : FC = () =>{
         focus:shadow-outline focus:outline-none text-white font-bold py-1 px-8 rounded"
         onClick={(e)=>{
             e.preventDefault();
-            setViewType(ViewType.CollectionsView);
+            setViewType({ viewType:ViewType.CollectionsView});
         }}>Let's Go</button>
     </div>
     </>
 
     return <div className="mt-16 mx-auto text-center">
         <h1 className="font-bold mt-2">Mint your NFT</h1>
-        {(viewType !== ViewType.None) &&
+        {(viewType.viewType !== ViewType.None) &&
         <button title="Cancel" 
         className="w-6 h-6 font-bold mb-4 mt-10 mr-32 pb-1 mb-2 bg-gray-800 
         rounded-3xl text-white float-right clear-both" onClick={()=>{
-            setViewType(ViewType.None);
+            setViewType({viewType :ViewType.None});
         }}><i className="fa fa-times" aria-hidden="true"/></button>}
         
         {switchView()}
