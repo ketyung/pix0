@@ -43,15 +43,17 @@ export const MinterGroupForm : FC <Props> = ({
         </div>
 
         <div className="mb-4">
-        <b>Dates</b>
+        <b className="text-sm">Start and end dates</b>
         <Datepicker value={{startDate : group.start_date ? new Date(group.start_date)
         : new Date(), endDate : group.end_date ? new Date(group.end_date) : new Date()}}
         primaryColor="blue" showShortcuts={true} 
         onChange={(e)=>{
 
             console.log("e:::x", e);
-            setGroup({...group, start_date : ( e?.startDate && e?.startDate instanceof Date) ? e?.startDate.getTime() : 0});
-            setGroup({...group, end_date : ( e?.endDate && e?.endDate instanceof Date) ? e?.endDate.getTime() : 0});
+            setGroup({...group, start_date : ( e?.startDate && typeof e?.startDate === 'string') 
+            ? new Date(e?.startDate).getTime() : 0,
+            end_date : ( e?.endDate && typeof e?.endDate === 'string') ? 
+            new Date(e?.endDate).getTime() : 0});     
         }}
         />
 
