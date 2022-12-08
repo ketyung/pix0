@@ -73,7 +73,7 @@ export default function useXrp() {
 
     const createNftSellOffer = async (tokenID : string,
         price : number, 
-        completion? : (res : { hash?: string, id? : string|number}|Error)=> void)  =>{
+        completion? : (res : { hash?: string, seq_num? : number}|Error)=> void)  =>{
 
         if ( selectedWalletPubkey ) {
 

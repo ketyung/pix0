@@ -59,12 +59,10 @@ export const SellForm : FC <Props> = ({
                 }
                 else {
 
-                    if ( e.id ) {
+                    if ( e.seq_num ) {
 
-                        let oid = `${e.id}`;
-                        let o = {...offer, offer_id : oid };
+                        let o = {...offer, seq_num : e.seq_num };
     
-                        console.log("oid:::x", oid, new Date());
                         await addOffer(o); // index it off-chain
     
                     }

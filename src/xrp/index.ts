@@ -348,9 +348,11 @@ export const getTx = async ( id : string) : Promise<TxResponse>=> {
 
 
 
+
+
 export const createNftSellOffer = async (tokenId : string, price: number,
     sellerWallet : xrpl.Wallet,
-    completion? : (res : { hash?: string, id? : string|number} |Error)=> void) =>{
+    completion? : (res : { hash?: string, seq_num? : number} |Error)=> void) =>{
 
     try {
 
@@ -377,11 +379,9 @@ export const createNftSellOffer = async (tokenId : string, price: number,
         // perhaps a hack to get the last offer ID
         //https://xrpl.org/offer.html
 
-        let lastOfferId = `${0x006F}${sellerWallet.classicAddress}${tx.result.Sequence}`;
-
         
         if ( completion) {
-            completion({hash : tx.result.hash, id: undefined});
+            completion({hash : tx.result.hash, seq_num: tx.result.Sequence});
         }
     }
     catch( e : any ) {

@@ -1,5 +1,4 @@
 import { NFTMetadata, StoredWallet } from "../models";
-import { decryptStoredWallet } from "./enc";
 import * as xrpl from 'xrpl';
 
 export const shortenStringTo = (str : string, length : number = 32, strInBetween : string = "...") => {
