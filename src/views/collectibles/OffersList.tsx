@@ -1,6 +1,7 @@
 import useXrp from "../../hooks/useXrp";
 import { dropsToXrp } from "xrpl";
 import { shortenStringTo } from "../../utils";
+import { Spinner } from "../components/Spinner";
 import { NFTOffer } from "xrpl/dist/npm/models/common";
 import { FC , useCallback, useEffect, useState} from "react";
 
@@ -15,13 +16,16 @@ export const OffersList : FC <Props> = ({
 
     const [sellOffers, setSellOffers] = useState<NFTOffer[]>();
 
+    const [loading, setLoading] = useState(false);
+
     const {getNftSellOffers} = useXrp();
     
     const fetchSellOffers = useCallback( async () =>{
 
+        setLoading(true);
         let offrs = await getNftSellOffers(tokenId );
         setSellOffers(offrs);
-       
+        setLoading(false);
     },[getNftSellOffers]);
 
 
@@ -35,12 +39,17 @@ export const OffersList : FC <Props> = ({
     return <div className="w-full text-sm" style={{minWidth:"600px"}}>
         <h2 className="uppercase font-bold">Your Sell Offers</h2>
         <table cellPadding={3} cellSpacing={3} className="text-left w-full">
-            <tr>
+            <tr className="bg-gray-200">
             <th style={{width:"60%"}}>Index</th>
             <th style={{width:"20%"}} className="text-center">Price (XRP)</th>
             <th style={{width:"20%"}} className="text-center">Action</th>
             </tr>
         {
+            loading ? 
+            <tr><td colSpan={3} className="text-center p-2">
+            <Spinner/>    
+            </td></tr> :
+
             sellOffers?.map((s,i)=>{
 
                 return <tr key={`so${i}`} className="hover:bg-gray-300">
