@@ -11,7 +11,7 @@ type Props = {
     nftToken? : AccountNFToken,
 }
 
-export const SaleForm : FC <Props> = ({
+export const SellForm : FC <Props> = ({
     nftToken
 }) =>{
 
