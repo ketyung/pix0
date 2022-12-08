@@ -60,6 +60,9 @@ export const SellOffers : FC <Props> = ({
                 </tr>
             })
         }
+         {(!loading && sellOffers?.length === 0) && <tr><td colSpan={3} className="text-center p-2">
+            NO Sell Offers
+            </td></tr>}
         </table>
     </>
 }
