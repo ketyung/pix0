@@ -1,5 +1,6 @@
 import * as xrp from "../xrp";
 import * as xrpl from 'xrpl';
+import { NFTOffer } from "xrpl/dist/npm/models/common";
 import { uploadToArweave, uploadMetadata } from "../arweave";
 import useWalletState from './useWalletState';
 import { decryptStoredWallet } from "../utils/enc";
@@ -222,9 +223,29 @@ export default function useXrp() {
 
     }
 
+    const getNftSellOffers = async ( 
+        tokenId : string, id? : string  ) : Promise<NFTOffer[]|undefined>=>{
+
+        if ( selectedWalletPubkey ) {
+
+            let connectedWallet = WalletsStorage.get(selectedWalletPubkey);
+            if ( connectedWallet) {
+
+                let wallet = decryptStoredWallet(connectedWallet);
+                if ( wallet ) {
+
+                    let offers = await xrp.getNftSellOffers(wallet, tokenId, id);
+                    return offers;
+                }
+
+            }
+        }
+        return undefined;
+    }
+
 
     return {genWallet,getNftsOf,  
-        fundWallet,getBalance,mintNft, 
+        fundWallet,getBalance,mintNft, getNftSellOffers,
         walletFromSeed, burnNft, createNftSellOffer} as const;
 
 }

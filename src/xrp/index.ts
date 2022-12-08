@@ -1,4 +1,5 @@
 import * as xrpl from 'xrpl';
+import { NFTOffer } from 'xrpl/dist/npm/models/common';
 import { WalletsStorage } from '../utils/local-storage';
 import { NFTResult} from '../models';
 
@@ -357,6 +358,29 @@ export const createNftSellOffer = async (tokenId : string, price: number,
             completion(new Error(e.message));
     }
    
+}
 
+
+
+export const getNftSellOffers = async ( 
+    wallet : xrpl.Wallet, 
+    tokenId : string, id? : string  ) : Promise<NFTOffer[]>=> {
+
+    let net = getNetwork();
+
+    const client = new xrpl.Client(net);
+
+    await client.connect();
+
+    let req : xrpl.NFTSellOffersRequest = {
+        account : wallet.classicAddress,
+        nft_id : tokenId, 
+        command: "nft_sell_offers",
+        id : id, 
+    };
+
+    let resp = await client.request(req);
+    
+    return resp.result.offers; 
 
 }

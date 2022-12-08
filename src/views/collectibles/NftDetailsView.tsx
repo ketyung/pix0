@@ -1,6 +1,7 @@
 import { fetchAsNFTMedata } from "../../utils";
 import { FC , useState, useCallback, useEffect} from "react";
 import { SellForm } from "./SellForm";
+import { NFTOffer } from "xrpl/dist/npm/models/common";
 import useXrp from "../../hooks/useXrp";
 import { Spinner } from "../components/Spinner";
 import { Modal } from "../components/Modal";
@@ -29,22 +30,37 @@ export const NftDetailsView : FC <Props> = ({
 
     const [isBurned, setIsBurned] = useState(false);
 
+    const [sellOffers, setSellOffers] = useState<NFTOffer[]>();
+
     const fetchURI = useCallback( async ()=>{
 
         let m = await fetchAsNFTMedata( xrpl.convertHexToString(nftToken?.URI ?? ""));
         setMediaURI(m);
 
-    },[]);
+    },[fetchAsNFTMedata]);
+
+    const {burnNft, getNftSellOffers} = useXrp();
+
+    const fetchSellOffers = useCallback( async () =>{
+
+        if ( nftToken?.NFTokenID ) {
+
+            let offrs = await getNftSellOffers(nftToken?.NFTokenID )
+            setSellOffers(offrs);
+        }
+       
+    },[getNftSellOffers]);
+
 
     useEffect(()=>{
 
         fetchURI();
+        fetchSellOffers();
     
-    },[nftToken?.URI]);
+    },[nftToken]);
 
 
-    const {burnNft} = useXrp();
-
+   
 
     const burnNftNow = async () =>{
 
@@ -110,7 +126,7 @@ export const NftDetailsView : FC <Props> = ({
     ><SellForm nftToken={nftToken} /></Modal>}
     </div>
 
-    {(nftToken?.Flags === 1 && !isBurned) && <div className="mb-4">
+    {(nftToken?.Flags === 1 && !isBurned && sellOffers?.length === 0) && <div className="mb-4">
     <button title="Burn!!" disabled={processing}
     className="text-sm w-64 font-bold ml-4 text-2xl p-2 mb-2 bg-red-800 rounded-3xl text-white" 
     onClick={async (e)=>{
