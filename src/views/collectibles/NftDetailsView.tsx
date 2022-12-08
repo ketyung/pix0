@@ -45,7 +45,8 @@ export const NftDetailsView : FC <Props> = ({
 
         if ( nftToken?.NFTokenID ) {
 
-            let offrs = await getNftSellOffers(nftToken?.NFTokenID )
+            let offrs = await getNftSellOffers(nftToken?.NFTokenID );
+            console.log("offrx", offrs);
             setSellOffers(offrs);
         }
        
@@ -63,6 +64,13 @@ export const NftDetailsView : FC <Props> = ({
    
 
     const burnNftNow = async () =>{
+
+        if ((sellOffers?.length ?? 0) > 0 ){
+            window.alert(
+            `You are NOT allowed to burn it now as you have ${sellOffers?.length} sell offers. You should cancel them if you wanna burn this NFT`);
+            return;
+        }
+
 
         if ( window.confirm('To burn this NFT?')) {
 
@@ -126,7 +134,7 @@ export const NftDetailsView : FC <Props> = ({
     ><SellForm nftToken={nftToken} /></Modal>}
     </div>
 
-    {(nftToken?.Flags === 1 && !isBurned && sellOffers?.length === 0) && <div className="mb-4">
+    {(nftToken?.Flags === 1 && !isBurned ) && <div className="mb-4">
     <button title="Burn!!" disabled={processing}
     className="text-sm w-64 font-bold ml-4 text-2xl p-2 mb-2 bg-red-800 rounded-3xl text-white" 
     onClick={async (e)=>{
