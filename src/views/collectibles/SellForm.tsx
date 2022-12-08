@@ -57,7 +57,9 @@ export const SellForm : FC <Props> = ({
                 }
                 else {
 
-                    setMessageNow({text : "Success", type : MessageType.Info, hash: e});
+                    console.log("id:::@id:::",e.id);
+
+                    setMessageNow({text : "Success", type : MessageType.Info, hash: e.hash});
                 }
                 setProcessing(false);
             });

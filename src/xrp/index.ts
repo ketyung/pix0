@@ -2,6 +2,7 @@ import * as xrpl from 'xrpl';
 import { NFTOffer } from 'xrpl/dist/npm/models/common';
 import { WalletsStorage } from '../utils/local-storage';
 import { NFTResult} from '../models';
+import { TxResponse } from 'xrpl';
 
 export enum Network {
 
@@ -324,10 +325,32 @@ export const getNftsOf = async (
 
 }
 
+export const getTx = async ( id : string) : Promise<TxResponse>=> {
+
+    let net = getNetwork();
+
+    const client = new xrpl.Client(net);
+
+    await client.connect();
+
+    let req : xrpl.TxRequest = {
+        command :"tx",
+        transaction : id, 
+    };
+
+    let resp = await client.request(req);
+   
+    await client.disconnect();
+    
+    return resp; 
+
+}
+
+
 
 export const createNftSellOffer = async (tokenId : string, price: number,
     sellerWallet : xrpl.Wallet,
-    completion? : (res : string|Error)=> void) =>{
+    completion? : (res : { hash?: string, id? : string|number} |Error)=> void) =>{
 
     try {
 
@@ -349,9 +372,12 @@ export const createNftSellOffer = async (tokenId : string, price: number,
        
         // submit tx
         const tx = await client.submitAndWait(transactionBlob,{wallet: signerWallet});
-        
+
+        let txResp = await getTx(tx.result.hash);
+        console.log("txResp:::[]", txResp);
+
         if ( completion) {
-            completion(tx.result.hash);
+            completion({hash : tx.result.hash, id: tx.id});
         }
     }
     catch( e : any ) {
