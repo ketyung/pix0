@@ -1,4 +1,5 @@
 import * as service from "../service";
+import { Offer, OfferCreator, OfferType } from "../models/token_offer";
 import { Collection, CollectionMedia } from "../models/collection";
 import useWalletState from "./useWalletState";
 import { singleUpload } from "../cloudUpload";
@@ -180,8 +181,46 @@ export default function useService()  {
         }
     }
 
+    const addOffer = async  (offer : Offer,
+        completion? : (res : Error|Offer) => void ) => {
+
+        setLoading(true);
+
+        await service.addOffer(offer, completion);
+
+        setLoading(false);
+    }
+
+    const deleteOffer = async  (param : {offer_id : string, 
+        creator : OfferCreator},
+        completion? : (res : Error|{deleted : boolean}) => void ) => {
+
+        setLoading(true);
+
+        await service.deleteOffer(param, completion);
+
+        setLoading(false);
+    }
+
+    const getOffers = async (
+        type : OfferType, 
+        offset : number = 0, limit : number = 20 )
+        : Promise<{res : Offer[], total? :number , offset? : number, limit? : number}> => {
+    
+            if ( selectedWalletPubkey) {
+                setLoading(true);
+                
+                let c = await service.getOffersBy(type , offset, limit);
+                setLoading(false);
+                return c; 
+            }
+    
+            return {res: []};
+        }
+    
+
     return {getCollectionsBy, addCollection, loading, updateCollection, getCollectionBy
-    ,getCollectionsMediaBy, getCollectionsMediaCountBy, addCollectionMedia,
-    getPublishedCollections, getOneCollectionMedia} as const ;
+    ,getCollectionsMediaBy, getCollectionsMediaCountBy, addCollectionMedia, addOffer, 
+    deleteOffer,getPublishedCollections, getOneCollectionMedia} as const ;
 
 }

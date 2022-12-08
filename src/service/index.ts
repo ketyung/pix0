@@ -1,4 +1,5 @@
 import { Collection, CollectionMedia } from "../models/collection"
+import { Offer, OfferCreator, OfferType } from "../models/token_offer";
 
 const REMOTE_URL = `${process.env.REACT_APP_SERVICE_API_URL ?? "http://localhost:3338/"}`;
 
@@ -318,6 +319,123 @@ export const getOneCollectionMedia = async (
     catch (e : any) {
 
         return undefined;
+        
+    }
+}
+
+
+
+export const addOffer = async  (offer : Offer,
+    completion? : (res : Error|Offer ) => void ) =>{
+
+    let url = `${REMOTE_URL}add_offer/`; 
+
+    try {
+
+        const response = await fetch(url, {
+            method: 'POST', 
+            mode: 'cors', 
+            cache: 'no-cache', 
+            //credentials: 'same-origin', // include, *same-origin, omit
+            headers:commonHeaders,
+            redirect: 'follow', 
+            referrerPolicy: 'no-referrer', 
+            body: JSON.stringify(offer) 
+        });
+
+        if ( response.status !== 200) {
+
+            let return_err = (await response.json()) ;
+
+            if ( completion ){
+                completion( new Error(`${return_err.error} : ${return_err.details}`));
+                return ;
+            }
+        }
+
+        
+        if ( completion) {
+
+            let return_collection = (await response.json()) ;
+            completion(return_collection);
+      
+        }
+    
+    }
+    catch(e : any ){
+
+        if ( completion )
+            completion( new Error(e.message));
+
+    }
+    
+}
+
+export const deleteOffer = async  (
+    param : {offer_id : string, 
+        creator : OfferCreator},
+    completion? : (res : Error|{deleted: boolean}) => void ) =>{
+
+    let url = `${REMOTE_URL}delete_offer/`; 
+
+    try {
+
+        const response = await fetch(url, {
+            method: 'POST', 
+            mode: 'cors', 
+            cache: 'no-cache', 
+            //credentials: 'same-origin', // include, *same-origin, omit
+            headers:commonHeaders,
+            redirect: 'follow', 
+            referrerPolicy: 'no-referrer', 
+            body: JSON.stringify(param) 
+        });
+
+        if ( response.status !== 200) {
+
+            let return_err = (await response.json()) ;
+
+            if ( completion ){
+                completion( new Error(`${return_err.error} : ${return_err.details}`));
+                return ;
+            }
+        }
+
+        
+        if ( completion) {
+
+            let return_collection = (await response.json()) ;
+            completion(return_collection);
+      
+        }
+    
+    }
+    catch(e : any ){
+
+        if ( completion )
+            completion( new Error(e.message));
+
+    }
+    
+}
+
+
+export const getOffersBy = async (type : OfferType, offset?: number , limit? : number )
+    : Promise<{res : Offer[], total? :number , offset? : number, limit? : number}> =>{
+
+    let url = 
+    `${REMOTE_URL}offers/${encodeURIComponent(type)}/${offset}/${limit}`;
+    
+    try {
+
+        let c = await ((await fetch(url,{
+            headers:commonHeaders,
+        }))).json() ;
+        return c;
+    }
+    catch (e : any) {
+
+        return {res: []};
         
     }
 }
