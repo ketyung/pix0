@@ -25,7 +25,7 @@ export const SellForm : FC <Props> = ({
 
     const {addOffer, hasOffer} = useService();
 
-    const [offer, setOffer] = useState<Offer>({type: OfferType.Sell, 
+    const [offer, setOffer] = useState<Offer>({type: OfferType.Sell, price : 1, 
     created_by : {pubkey :selectedWalletPubkey, classic_address: toClassicAddress(selectedWalletPubkey ?? "") 
     }, nft_token : nftToken});
 
