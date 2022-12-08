@@ -18,16 +18,22 @@ export const OfferListRow : FC <Props> = ({
 
     const [metadata, setMetadata] = useState<NFTMetadata>();
 
-    return <div className="mb-4 p-2">
+    return <div className="mb-6 p-4 border-b-2 hover:bg-gray-200 rounded-2xl w-1/2 mx-auto shadow-2xl">
       <div className="mb-2 text-left font-bold">
         <span className="mr-2">{((index ?? 0) + 1)}.</span>  
         {metadata?.name && <span className="ml-2">{metadata?.name}</span>}
       </div>
       <div className="mb-2 text-left">
       <NFTMetadataImageView hexUri={offer?.nft_token?.URI} setMetadataCallback={setMetadata}
-      className="object-scale-down h-30 w-30 my-2"/>
+      className="object-scale-down my-2 inline-block" style={{width:"80px",height:"80px"}}/>
+      <div className="inline-block">
+        <div className="mb-2"><span className="mr-2 ml-2">Price:</span><span className="font-bold">{offer?.price ?? 1} XRP</span></div>
+      
       </div>
-      {metadata?.description &&  <div className="mb-2 text-left">
+     
+      </div>
+      {metadata?.description && <div className="mb-2 text-left line-clamp-1">
      {metadata?.description}</div>}
+    
     </div>
 }

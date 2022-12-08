@@ -24,7 +24,8 @@ export const SellOffersList : FC = () =>{
         fetchOffers();
     },[]);
 
-    return <div className="mt-2">
+    return <div className="mt-2 p-2 text-center content-center mx-auto">
+        <h2 className="font-bold mb-2">Listed Sell Offers</h2>
         { offers?.map((o,i)=>{
             return <OfferListRow offer={o} index={i}/>
         })}
