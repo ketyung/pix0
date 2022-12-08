@@ -59,12 +59,16 @@ export const SellForm : FC <Props> = ({
                 }
                 else {
 
-                    let oid = `${e.id}`;
-                    let o = {...offer, offer_id : oid };
+                    if ( e.id ) {
 
-                    console.log("oid:::x", oid, new Date());
-                    await addOffer(o); // index it off-chain
-
+                        let oid = `${e.id}`;
+                        let o = {...offer, offer_id : oid };
+    
+                        console.log("oid:::x", oid, new Date());
+                        await addOffer(o); // index it off-chain
+    
+                    }
+                   
                     setMessageNow({text : "Success", type : MessageType.Info, hash: e.hash});
                 }
                 setProcessing(false);
