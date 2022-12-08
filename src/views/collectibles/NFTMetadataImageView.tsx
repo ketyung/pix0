@@ -7,13 +7,13 @@ type Props = {
 
     hexUri? : string, 
 
-    size? : {width: number, height: number},
+    className? : string, 
 
     setMetadataCallback? : (metadata : NFTMetadata) => void,
 }
 
 export const NFTMetadataImageView : FC <Props> = ({
-    hexUri, size, setMetadataCallback
+    hexUri, setMetadataCallback, className
 }) =>{
 
     const [metadata, setMetadata] = useState<NFTMetadata>();
@@ -39,7 +39,6 @@ export const NFTMetadataImageView : FC <Props> = ({
 
     return <img src={metadata === undefined ? xrpl.convertHexToString(hexUri ?? "")
         : metadata.image } 
-        className={`object-scale-down h-${size?.height ?? 80} w-${size?.width ?? 80} 
-        my-2 content-center mx-auto`}
+        className={className ?? "object-scale-down h-80 w-80 my-2 content-center mx-auto"}
         title={metadata?.description ? metadata.description : "image..."}/>;
 }
