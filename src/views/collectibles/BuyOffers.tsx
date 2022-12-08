@@ -33,7 +33,7 @@ export const BuyOffers : FC <Props> = ({
     return <>
         <table cellPadding={3} cellSpacing={3} className="text-left w-full">
             <tr className="bg-gray-300">
-            <th style={{width:"60%"}}>Index</th>
+            <th style={{width:"60%"}}>ID</th>
             <th style={{width:"20%"}} className="text-center">Price (XRP)</th>
             <th style={{width:"20%"}} className="text-center">Action</th>
             </tr>

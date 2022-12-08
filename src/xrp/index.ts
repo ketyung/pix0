@@ -363,6 +363,42 @@ export const createNftSellOffer = async (tokenId : string, price: number,
 }
 
 
+export const cancelOffer = async (offerId : string,
+    wallet : xrpl.Wallet,
+    completion? : (res : string|Error)=> void) =>{
+
+    try {
+
+        let net = getNetwork();
+
+        const client = new xrpl.Client(net);
+    
+        await client.connect();
+        
+        let transactionBlob : xrpl.NFTokenCancelOffer =  {
+            TransactionType: "NFTokenCancelOffer",
+            Account: wallet.classicAddress ,
+            NFTokenOffers: [offerId],
+            Flags: 1,
+        };
+    
+        let signerWallet = xrpl.Wallet.fromSeed(wallet.seed ?? "");
+       
+        // submit tx
+        const tx = await client.submitAndWait(transactionBlob,{wallet: signerWallet});
+        
+        if ( completion) {
+            completion(tx.result.hash);
+        }
+    }
+    catch( e : any ) {
+
+        if ( completion)
+            completion(new Error(e.message));
+    }
+   
+}
+
 
 export const getNftSellOffers = async ( 
     wallet : xrpl.Wallet, 
