@@ -1,6 +1,7 @@
 import { fetchAsNFTMedata } from "../../utils";
 import { FC , useState, useCallback, useEffect} from "react";
 import { SellForm } from "./SellForm";
+import { OffersList } from "./OffersList";
 import { NFTOffer } from "xrpl/dist/npm/models/common";
 import useXrp from "../../hooks/useXrp";
 import { Spinner } from "../components/Spinner";
@@ -46,7 +47,6 @@ export const NftDetailsView : FC <Props> = ({
         if ( nftToken?.NFTokenID ) {
 
             let offrs = await getNftSellOffers(nftToken?.NFTokenID );
-            console.log("offrx", offrs);
             setSellOffers(offrs);
         }
        
@@ -133,6 +133,14 @@ export const NftDetailsView : FC <Props> = ({
     triggerButtonClassName="text-sm w-64 font-bold ml-4 text-2xl p-2 mb-2 bg-gray-900 rounded-3xl text-white ease-linear transition-all duration-250"
     ><SellForm nftToken={nftToken} /></Modal>}
     </div>
+    
+    {((sellOffers?.length ?? 0) > 0) && 
+      <div className="mb-4">
+         <Modal id="OffersModal" title="Offers" triggerButton={
+    <><i className="fa fa-check mr-2" aria-hidden="true"/><span className="mr-4">Offers</span></>}
+    triggerButtonClassName="text-sm w-64 font-bold ml-4 text-2xl p-2 mb-2 bg-blue-900 rounded-3xl text-white ease-linear transition-all duration-250"
+    ><OffersList tokenId={nftToken?.NFTokenID ?? ""} /></Modal>
+     </div>}
 
     {(nftToken?.Flags === 1 && !isBurned ) && <div className="mb-4">
     <button title="Burn!!" disabled={processing}

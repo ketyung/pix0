@@ -318,6 +318,8 @@ export const getNftsOf = async (
         id : resp.id, 
     }
 
+    await client.disconnect();
+    
     return res; 
 
 }
@@ -381,6 +383,7 @@ export const getNftSellOffers = async (
 
     let resp = await client.request(req);
     
+    await client.disconnect();
     return resp.result.offers; 
 
 }
