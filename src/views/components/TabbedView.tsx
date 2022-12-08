@@ -58,8 +58,8 @@ export const TabbedView : FC <Props> = ({
         {tabs?.map((t,i)=>{
 
             return   <li key={`tab_${id}_${i}`} className="-mb-px mr-2 last:mr-0 flex-auto text-center">
-            <a className="text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal 
-            text-white bg-stone-600" onClick={(e)=>{
+            <a className={`text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal 
+            ${i===0 ? "bg-stone-600 text-white" : "bg-white"} cursor-pointer`} onClick={(e)=>{
                 changeAtiveTab(e,t.id ?? `tb_${i}`);}
             }>
             {t.title}
