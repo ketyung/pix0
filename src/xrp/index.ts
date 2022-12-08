@@ -423,7 +423,8 @@ export const cancelOffer = async (offerId : string,
     }
    
 }
-
+// refer here
+// https://js.xrpl.org/interfaces/NFTokenAcceptOffer.html#TicketSequence
 export const acceptSellOffer = async (offerId : string,
     fee : number, wallet : xrpl.Wallet, completion? : (res : string|Error)=> void) =>{
 
@@ -437,8 +438,9 @@ export const acceptSellOffer = async (offerId : string,
         
         let transactionBlob : xrpl.NFTokenAcceptOffer =  {
             TransactionType: "NFTokenAcceptOffer",
-            Account: offerId, //wallet.classicAddress ,
+            Account: wallet.classicAddress ,
             NFTokenSellOffer: "sell_offer", 
+            AccountTxnID : offerId,
             Fee : xrpToDrops(fee), 
         };
     
