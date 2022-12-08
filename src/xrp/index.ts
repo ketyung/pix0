@@ -387,3 +387,28 @@ export const getNftSellOffers = async (
     return resp.result.offers; 
 
 }
+
+export const getNftBuyOffers = async ( 
+    wallet : xrpl.Wallet, 
+    tokenId : string, id? : string  ) : Promise<NFTOffer[]>=> {
+
+    let net = getNetwork();
+
+    const client = new xrpl.Client(net);
+
+    await client.connect();
+
+    let req : xrpl.NFTBuyOffersRequest = {
+        account : wallet.classicAddress,
+        nft_id : tokenId, 
+        command: "nft_buy_offers",
+        id : id, 
+    };
+
+    let resp = await client.request(req);
+    
+    await client.disconnect();
+    return resp.result.offers; 
+
+}
+

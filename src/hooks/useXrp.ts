@@ -243,9 +243,29 @@ export default function useXrp() {
         return undefined;
     }
 
+    const getNftBuyOffers = async ( 
+        tokenId : string, id? : string  ) : Promise<NFTOffer[]|undefined>=>{
+
+        if ( selectedWalletPubkey ) {
+
+            let connectedWallet = WalletsStorage.get(selectedWalletPubkey);
+            if ( connectedWallet) {
+
+                let wallet = decryptStoredWallet(connectedWallet);
+                if ( wallet ) {
+
+                    let offers = await xrp.getNftBuyOffers(wallet, tokenId, id);
+                    return offers;
+                }
+
+            }
+        }
+        return undefined;
+    }
+
 
     return {genWallet,getNftsOf,  
-        fundWallet,getBalance,mintNft, getNftSellOffers,
+        fundWallet,getBalance,mintNft, getNftSellOffers,getNftBuyOffers, 
         walletFromSeed, burnNft, createNftSellOffer} as const;
 
 }

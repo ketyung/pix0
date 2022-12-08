@@ -1,5 +1,6 @@
 import { FC } from "react"
 import { SellOffers } from "./SellOffers"
+import { BuyOffers } from "./BuyOffers"
 import { TabbedView } from "../components/TabbedView"
 
 
@@ -15,7 +16,7 @@ export const OffersList : FC <Props> = ({
     return <div className="w-full text-sm" style={{minWidth:"600px"}}>
         <TabbedView tabs={[
             {id: "tab1", title:"Sell Offers", content: <SellOffers tokenId={tokenId}/>},
-            {id: "tab2", title:"Buy Offers", content: <p>Buy offers...</p>}
+            {id: "tab2", title:"Buy Offers", content: <BuyOffers tokenId={tokenId}/>}
 
         ]}/>
     </div>
