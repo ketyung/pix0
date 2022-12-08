@@ -378,10 +378,10 @@ export const createNftSellOffer = async (tokenId : string, price: number,
         //https://xrpl.org/offer.html
 
         let lastOfferId = `${0x006F}${sellerWallet.classicAddress}${tx.result.Sequence}`;
-        
+
         
         if ( completion) {
-            completion({hash : tx.result.hash, id: lastOfferId});
+            completion({hash : tx.result.hash, id: undefined});
         }
     }
     catch( e : any ) {
