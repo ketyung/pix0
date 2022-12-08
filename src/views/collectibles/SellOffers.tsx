@@ -15,10 +15,9 @@ export const SellOffers : FC <Props> = ({
 
     const [loading, setLoading] = useState(false);
 
-    const {getNftSellOffers} = useXrp();
+    const {getNftSellOffers, cancelOffer} = useXrp();
     
     const fetchSellOffers = useCallback( async () =>{
-
         setLoading(true);
         let offrs = await getNftSellOffers(tokenId );
         setSellOffers(offrs);
@@ -31,6 +30,24 @@ export const SellOffers : FC <Props> = ({
         fetchSellOffers();
     
     },[tokenId]);
+
+    const cancelOfferNow = async (id : string) =>{
+
+        if ( window.confirm('Are you sure to cancel the selected offer?')){
+
+            await cancelOffer(id, async (e)=>{
+                if ( e instanceof Error){
+
+                    window.alert(`Error : ${e.message}`);
+                }
+                else {
+                    window.alert('Success!');
+                    await fetchSellOffers();
+                }
+            });
+        }
+
+    }
 
     return <>
         <table cellPadding={3} cellSpacing={3} className="text-left w-full">
@@ -51,7 +68,10 @@ export const SellOffers : FC <Props> = ({
                     <td>{shortenStringTo(s.nft_offer_index, 16)}</td>
                     <td className="text-center">{dropsToXrp(s.amount.toString())}</td>
                     <td className="text-center">
-                    <button title="Cancel!!"
+                    <button title="Cancel!!" onClick={async (e)=>{
+                        e.preventDefault();
+                        await cancelOfferNow(s.nft_offer_index);
+                    }}
                     className="text-xs w-32 m-1 text-2xl p-1 mb-2 bg-red-800 rounded-xl text-white">
                     Cancel?
                     </button>
