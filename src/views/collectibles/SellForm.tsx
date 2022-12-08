@@ -56,6 +56,7 @@ export const SellForm : FC <Props> = ({
 
                 setMessageNow({text : "You've already created a sell offer for this NFT!", 
                 type: MessageType.Error });
+                setProcessing(false);
                 return;
             }
 
