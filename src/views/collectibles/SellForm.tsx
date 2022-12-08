@@ -33,7 +33,7 @@ export const SellForm : FC <Props> = ({
 
     const [processing,setProcessing] = useState(false);
 
-    const {createNftSellOffer} = useXrp();
+    const {createNftOffer} = useXrp();
 
     const setMessageNow = (message : Message) =>{
 
@@ -60,7 +60,7 @@ export const SellForm : FC <Props> = ({
                 return;
             }
 
-            await createNftSellOffer(nftToken?.NFTokenID, price,async (e)=>{
+            await createNftOffer(nftToken?.NFTokenID, price,async (e)=>{
 
                 if (e instanceof Error){
 

@@ -350,7 +350,7 @@ export const getTx = async ( id : string) : Promise<TxResponse>=> {
 
 
 
-export const createNftSellOffer = async (tokenId : string, price: number,
+export const createNftOffer = async (tokenId : string, price: number,
     sellerWallet : xrpl.Wallet,
     completion? : (res : { hash?: string, seq_num? : number} |Error)=> void) =>{
 

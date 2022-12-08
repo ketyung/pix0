@@ -71,7 +71,7 @@ export default function useXrp() {
        
     }
 
-    const createNftSellOffer = async (tokenID : string,
+    const createNftOffer = async (tokenID : string,
         price : number, 
         completion? : (res : { hash?: string, seq_num? : number}|Error)=> void)  =>{
 
@@ -83,7 +83,7 @@ export default function useXrp() {
                 let wallet = decryptStoredWallet(connectedWallet);
 
                 if ( wallet ) {
-                    await xrp.createNftSellOffer(tokenID,price, wallet, completion);
+                    await xrp.createNftOffer(tokenID,price, wallet, completion);
                 }
                 else {
                     if ( completion ) {
@@ -330,7 +330,7 @@ export default function useXrp() {
 
     return {genWallet,getNftsOf,  
         fundWallet,getBalance,mintNft, getNftSellOffers,getNftBuyOffers, 
-        walletFromSeed, burnNft, createNftSellOffer, cancelOffer,
+        walletFromSeed, burnNft, createNftOffer, cancelOffer,
         acceptSellOffer} as const;
 
 }
