@@ -2,7 +2,7 @@ import * as xrpl from 'xrpl';
 import { NFTOffer } from 'xrpl/dist/npm/models/common';
 import { WalletsStorage } from '../utils/local-storage';
 import { NFTResult} from '../models';
-import { TxResponse } from 'xrpl';
+import { TxResponse, xrpToDrops } from 'xrpl';
 
 export enum Network {
 
@@ -425,7 +425,7 @@ export const cancelOffer = async (offerId : string,
 }
 
 export const acceptSellOffer = async (offerId : string,
-    wallet : xrpl.Wallet, completion? : (res : string|Error)=> void) =>{
+    fee : number, wallet : xrpl.Wallet, completion? : (res : string|Error)=> void) =>{
 
     try {
 
@@ -437,8 +437,9 @@ export const acceptSellOffer = async (offerId : string,
         
         let transactionBlob : xrpl.NFTokenAcceptOffer =  {
             TransactionType: "NFTokenAcceptOffer",
-            Account: wallet.classicAddress ,
+            Account: offerId, //wallet.classicAddress ,
             NFTokenSellOffer: "sell_offer", 
+            Fee : xrpToDrops(fee), 
         };
     
         let signerWallet = xrpl.Wallet.fromSeed(wallet.seed ?? "");

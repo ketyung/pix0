@@ -295,8 +295,42 @@ export default function useXrp() {
     }
 
 
+    const acceptSellOffer = async (offerId : string,
+        fee : number, completion? : (res : string|Error)=> void) =>{
+
+        if ( selectedWalletPubkey ) {
+
+            let connectedWallet = WalletsStorage.get(selectedWalletPubkey);
+            if ( connectedWallet) {
+
+                let wallet = decryptStoredWallet(connectedWallet);
+                if ( wallet ) {
+
+                    await xrp.acceptSellOffer(offerId, fee, wallet, completion);
+                }
+                else {
+                    if ( completion ) {
+                        completion(new Error("Undefined wallet!"));
+                    }
+    
+                }
+
+            }
+        }
+        else {
+
+            if ( completion ) {
+                completion(new Error("No connected wallet!"));
+            }
+        }
+
+    }
+
+
+
     return {genWallet,getNftsOf,  
         fundWallet,getBalance,mintNft, getNftSellOffers,getNftBuyOffers, 
-        walletFromSeed, burnNft, createNftSellOffer, cancelOffer} as const;
+        walletFromSeed, burnNft, createNftSellOffer, cancelOffer,
+        acceptSellOffer} as const;
 
 }

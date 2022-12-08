@@ -1,6 +1,8 @@
-import { FC , useState} from "react";
+import { FC , useState, useCallback, useEffect} from "react";
 import { Spinner } from "../components/Spinner";
 import { dateToTimeAgo } from "../../utils";
+import { NFTOffer } from "xrpl/dist/npm/models/common";
+import useXrp from "../../hooks/useXrp";
 import { NFTMetadataImageView } from "../collectibles/NFTMetadataImageView";
 import { NFTMetadata } from "../../models";
 import { Offer } from "../../models/token_offer";
@@ -22,7 +24,50 @@ export const OfferListRow : FC <Props> = ({
 
     const [processing, setProcessing] = useState(false);
 
+    const [nftOffer, setNftOffer] = useState<NFTOffer>();
+
     const timeAgo = dateToTimeAgo(offer?.date_created);
+
+    const {acceptSellOffer, getNftSellOffers} = useXrp();
+
+    const fetchSellOffers = useCallback( async () =>{
+
+        if ( offer?.nft_token?.NFTokenID) {
+
+            let offrs = await getNftSellOffers( offer?.nft_token?.NFTokenID );
+            if ( offrs && (offrs?.length ?? 0) > 0 ){
+                setNftOffer(offrs[0]);
+            }
+        }
+        
+    },[getNftSellOffers]);
+
+
+    useEffect(()=>{
+        fetchSellOffers();
+    },[]);
+
+
+    const buy = async () =>{
+
+        if ( nftOffer?.nft_offer_index &&  nftOffer?.amount ) {
+
+            setProcessing(true);
+            await acceptSellOffer(nftOffer?.nft_offer_index, parseFloat(nftOffer?.amount.toString()),
+            (e)=>{
+
+                if ( e instanceof Error){
+                    window.alert(`Error : ${e.message}`);
+                }
+                else {
+                    window.alert("Success!");
+                }
+
+                setProcessing(false);
+            });
+        }
+        
+    }
 
 
     return <div className="mb-6 p-4 border-b-2 hover:bg-gray-200 rounded-2xl w-1/2 mx-auto shadow-2xl">
@@ -44,22 +89,25 @@ export const OfferListRow : FC <Props> = ({
             rounded-3xl text-white inline-block m-2" 
             onClick={async (e)=>{
                 e.preventDefault();
+                await buy();
             }}>{processing ? <Spinner/> : <>Buy</>}</button> 
             <button title="Create Buy Offer..." disabled={processing}
             className="text-sm w-20 font-bold text-sm p-2 mb-2 bg-purple-600 text-center 
             rounded-3xl text-white inline-block m-2" 
             onClick={async (e)=>{
                 e.preventDefault();
+                window.alert("Coming sooon...");
             }}>{processing ? <Spinner/> : <>Offer</>}</button> 
             <button title="More Details..." disabled={processing}
             className="text-sm w-20 font-bold text-sm p-2 mb-2 bg-blue-600 text-center 
             rounded-3xl text-white inline-block m-2" 
             onClick={async (e)=>{
                 e.preventDefault();
+                window.alert("Coming sooon...");
             }}>{processing ? <Spinner/> : <>Details</>}</button>  
 
             <div className="mb-2 pl-2 text-sm" title={offer?.date_created?.toString()}>
-            <>{timeAgo.short}</>
+            <>Listed : {timeAgo.short}</>
             </div>
       </div>
     
