@@ -368,47 +368,63 @@ export const getNftSellOffers = async (
     wallet : xrpl.Wallet, 
     tokenId : string, id? : string  ) : Promise<NFTOffer[]>=> {
 
-    let net = getNetwork();
 
-    const client = new xrpl.Client(net);
+    try {
 
-    await client.connect();
+        let net = getNetwork();
 
-    let req : xrpl.NFTSellOffersRequest = {
-        account : wallet.classicAddress,
-        nft_id : tokenId, 
-        command: "nft_sell_offers",
-        id : id, 
-    };
+        const client = new xrpl.Client(net);
 
-    let resp = await client.request(req);
-    
-    await client.disconnect();
-    return resp.result.offers; 
+        await client.connect();
 
+        let req : xrpl.NFTSellOffersRequest = {
+            account : wallet.classicAddress,
+            nft_id : tokenId, 
+            command: "nft_sell_offers",
+            id : id, 
+        };
+
+        let resp = await client.request(req);
+        
+        await client.disconnect();
+        return resp.result.offers; 
+    }
+    catch ( e : any ){
+
+        console.log("e:xx",e );
+        return [];
+    }
 }
 
 export const getNftBuyOffers = async ( 
     wallet : xrpl.Wallet, 
     tokenId : string, id? : string  ) : Promise<NFTOffer[]>=> {
 
-    let net = getNetwork();
+    try {
 
-    const client = new xrpl.Client(net);
+        let net = getNetwork();
 
-    await client.connect();
+        const client = new xrpl.Client(net);
 
-    let req : xrpl.NFTBuyOffersRequest = {
-        account : wallet.classicAddress,
-        nft_id : tokenId, 
-        command: "nft_buy_offers",
-        id : id, 
-    };
+        await client.connect();
 
-    let resp = await client.request(req);
-    
-    await client.disconnect();
-    return resp.result.offers; 
+        let req : xrpl.NFTBuyOffersRequest = {
+            account : wallet.classicAddress,
+            nft_id : tokenId, 
+            command: "nft_buy_offers",
+            id : id, 
+        };
 
+        let resp = await client.request(req);
+        
+        await client.disconnect();
+        return resp.result.offers; 
+
+    }
+    catch ( e : any ){
+
+        console.log("e:xx",e );
+        return [];
+    }    
 }
 
