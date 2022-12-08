@@ -8,10 +8,8 @@ import useXrp from "../../hooks/useXrp";
 import useWalletState from "../../hooks/useWalletState";
 import { toClassicAddress } from "../../utils";
 import useService from "../../hooks/useService";
-import Datepicker from "react-tailwindcss-datepicker";
 import { TextField, commonTextfieldClassName } from "../components/TextField";
 import { AccountNFToken } from "../../models";
-import { hasOffer } from "../../service";
 
 type Props = {
     nftToken? : AccountNFToken,
