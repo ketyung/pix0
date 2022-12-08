@@ -56,7 +56,7 @@ export const View : FC = () =>{
     </div>
 
     <div className="bg-white hover:bg-sky-200 shadow-md rounded-2xl px-8 pt-6 pb-8 mb-4 mt-10 text-left w-4/5 mx-auto">
-        Or mint from any collections in your neighborhood <button className="shadow bg-gray-800 hover:bg-purple-700 w-200 ml-4 mt-4
+        Or mint from any beautiful collections in your neighborhood <button className="shadow bg-gray-800 hover:bg-purple-700 w-200 ml-4 mt-4
         focus:shadow-outline focus:outline-none text-white font-bold py-1 px-8 rounded"
         onClick={(e)=>{
             e.preventDefault();
