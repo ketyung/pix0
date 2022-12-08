@@ -50,6 +50,9 @@ export const List : FC <Props> = ({
         })
     }
     {loading ? <tr><td colSpan={6} className="p-10"><Spinner/></td></tr> : <></>}
+    { (!loading && collections.length === 0) && 
+    <tr><td colSpan={7} className="text-center">You have NOT created any collection,
+    click on "Create New Collection" to create some.</td></tr>}
     </tbody>
     </table></div>
 }
