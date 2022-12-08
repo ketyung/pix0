@@ -3,8 +3,10 @@ import { shortenStringTo } from "../../utils";
 import { Spinner } from "../components/Spinner";
 import { MessageView } from "../components/MessageView";
 import { Message, MessageType } from "../../models";
-import { Offer } from "../../models/token_offer";
+import { Offer, OfferType } from "../../models/token_offer";
 import useXrp from "../../hooks/useXrp";
+import useWalletState from "../../hooks/useWalletState";
+import useService from "../../hooks/useService";
 import { TextField, commonTextfieldClassName } from "../components/TextField";
 import { AccountNFToken } from "../../models";
 
@@ -18,7 +20,10 @@ export const SellForm : FC <Props> = ({
 
     const [price, setPrice] = useState(1);
 
-    const [ offer, setOffer] = useState<Offer>();
+    const {selectedWalletPubkey} = useWalletState();
+
+    const [offer, setOffer] = useState<Offer>({type: OfferType.Sell, 
+    created_by : {pubkey :selectedWalletPubkey }, offer_id : "", nft_token : nftToken});
 
     const [message, setMessage] = useState<Message>();
 
@@ -68,10 +73,18 @@ export const SellForm : FC <Props> = ({
         value={`${price}`}
         onChange={(e)=>{
             let p = parseFloat(e.target.value);
-            if ( !isNaN(p))
+            if ( !isNaN(p)) {
                 setPrice(p);
+                setOffer({...offer, price : p});
+            }
         }} className={commonTextfieldClassName('ml-2 w-64')}/><span className="ml-2 font-bold">XRP</span>
         </div>
+        <div className="mb-4">
+        <TextField label="Remark" type="text" 
+        value={offer.remark}
+        onChange={(e)=>{
+            setOffer({...offer, remark : e.target.value});    
+        }}/></div>
         <div className="mb-4">
         <button title="Burn!!" disabled={processing}
         className="text-sm w-64 font-bold ml-4 text-2xl p-2 mb-2 bg-gray-800 rounded-3xl text-white" 
