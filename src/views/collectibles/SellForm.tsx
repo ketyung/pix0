@@ -7,6 +7,7 @@ import { Offer, OfferType } from "../../models/token_offer";
 import useXrp from "../../hooks/useXrp";
 import useWalletState from "../../hooks/useWalletState";
 import useService from "../../hooks/useService";
+import Datepicker from "react-tailwindcss-datepicker";
 import { TextField, commonTextfieldClassName } from "../components/TextField";
 import { AccountNFToken } from "../../models";
 
@@ -86,8 +87,22 @@ export const SellForm : FC <Props> = ({
             setOffer({...offer, remark : e.target.value});    
         }}/></div>
         <div className="mb-4">
+        <b className="text-sm">Start and end dates</b>
+        <Datepicker value={{startDate : offer.start_date ? new Date(offer.start_date)
+        : new Date(), endDate : offer.end_date ? new Date(offer.end_date) : new Date()}}
+        primaryColor="blue" showShortcuts={true} 
+        onChange={(e)=>{
+
+            setOffer({...offer, start_date : ( e?.startDate && typeof e?.startDate === 'string') 
+            ? new Date(e?.startDate).getTime() : 0,
+            end_date : ( e?.endDate && typeof e?.endDate === 'string') ? 
+            new Date(e?.endDate).getTime() : 0});     
+        }}
+        /></div>
+
+        <div className="mb-4">
         <button title="Burn!!" disabled={processing}
-        className="text-sm w-64 font-bold ml-4 text-2xl p-2 mb-2 bg-gray-800 rounded-3xl text-white" 
+        className="text-sm w-64 font-bold text-2xl p-2 mb-2 bg-gray-800 rounded-3xl text-white" 
         onClick={async (e)=>{
             e.preventDefault();
             await createSellOffer();
