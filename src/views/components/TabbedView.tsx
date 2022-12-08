@@ -72,7 +72,7 @@ export const TabbedView : FC <Props> = ({
       <div className="px-4 py-5 flex-auto">
         <div className="tab-content tab-space">
         {tabs?.map((t,i)=>{
-            return <div className={i===0 ? "block" : "hidden"} id={t.id}>
+            return <div  key={`ctnt_${id}_${i}`} className={i===0 ? "block" : "hidden"} id={t.id}>
             {t.content}
             </div>;
         })}

@@ -56,7 +56,6 @@ export const SellOffers : FC <Props> = ({
                     Cancel?
                     </button>
                     </td>
-                    
                 </tr>
             })
         }
