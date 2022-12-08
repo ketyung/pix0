@@ -41,6 +41,15 @@ export const fetchAsNFTMedata = async ( uri : string) : Promise<NFTMetadata|unde
     }
 }
 
+
+export const toClassicAddress = (pubkey : string) => {
+
+	let addr = xrpl.deriveAddress(pubkey);
+
+	return addr;
+	
+}
+
 export const pubkeyOrAddress = (wallet? : StoredWallet, _type : string = "address" ) => {
 
     if (_type === "pubkey")
@@ -49,16 +58,8 @@ export const pubkeyOrAddress = (wallet? : StoredWallet, _type : string = "addres
     }
 
     if ( wallet ) {
-        /* 
-		let w = decryptStoredWallet(wallet);
-   
-        return w?.classicAddress;
-		*/
-		let addr = xrpl.deriveAddress(wallet.pubkey);
-
-		return addr;
-		//return xrpl.xAddressToClassicAddress(xAddr.accountId.toString()).classicAddress;
-
+      
+		return toClassicAddress(wallet.pubkey);
     }
 
     return "";

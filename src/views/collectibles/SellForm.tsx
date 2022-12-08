@@ -6,6 +6,7 @@ import { Message, MessageType } from "../../models";
 import { Offer, OfferType } from "../../models/token_offer";
 import useXrp from "../../hooks/useXrp";
 import useWalletState from "../../hooks/useWalletState";
+import { toClassicAddress } from "../../utils";
 import useService from "../../hooks/useService";
 import Datepicker from "react-tailwindcss-datepicker";
 import { TextField, commonTextfieldClassName } from "../components/TextField";
@@ -24,7 +25,8 @@ export const SellForm : FC <Props> = ({
     const {selectedWalletPubkey} = useWalletState();
 
     const [offer, setOffer] = useState<Offer>({type: OfferType.Sell, 
-    created_by : {pubkey :selectedWalletPubkey }, offer_id : "", nft_token : nftToken});
+    created_by : {pubkey :selectedWalletPubkey, classic_address: toClassicAddress(selectedWalletPubkey ?? "") 
+    }, offer_id : "", nft_token : nftToken});
 
     const [message, setMessage] = useState<Message>();
 
@@ -101,7 +103,7 @@ export const SellForm : FC <Props> = ({
         /></div>
 
         <div className="mb-4">
-        <button title="Burn!!" disabled={processing}
+        <button title="Create Offer..." disabled={processing}
         className="text-sm w-64 font-bold text-2xl p-2 mb-2 bg-gray-800 rounded-3xl text-white" 
         onClick={async (e)=>{
             e.preventDefault();
