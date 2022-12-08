@@ -1,5 +1,5 @@
-import { fetchAsNFTMedata } from "../../utils";
 import { FC , useState, useCallback, useEffect} from "react";
+import { NFTMetadataImageView } from "./NFTMetadataImageView";
 import { SellForm } from "./SellForm";
 import { OffersList } from "./OffersList";
 import { NFTOffer } from "xrpl/dist/npm/models/common";
@@ -7,7 +7,6 @@ import useXrp from "../../hooks/useXrp";
 import { Spinner } from "../components/Spinner";
 import { Modal } from "../components/Modal";
 import { ViewType } from "./View";
-import * as xrpl from 'xrpl';
 
 
 import { AccountNFToken, NFTMetadata } from "../../models";
@@ -25,20 +24,13 @@ export const NftDetailsView : FC <Props> = ({
     nftToken, setViewType
 }) =>{
 
-    const [mediaURI, setMediaURI] = useState<NFTMetadata>();
+    const [metadata, setMetadata] = useState<NFTMetadata>();
 
     const [processing, setProcessing] = useState(false);
 
     const [isBurned, setIsBurned] = useState(false);
 
     const [sellOffers, setSellOffers] = useState<NFTOffer[]>();
-
-    const fetchURI = useCallback( async ()=>{
-
-        let m = await fetchAsNFTMedata( xrpl.convertHexToString(nftToken?.URI ?? ""));
-        setMediaURI(m);
-
-    },[fetchAsNFTMedata]);
 
     const {burnNft, getNftSellOffers} = useXrp();
 
@@ -55,7 +47,6 @@ export const NftDetailsView : FC <Props> = ({
 
     useEffect(()=>{
 
-        fetchURI();
         fetchSellOffers();
     
     },[nftToken]);
@@ -118,13 +109,10 @@ export const NftDetailsView : FC <Props> = ({
     }}/>
     </div>
     <div className="mb-2 text-center mt-2 p-2">
-     <img src={mediaURI === undefined ? xrpl.convertHexToString(nftToken?.URI ?? "")
-        : mediaURI.image } 
-        className="object-scale-down h-80 w-80 my-2 content-center mx-auto"
-        title={mediaURI?.description ? mediaURI.description : "image..."}/>
+        <NFTMetadataImageView hexUri={nftToken?.URI} setMetadataCallback={setMetadata}/>
     </div>
-    {mediaURI?.name && <div className="mb-4 font-bold text-2xl">{mediaURI?.name}</div>}
-    {mediaURI?.description && <div className="mb-4">{mediaURI?.description}</div>}
+    {metadata?.name && <div className="mb-4 font-bold text-2xl">{metadata?.name}</div>}
+    {metadata?.description && <div className="mb-4">{metadata?.description}</div>}
 
     <div className="mb-4">
     { !isBurned && 
