@@ -372,12 +372,14 @@ export const createNftSellOffer = async (tokenId : string, price: number,
        
         // submit tx
         const tx = await client.submitAndWait(transactionBlob,{wallet: signerWallet});
+        await client.disconnect();
 
-        let txResp = await getTx(tx.result.hash);
-        console.log("txResp:::[]", txResp);
-
+        // perhaps a hack to get the last offer ID
+        let sellOffers = await getNftSellOffers(sellerWallet, tokenId);
+        let lastOfferId = sellOffers[sellOffers.length - 1].nft_offer_index;
+       
         if ( completion) {
-            completion({hash : tx.result.hash, id: tx.id});
+            completion({hash : tx.result.hash, id: lastOfferId});
         }
     }
     catch( e : any ) {

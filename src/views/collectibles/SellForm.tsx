@@ -24,6 +24,8 @@ export const SellForm : FC <Props> = ({
 
     const {selectedWalletPubkey} = useWalletState();
 
+    const {addOffer} = useService();
+
     const [offer, setOffer] = useState<Offer>({type: OfferType.Sell, 
     created_by : {pubkey :selectedWalletPubkey, classic_address: toClassicAddress(selectedWalletPubkey ?? "") 
     }, offer_id : "", nft_token : nftToken});
@@ -49,7 +51,7 @@ export const SellForm : FC <Props> = ({
         if ( nftToken?.NFTokenID) {
 
             setProcessing(true);
-            await createNftSellOffer(nftToken?.NFTokenID, price, (e)=>{
+            await createNftSellOffer(nftToken?.NFTokenID, price,async (e)=>{
 
                 if (e instanceof Error){
 
@@ -57,7 +59,9 @@ export const SellForm : FC <Props> = ({
                 }
                 else {
 
-                    console.log("id:::@id:::",e.id);
+                    let o = {...offer, offer_id : `${e.id}`};
+                    setOffer(o);
+                    await addOffer(o); // index it off-chain
 
                     setMessageNow({text : "Success", type : MessageType.Info, hash: e.hash});
                 }
