@@ -439,3 +439,23 @@ export const getOffersBy = async (type : OfferType, offset?: number , limit? : n
         
     }
 }
+
+export const hasOffer = async (tokenId : string, type : OfferType )
+    : Promise<{has_offer : boolean}> =>{
+
+    let url = 
+    `${REMOTE_URL}has_offer/${encodeURIComponent(type)}/${tokenId}`;
+    
+    try {
+
+        let c = await ((await fetch(url,{
+            headers:commonHeaders,
+        }))).json() ;
+        return c;
+    }
+    catch (e : any) {
+
+        return {has_offer: false};
+        
+    }
+}

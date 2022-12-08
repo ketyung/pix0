@@ -11,6 +11,7 @@ import useService from "../../hooks/useService";
 import Datepicker from "react-tailwindcss-datepicker";
 import { TextField, commonTextfieldClassName } from "../components/TextField";
 import { AccountNFToken } from "../../models";
+import { hasOffer } from "../../service";
 
 type Props = {
     nftToken? : AccountNFToken,
@@ -24,11 +25,11 @@ export const SellForm : FC <Props> = ({
 
     const {selectedWalletPubkey} = useWalletState();
 
-    const {addOffer} = useService();
+    const {addOffer, hasOffer} = useService();
 
     const [offer, setOffer] = useState<Offer>({type: OfferType.Sell, 
     created_by : {pubkey :selectedWalletPubkey, classic_address: toClassicAddress(selectedWalletPubkey ?? "") 
-    }, offer_id : "", nft_token : nftToken});
+    }, nft_token : nftToken});
 
     const [message, setMessage] = useState<Message>();
 
@@ -51,6 +52,15 @@ export const SellForm : FC <Props> = ({
         if ( nftToken?.NFTokenID) {
 
             setProcessing(true);
+
+            let _hasOffer = await hasOffer(nftToken.NFTokenID, OfferType.Sell);
+            if (_hasOffer.has_offer) {
+
+                setMessageNow({text : "You've already created a sell offer for this NFT!", 
+                type: MessageType.Error });
+                return;
+            }
+
             await createNftSellOffer(nftToken?.NFTokenID, price,async (e)=>{
 
                 if (e instanceof Error){
@@ -93,25 +103,11 @@ export const SellForm : FC <Props> = ({
         }} className={commonTextfieldClassName('ml-2 w-64')}/><span className="ml-2 font-bold">XRP</span>
         </div>
         <div className="mb-4">
-        <TextField label="Remark" type="text" 
-        value={offer.remark}
+        <TextField label="Remark" type="text" value={offer.remark}
         onChange={(e)=>{
             setOffer({...offer, remark : e.target.value});    
         }}/></div>
-        <div className="mb-4">
-        <b className="text-sm">Start and end dates</b>
-        <Datepicker value={{startDate : offer.start_date ? new Date(offer.start_date)
-        : new Date(), endDate : offer.end_date ? new Date(offer.end_date) : new Date()}}
-        primaryColor="blue" showShortcuts={true} 
-        onChange={(e)=>{
-
-            setOffer({...offer, start_date : ( e?.startDate && typeof e?.startDate === 'string') 
-            ? new Date(e?.startDate).getTime() : 0,
-            end_date : ( e?.endDate && typeof e?.endDate === 'string') ? 
-            new Date(e?.endDate).getTime() : 0});     
-        }}
-        /></div>
-
+       
         <div className="mb-4">
         <button title="Create Offer..." disabled={processing}
         className="text-sm w-64 font-bold text-2xl p-2 mb-2 bg-gray-800 rounded-3xl text-white" 

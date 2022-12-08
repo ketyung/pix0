@@ -216,11 +216,18 @@ export default function useService()  {
             }
     
             return {res: []};
-        }
+    }
+
+    const hasOffer = async (tokenId : string, type : OfferType )
+    : Promise<{has_offer : boolean}> =>{
+
+        let c = await service.hasOffer(tokenId, type);
+        return c;
+    }
     
 
     return {getCollectionsBy, addCollection, loading, updateCollection, getCollectionBy
     ,getCollectionsMediaBy, getCollectionsMediaCountBy, addCollectionMedia, addOffer, 
-    getOffers,deleteOffer,getPublishedCollections, getOneCollectionMedia} as const ;
+    getOffers,deleteOffer,hasOffer, getPublishedCollections, getOneCollectionMedia} as const ;
 
 }

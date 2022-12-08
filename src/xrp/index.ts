@@ -375,11 +375,7 @@ export const createNftSellOffer = async (tokenId : string, price: number,
         // submit tx
         const tx = await client.submitAndWait(transactionBlob,{wallet: signerWallet});
         await client.disconnect();
-
-        // perhaps a hack to get the last offer ID
-        //https://xrpl.org/offer.html
-
-        
+ 
         if ( completion) {
             completion({hash : tx.result.hash, seq_num: tx.result.Sequence});
         }
