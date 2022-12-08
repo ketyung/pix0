@@ -46,6 +46,10 @@ export const SimpleMintForm : FC = () =>{
 
     const mintNow = async () =>{
 
+        if (!window.confirm('Confirm to mint now?')){
+            return;
+        }
+
         setMessage(undefined);
 
         setProcessing(true);
@@ -59,6 +63,7 @@ export const SimpleMintForm : FC = () =>{
 
         await mintNft(params, (e)=>{
 
+           
             if ( e instanceof Error) {
                 setMessageNow ({
                     text: e.message,
