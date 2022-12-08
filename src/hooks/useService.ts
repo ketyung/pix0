@@ -221,6 +221,6 @@ export default function useService()  {
 
     return {getCollectionsBy, addCollection, loading, updateCollection, getCollectionBy
     ,getCollectionsMediaBy, getCollectionsMediaCountBy, addCollectionMedia, addOffer, 
-    deleteOffer,getPublishedCollections, getOneCollectionMedia} as const ;
+    getOffers,deleteOffer,getPublishedCollections, getOneCollectionMedia} as const ;
 
 }

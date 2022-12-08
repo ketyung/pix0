@@ -3,6 +3,7 @@ import { shortenStringTo } from "../../utils";
 import { Spinner } from "../components/Spinner";
 import { MessageView } from "../components/MessageView";
 import { Message, MessageType } from "../../models";
+import { Offer } from "../../models/token_offer";
 import useXrp from "../../hooks/useXrp";
 import { TextField, commonTextfieldClassName } from "../components/TextField";
 import { AccountNFToken } from "../../models";
@@ -16,6 +17,8 @@ export const SellForm : FC <Props> = ({
 }) =>{
 
     const [price, setPrice] = useState(1);
+
+    const [ offer, setOffer] = useState<Offer>();
 
     const [message, setMessage] = useState<Message>();
 

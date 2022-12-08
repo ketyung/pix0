@@ -22,6 +22,8 @@ export interface Offer {
 
     nft_token : AccountNFToken,
 
+    price? : number, 
+    
     remark? : string, 
 
     start_date? : number, // in timestamp,
