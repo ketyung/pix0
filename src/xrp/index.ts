@@ -379,7 +379,6 @@ export const cancelOffer = async (offerId : string,
             TransactionType: "NFTokenCancelOffer",
             Account: wallet.classicAddress ,
             NFTokenOffers: [offerId],
-            Flags: 1,
         };
     
         let signerWallet = xrpl.Wallet.fromSeed(wallet.seed ?? "");

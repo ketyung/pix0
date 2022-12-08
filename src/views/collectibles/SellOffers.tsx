@@ -15,6 +15,9 @@ export const SellOffers : FC <Props> = ({
 
     const [loading, setLoading] = useState(false);
 
+    const [processing, setProcessing] = useState<{index?: number, 
+        processing: boolean}>({processing :false});
+
     const {getNftSellOffers, cancelOffer} = useXrp();
     
     const fetchSellOffers = useCallback( async () =>{
@@ -31,11 +34,14 @@ export const SellOffers : FC <Props> = ({
     
     },[tokenId]);
 
-    const cancelOfferNow = async (id : string) =>{
+    const cancelOfferNow = async (id : string, index? : number) =>{
 
         if ( window.confirm('Are you sure to cancel the selected offer?')){
 
+            setProcessing({processing : true, index : index});
             await cancelOffer(id, async (e)=>{
+                setProcessing({processing : false , index : undefined});
+           
                 if ( e instanceof Error){
 
                     window.alert(`Error : ${e.message}`);
@@ -44,6 +50,7 @@ export const SellOffers : FC <Props> = ({
                     window.alert('Success!');
                     await fetchSellOffers();
                 }
+               
             });
         }
 
@@ -68,12 +75,13 @@ export const SellOffers : FC <Props> = ({
                     <td>{shortenStringTo(s.nft_offer_index, 16)}</td>
                     <td className="text-center">{dropsToXrp(s.amount.toString())}</td>
                     <td className="text-center">
-                    <button title="Cancel!!" onClick={async (e)=>{
+                    <button title="Cancel!!" disabled={processing.processing} 
+                    onClick={async (e)=>{
                         e.preventDefault();
-                        await cancelOfferNow(s.nft_offer_index);
+                        await cancelOfferNow(s.nft_offer_index, i);
                     }}
                     className="text-xs w-32 m-1 text-2xl p-1 mb-2 bg-red-800 rounded-xl text-white">
-                    Cancel?
+                    {(processing.processing && processing.index === i) ? <Spinner/> : <>Cancel?</>}
                     </button>
                     </td>
                 </tr>
@@ -81,7 +89,7 @@ export const SellOffers : FC <Props> = ({
         }
          {(!loading && sellOffers?.length === 0) && <tr><td colSpan={3} className="text-center p-2">
             NO Sell Offers
-            </td></tr>}
+        </td></tr>}
         </table>
     </>
 }
