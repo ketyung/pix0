@@ -191,7 +191,8 @@ export default function useService()  {
         setLoading(false);
     }
 
-    const deleteOffer = async  (param : {offer_id : string, 
+    const deleteOffer = async (param: {token_id : string,
+        type : OfferType,  
         creator : OfferCreator},
         completion? : (res : Error|{deleted : boolean}) => void ) => {
 

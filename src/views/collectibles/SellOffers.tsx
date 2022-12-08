@@ -1,10 +1,13 @@
 import { Props } from "./OffersList";
 import { NFTOffer } from "xrpl/dist/npm/models/common";
 import useXrp from "../../hooks/useXrp";
-import { shortenStringTo } from "../../utils";
+import useService from "../../hooks/useService";
+import useWalletState from "../../hooks/useWalletState";
+import { shortenStringTo, toClassicAddress } from "../../utils";
 import { Spinner } from "../components/Spinner";
 import { dropsToXrp } from "xrpl";
 import { FC , useCallback, useEffect, useState} from "react";
+import { OfferType } from "../../models/token_offer";
 
 
 export const SellOffers : FC <Props> = ({
@@ -19,6 +22,8 @@ export const SellOffers : FC <Props> = ({
         processing: boolean}>({processing :false});
 
     const {getNftSellOffers, cancelOffer} = useXrp();
+
+    const {deleteOffer} = useService();
     
     const fetchSellOffers = useCallback( async () =>{
         setLoading(true);
@@ -27,6 +32,8 @@ export const SellOffers : FC <Props> = ({
         setLoading(false);
     },[getNftSellOffers]);
 
+
+    const {selectedWalletPubkey} = useWalletState();
 
     useEffect(()=>{
 
@@ -48,6 +55,10 @@ export const SellOffers : FC <Props> = ({
                 }
                 else {
                     window.alert('Success!');
+                    await deleteOffer({ token_id :tokenId, type : OfferType.Sell,
+                        creator :  {pubkey :selectedWalletPubkey, classic_address: 
+                            toClassicAddress(selectedWalletPubkey ?? "") }
+                    });
                     await fetchSellOffers();
                 }
                

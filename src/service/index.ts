@@ -372,7 +372,8 @@ export const addOffer = async  (offer : Offer,
 }
 
 export const deleteOffer = async  (
-    param : {offer_id : string, 
+    param : {token_id : string,
+        type : OfferType,  
         creator : OfferCreator},
     completion? : (res : Error|{deleted: boolean}) => void ) =>{
 
