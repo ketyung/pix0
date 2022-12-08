@@ -426,7 +426,7 @@ export const getNftSellOffers = async (
     }
     catch ( e : any ){
 
-        console.log("e:xx@sOffers",e );
+        //console.log("e:xx@sOffers",e );
         return [];
     }
 }
@@ -458,7 +458,7 @@ export const getNftBuyOffers = async (
     }
     catch ( e : any ){
 
-        console.log("e:xx@bOffers",e );
+        //console.log("e:xx@bOffers",e );
         return [];
     }    
 }
