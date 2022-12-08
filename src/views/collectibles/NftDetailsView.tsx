@@ -128,7 +128,7 @@ export const NftDetailsView : FC <Props> = ({
 
     <div className="mb-4">
     { !isBurned && 
-    <Modal title="Create Sell Offer for this NFT" triggerButton={
+    <Modal id="SellFormModal" title="Create Sell Offer for this NFT" triggerButton={
     <><i className="fa fa-exchange mr-2" aria-hidden="true"/><span className="mr-6">Sell</span></>}
     triggerButtonClassName="text-sm w-64 font-bold ml-4 text-2xl p-2 mb-2 bg-gray-900 rounded-3xl text-white ease-linear transition-all duration-250"
     ><SellForm nftToken={nftToken} /></Modal>}
