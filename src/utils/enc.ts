@@ -41,13 +41,6 @@ export const decrypt = (transitmessage: string, pass: string) => {
     try 
     {
        
-        /*
-        const salt = CryptoJS.enc.Hex.parse(transitmessage.substr(0, 32))
-        const iv = CryptoJS.enc.Hex.parse(transitmessage.substr(32, 32))
-        const encrypted = transitmessage.substring(64)
-        // substr - deprecated, use substring as the followings
-        */
-
         const salt = CryptoJS.enc.Hex.parse(transitmessage.substring(0, 32));
         const iv = CryptoJS.enc.Hex.parse(transitmessage.substring(32, 64));
         const encrypted = transitmessage.substring(64);
