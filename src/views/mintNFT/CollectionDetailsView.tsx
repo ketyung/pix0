@@ -47,6 +47,7 @@ export const CollectionDetailsView : FC <Props> = ({
 
         if ( collection) {
 
+            setProcessing(true);
             await randomMint(collection, (e)=>{
 
                 if ( e instanceof Error){
@@ -57,6 +58,7 @@ export const CollectionDetailsView : FC <Props> = ({
 
                     setMessageNow({text: "Success!", type: MessageType.Info, hash : e});
                 }
+                setProcessing(false);
             });
         }
        

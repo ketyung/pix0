@@ -173,7 +173,8 @@ export default function useXrp() {
                     let collection_media : CollectionMedia|undefined =
                     await randomMediaForMinting(collection._id, selectedWalletPubkey);
                 
-                    if ( collection_media && collection_media.medias.length > 0 ) {
+                    if ( collection_media && collection_media.medias && 
+                        collection_media.medias.length > 0 ) {
             
                         let media = collection_media.medias[0];
                         if ( media.value !== undefined) {
