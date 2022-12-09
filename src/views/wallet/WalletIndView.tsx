@@ -51,12 +51,8 @@ export const WalletIndView : FC <Props> = ({
      <div className="mr-20">Balance : {loading ? <Spinner/> : <>{balance} XRP</>}</div>
      <div className="mt-4">
 
-        <Modal id="SendModal" title="Send XRP..." triggerButton={
-        <><button title="Send XRP" 
-        className="text-sm w-32 font-bold p-2 mb-2 bg-gray-900 rounded text-white" 
-        onClick={(e)=>{
-            e.preventDefault();}}>Send</button></>}
-        triggerButtonClassName="text-sm w-64 font-bold ml-4 text-2xl p-2 mb-2 bg-blue-900 rounded-3xl text-white ease-linear transition-all duration-250"
+        <Modal id="SendModal" title="Send XRP..." triggerButton="Send"
+        triggerButtonClassName="text-sm w-32 font-bold p-2 mb-2 bg-gray-900 rounded text-white"
         ><p>Coming soon..</p></Modal>
         
      </div>
