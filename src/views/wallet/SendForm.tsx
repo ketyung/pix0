@@ -74,7 +74,7 @@ export const SendForm : FC = () =>{
             }}/>
         </div>
         <div className="mt-4">
-        <button title="Import wallet" disabled={processing}
+        <button title="Send XRP..." disabled={processing}
             className="text-sm w-32 font-bold p-2 mb-2 bg-gray-500 rounded text-white" 
             onClick={async (e)=>{
                 e.preventDefault();

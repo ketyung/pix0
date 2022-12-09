@@ -335,7 +335,6 @@ export const sendXrp = async ( from : xrpl.Wallet, to : string,
 
         await client.connect();
 
-        // Note that the destination is hard coded.
         const prepared = await client.autofill({
             "TransactionType": "Payment",
             "Account": from.address,
