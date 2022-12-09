@@ -19,6 +19,8 @@ export const WalletIndView : FC <Props> = ({
 
     const [loading, setLoading] = useState(false);
 
+    const [processing, setProcessing] = useState(false);
+
     const {getBalance} = useXrp();
 
     useEffect(()=>{
@@ -46,5 +48,21 @@ export const WalletIndView : FC <Props> = ({
     rounded-3xl p-2 pb-5 text-left pl-20">
      <div className="max-w-200 mr-10 mb-4">{shortenStringTo(pubkeyOrAddress(storedWallet) ?? "", 20)}</div>
      <div className="mr-20">Balance : {loading ? <Spinner/> : <>{balance} XRP</>}</div>
+     <div className="mt-4">
+        <div className="mt-2">
+            <button title="Send XRP" disabled={processing}
+            className="text-sm w-32 font-bold p-2 mb-2 bg-gray-900 rounded text-white" 
+            onClick={(e)=>{
+                e.preventDefault();
+            }}>{processing ? <Spinner/> : <>Send</>}</button>
+
+            <button title="Receive XRP" disabled={processing}
+            className="text-sm w-32 font-bold p-2 ml-10 mb-2 bg-blue-900 rounded text-white" 
+            onClick={(e)=>{
+                e.preventDefault();
+            }}>{processing ? <Spinner/> : <>Receive</>}</button>
+        </div>
+        
+     </div>
     </div>
 }
