@@ -136,3 +136,18 @@ export const isPwStrong = (pass : string) : boolean =>{
 
 	return strongPassword.test(pass);
 }
+
+
+export const urlToBase64 = async (url : string) : Promise<string|ArrayBuffer> => {
+	const data = await fetch(url);
+	const blob = await data.blob();
+	return new Promise((resolve) => {
+	  	const reader = new FileReader();
+	  	reader.readAsDataURL(blob); 
+	  	reader.onloadend = () => {
+			const base64data = reader.result;
+			if ( base64data !== null)   
+				resolve(base64data);
+	  	}
+	});
+}

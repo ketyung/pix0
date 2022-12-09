@@ -4,7 +4,7 @@ import { NFTOffer } from "xrpl/dist/npm/models/common";
 import { uploadToArweave, uploadMetadata } from "../arweave";
 import useWalletState from './useWalletState';
 import { decryptStoredWallet } from "../utils/enc";
-import { uriExists } from "../utils";
+import { uriExists, urlToBase64 } from "../utils";
 import { StoredWallet, NFTResult, NFTMetadata } from "../models";
 import { WalletsStorage } from "../utils/local-storage";
 import { Collection, CollectionMedia } from "../models/collection";
@@ -136,27 +136,98 @@ export default function useXrp() {
        
     }
 
+
+    const nftMetadataFrom = (media : CollectionMedia, collection : Collection) =>{
+
+        let metadata : NFTMetadata = {name : `${media.name} of ${collection.name}`,
+         description : collection.description};
+
+        if ( media.medias.length > 0 ) {
+
+            metadata.attributes = media.medias[0].attributes;
+        }
+
+        return metadata;
+      
+    }
+
     const randomMint = async (
         minterWallet : xrpl.Wallet,
         collection : Collection,
         completion? : (res : string|Error)=> void) => {
+
+        if ( selectedWalletPubkey ) {
+
+            let connectedWallet = WalletsStorage.get(selectedWalletPubkey);
+            if ( connectedWallet) {
+
+                let wallet = decryptStoredWallet(connectedWallet);
+
+                if ( wallet === undefined) {
+
+                    if (completion)
+                        completion(new Error('Failed to decrypt wallet'));
+                    return;
+                }
+
+                if ( collection?._id) {
     
-        if ( collection?._id) {
-    
-            let collection_media : CollectionMedia|undefined =
-            await randomMediaForMinting(collection._id, minterWallet.publicKey);
+                    let collection_media : CollectionMedia|undefined =
+                    await randomMediaForMinting(collection._id, minterWallet.publicKey);
+                
+                    if ( collection_media && collection_media.medias.length > 0 ) {
+            
+                        let media = collection_media.medias[0];
+                        if ( media.value !== undefined) {
         
-            if ( collection_media && collection_media.medias.length > 0 ) {
-    
-                let media_uri = collection_media.medias[0];
-    
-            }
-            else {
-    
-                if ( completion )
-                    completion(new Error('Failed to fetch collection media!'));
+                            let data_url = await urlToBase64(media.value);
+                            
+                            // upload to arweave now ...
+                            if ( typeof data_url === 'string') {
+        
+                                let uri = await uploadToArweave(data_url, media.content_type);
+
+                                console.log("arweave.image.url", uri, new Date());
+                                if ( uri instanceof Error){
+                                    if ( completion)
+                                        completion(uri);
+                                    return; 
+                                }
+        
+                                let metadata = nftMetadataFrom(collection_media, collection);
+                                metadata.image = uri;
+        
+                                // upload metadata to arweave !
+                                uri = await uploadMetadata(metadata);
+
+                                console.log("arweave.metadata.url", uri, new Date());
+        
+                                if ( uri instanceof Error){
+                                    if ( completion)
+                                        completion(uri);
+                                    return; 
+                                }
+        
+                                await xrp.mintNft(wallet, uri ,collection.std_price, 
+                                    collection.transfer_fee,
+                                    collection.burnable,completion);
+        
+        
+                            }
+                        }
+                       
+                    }
+                    else {
+            
+                        if ( completion )
+                            completion(new Error('Failed to fetch collection media!'));
+                    }
+                }
+
             }
         }
+    
+       
       
     }
     
