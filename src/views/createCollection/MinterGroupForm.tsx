@@ -1,5 +1,6 @@
 import { Collection } from "../../models/collection";
 import { MinterGroup } from "../../models/collection";
+import { Spinner } from "../components/Spinner";
 import { TextField, commonTextfieldClassName } from "../components/TextField";
 import { FC, useState } from "react";
 import Datepicker from "react-tailwindcss-datepicker";
@@ -14,6 +15,8 @@ export const MinterGroupForm : FC <Props> = ({
 }) =>{
 
     const [group, setGroup] = useState<MinterGroup>({name : "", collection_id : collection?.id ?? ""});
+
+    const [loading, setLoading] = useState(false);
 
     return <div className="m-auto p-10 mt-4 border-1 border-gray-300 rounded-3xl w-3/5 shadow-2xl text-left">
           <div className="mb-4">Add a minter group (such as WhiteList, OG etc) in your collection <span className="font-bold">{
@@ -55,8 +58,14 @@ export const MinterGroupForm : FC <Props> = ({
             new Date(e?.endDate).getTime() : 0});     
         }}
         />
-
         </div>
         
+        <div className="mt-2">
+            <button title="Add media" disabled={loading}
+            className="text-sm w-64 font-bold p-2 mb-2 bg-gray-500 rounded text-white" 
+            onClick={(e)=>{
+                e.preventDefault();
+            }}>{loading ? <Spinner/> : <>Add</>}</button>
+        </div>
     </div>;
 }

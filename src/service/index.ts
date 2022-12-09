@@ -1,4 +1,4 @@
-import { Collection, CollectionMedia } from "../models/collection"
+import { Collection, CollectionMedia, MinterGroup } from "../models/collection"
 import { Offer, OfferCreator, OfferType } from "../models/token_offer";
 
 const REMOTE_URL = `${process.env.REACT_APP_SERVICE_API_URL ?? "http://localhost:3338/"}`;
@@ -479,4 +479,52 @@ export const hasOffer = async (tokenId : string, type : OfferType )
         return {has_offer: false};
         
     }
+}
+
+
+
+export const addMinterGroup = async  (minterGroup : MinterGroup,
+    completion? : (res : Error|Collection) => void ) =>{
+
+    let url = `${REMOTE_URL}add_collection_media/`; 
+
+    try {
+
+        const response = await fetch(url, {
+            method: 'POST', 
+            mode: 'cors', 
+            cache: 'no-cache', 
+            //credentials: 'same-origin', // include, *same-origin, omit
+            headers:commonHeaders,
+            redirect: 'follow', 
+            referrerPolicy: 'no-referrer', 
+            body: JSON.stringify(minterGroup) 
+        });
+
+        if ( response.status !== 200) {
+
+            let return_err = (await response.json()) ;
+
+            if ( completion ){
+                completion( new Error(`${return_err.error} : ${return_err.details}`));
+                return ;
+            }
+        }
+
+        
+        if ( completion) {
+
+            let return_collection = (await response.json()) ;
+            completion(return_collection);
+      
+        }
+    
+    }
+    catch(e : any ){
+
+        if ( completion )
+            completion( new Error(e.message));
+
+    }
+    
 }
