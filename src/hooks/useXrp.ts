@@ -151,8 +151,7 @@ export default function useXrp() {
       
     }
 
-    const randomMint = async (
-        collection : Collection,
+    const randomMint = async (collection : Collection,
         completion? : (res : string|Error)=> void) => {
 
         if ( selectedWalletPubkey ) {
