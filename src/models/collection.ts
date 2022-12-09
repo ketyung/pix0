@@ -137,7 +137,7 @@ export interface MinterGroup {
 }
 
 
-export interface GroupAllowedMinter {
+export interface Minter {
 
     name? : string,
 
