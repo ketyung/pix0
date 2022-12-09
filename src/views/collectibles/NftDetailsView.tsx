@@ -45,6 +45,17 @@ export const NftDetailsView : FC <Props> = ({
     },[getNftSellOffers]);
 
 
+    const isBurnable = () =>{
+        return nftToken?.Flags === 1 || nftToken?.Flags === (1+8) ||
+        nftToken?.Flags === (1+2+8);
+    }
+
+
+    const isTransferable = () =>{
+        return nftToken?.Flags === 8 || nftToken?.Flags === (1+8) ||
+        nftToken?.Flags === (1+2+8);
+    }
+
     useEffect(()=>{
 
         fetchSellOffers();
@@ -130,7 +141,7 @@ export const NftDetailsView : FC <Props> = ({
     ><OffersList tokenId={nftToken?.NFTokenID ?? ""} /></Modal>
      </div>}
 
-    {(nftToken?.Flags === 1 && !isBurned ) && <div className="mb-4">
+    {(isBurnable() && !isBurned ) && <div className="mb-4">
     <button title="Burn!!" disabled={processing}
     className="text-sm w-64 font-bold ml-4 text-2xl p-2 mb-2 bg-red-800 rounded-3xl text-white" 
     onClick={async (e)=>{
