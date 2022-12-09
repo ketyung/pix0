@@ -2,6 +2,7 @@ import { FC, useEffect, useState, useCallback } from "react";
 import { StoredWallet } from "../../models";
 import { shortenStringTo, pubkeyOrAddress } from "../../utils";
 import { Spinner } from "../components/Spinner";
+import { SendForm } from "./SendForm";
 import { Modal } from "../components/Modal";
 import useXrp from "../../hooks/useXrp";
 import { WalletsStorage } from "../../utils/local-storage";
@@ -52,7 +53,7 @@ export const WalletIndView : FC <Props> = ({
      <div className="mt-4">
         <Modal id="SendModal" title="Send XRP..." triggerButton="Send"
         triggerButtonClassName="text-sm w-32 font-bold p-2 mb-2 bg-gray-900 rounded text-white"
-        ><p>Coming soon..</p></Modal>
+        ><SendForm/></Modal>
      </div>
     </div>
 }
