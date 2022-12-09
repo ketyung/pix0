@@ -437,10 +437,41 @@ export default function useXrp() {
     }
 
 
+    const sendXrp = async ( to : string, amount : number ,
+        completion? : (res : { hash?: string } |Error)=> void ) => {
+
+        if ( selectedWalletPubkey ) {
+
+            let connectedWallet = WalletsStorage.get(selectedWalletPubkey);
+            if ( connectedWallet) {
+
+                let wallet = decryptStoredWallet(connectedWallet);
+                if ( wallet ) {
+                    await xrp.sendXrp(wallet, to, amount, completion);
+                }
+                else {
+                    if ( completion ) {
+                        completion(new Error("Undefined wallet!"));
+                    }
+    
+                }
+
+            }
+        }
+        else {
+
+            if ( completion ) {
+                completion(new Error("No connected wallet!"));
+            }
+        }
+
+    }
+
+
 
     return {genWallet,getNftsOf,  
         fundWallet,getBalance,mintNft, getNftSellOffers,getNftBuyOffers, 
         walletFromSeed, burnNft, createNftOffer, cancelOffer,
-        acceptSellOffer,randomMint} as const;
+        acceptSellOffer,randomMint, sendXrp} as const;
 
 }
