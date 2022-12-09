@@ -179,8 +179,8 @@ export const HeaderForm : FC <Props> = ({
         setCollection({...collection, status : e.target.value});
     }}/>
       <div className="text-xs mt-1">
-        Set the status to "Published" so this collection is viewable and can be minted by the /**
-        or from the neighborhood
+        Set the status to "Published" so this collection is viewable and can be minted by public or 
+        from the neighborhood when there are media in it
       </div>
     </div>
     <div className="mt-2">

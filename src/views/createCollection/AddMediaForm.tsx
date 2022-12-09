@@ -117,7 +117,8 @@ export const AddMediaForm : FC <Props> = ({
     const addMediaNow = async () =>{
 
         //console.log("collection.media@xx::", collectionMedia, new Date());
-        if ( collection?.id ) {
+
+        if ( collection?._id ) {
 
             if (mediaDataUrl === undefined ){
 
@@ -125,7 +126,7 @@ export const AddMediaForm : FC <Props> = ({
                 return;
             }
 
-            await addCollectionMedia(collectionMedia, collection?.id, 
+            await addCollectionMedia(collectionMedia, collection?._id, 
                 mediaDataUrl, (e)=>{
 
                 setMediaDataUrl(undefined);
@@ -138,6 +139,10 @@ export const AddMediaForm : FC <Props> = ({
                     setMessageNow( {type: MessageType.Info, text : "Success"});
                 }
             });
+        }
+        else {
+
+            window.alert("Undefined collection");
         }
        
     }
