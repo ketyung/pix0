@@ -1,6 +1,6 @@
 import { StoredWallet } from "../../models";
 import { WalletsStorage } from "../../utils/local-storage";
-import { shortenStringTo,pubkeyOrAddress } from "../../utils";
+import { shortenStringTo,pubkeyOrAddress, copy } from "../../utils";
 import useXrp from "../../hooks/useXrp";
 import useWalletState from "../../hooks/useWalletState";
 import { Spinner } from "../components/Spinner";
@@ -117,8 +117,14 @@ export const WalletListRow : FC <Props> = ({
     m-4 bg-slate-50 hover:bg-slate-200 align-top 
     rounded-3xl p-4 text-left">
     <span className="max-w-40 mr-4">{(index ?? 0) + 1}.</span> 
-    <span className="min-w-200 mr-10">{shortenStringTo(
-        pubkeyOrAddress(wallet) ?? "", 20)}</span>
+    <span className="min-w-200 mr-2">{shortenStringTo(
+        pubkeyOrAddress(wallet) ?? "", 20)}</span><span className="ml-2">
+            <i className="fa fa-clone cursor-pointer" aria-hidden="true"
+            onClick={(e)=>{
+                e.preventDefault();
+                copy( pubkeyOrAddress(wallet));
+            }}/>
+        </span>
     <div>
     <span className="mr-20 min-w-260">Balance : {loading ? <Spinner/> : <>{balance} XRP</>}</span>
     {buttons}
