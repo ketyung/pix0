@@ -232,7 +232,7 @@ export default function useXrp() {
                     else {
             
                         if ( completion )
-                            completion(new Error('Failed to fetch collection media!'));
+                            completion(new Error('No available media for minting!'));
                     }
                 }
 
