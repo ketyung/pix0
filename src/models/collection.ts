@@ -35,6 +35,8 @@ export interface Collection {
   
     media_count? : number, 
 
+    minter_group_count? : number, 
+     
     created_by : string, 
 
     date_created? : Date,

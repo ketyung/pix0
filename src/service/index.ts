@@ -533,7 +533,7 @@ export const addMinterGroup = async  (minterGroup : MinterGroup,
 export const addMintersToGroup = async  (minters : Minter[],
     completion? : (res : Error|Collection) => void ) =>{
 
-    let url = `${REMOTE_URL}add_minter_group/`; 
+    let url = `${REMOTE_URL}add_minters_to_group/`; 
 
     try {
 
