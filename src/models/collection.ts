@@ -38,6 +38,8 @@ export interface Collection {
     minter_group_count? : number, 
 
     burnable? : boolean,
+
+    transfer_fee? : number, 
           
     created_by : string, 
 

@@ -277,6 +277,49 @@ export const updateCollectionMedia = async  (
 }
 
 
+export const randomMediaForMinting = async (collection_id : string, minted_by : string  )
+: Promise< CollectionMedia|undefined> =>{
+
+    let url = `${REMOTE_URL}random_media_for_minting/${encodeURIComponent(collection_id)}/${encodeURIComponent(minted_by)}`;
+    
+    try {
+
+        let c = await ((await fetch(url,{
+            headers: commonHeaders,
+        }))).json() ;
+
+        return c;
+    }
+    catch (e : any) {
+
+        console.error("error@getCollectionsBy", e);
+        return undefined;
+    }
+}
+
+
+export const removeMintInfoOf = async (media_id : string, minted_by : string  )
+: Promise< CollectionMedia|undefined> =>{
+
+    let url = `${REMOTE_URL}remove_mint_info/${encodeURIComponent(media_id)}/${encodeURIComponent(minted_by)}`;
+    
+    try {
+
+        let c = await ((await fetch(url,{
+            headers: commonHeaders,
+        }))).json() ;
+
+        return c;
+    }
+    catch (e : any) {
+
+        console.error("error@getCollectionsBy", e);
+        return undefined;
+    }
+}
+
+
+
 export const getCollectionsMediaCountBy = async (
     collection_id : string, created_by : string )
 : Promise<{count : number}> =>{
