@@ -30,6 +30,13 @@ export const List : FC <Props> = ({
         fetchCollections();
     },[]);
 
+    const refreshList = (refresh : boolean) =>{
+
+        if ( refresh ){
+            fetchCollections();
+        }
+    }
+
     return <div className="flex flex-col justify-center items-center p-2 z-20">
     <table className="table-auto m-2 shadow-2xl rounded" cellPadding={3} cellSpacing={3}>
     <thead>
@@ -46,7 +53,8 @@ export const List : FC <Props> = ({
     <tbody>
     {
         collections.map((c,i)=>{
-            return <ListRow key={`coll_${i}`} collection={c} index={i} setViewType={setViewType}/>
+            return <ListRow key={`coll_${i}`} collection={c} index={i} setViewType={setViewType}
+            refreshList={refreshList}/>
         })
     }
     {loading ? <tr><td colSpan={6} className="p-10"><Spinner/></td></tr> : <></>}

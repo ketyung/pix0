@@ -82,6 +82,32 @@ export default function useService()  {
     
     }
 
+
+    const deleteCollection = async (collection_id : string, 
+        completion? : (res : Error|any ) => void ) => {
+
+        if ( selectedWalletPubkey) {
+
+            setLoading(true);
+
+            let res = await service.deleteCollection(collection_id, selectedWalletPubkey);
+            if (completion){
+                completion(res);
+            }
+
+            setLoading(false);
+        }
+        else {
+
+            if ( completion)
+                completion(new Error('No connected wallet!'));
+        }
+        
+
+     
+    }
+
+
     const getCollectionBy = async (id : string )
     : Promise<Collection|undefined> =>{
 
@@ -229,6 +255,7 @@ export default function useService()  {
 
     return {getCollectionsBy, addCollection, loading, updateCollection, getCollectionBy
     ,getCollectionsMediaBy, getCollectionsMediaCountBy, addCollectionMedia, addOffer, 
-    getOffers,deleteOffer,hasOffer, getPublishedCollections, getOneCollectionMedia} as const ;
+    getOffers,deleteOffer,hasOffer, getPublishedCollections, getOneCollectionMedia,
+    deleteCollection} as const ;
 
 }

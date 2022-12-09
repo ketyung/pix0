@@ -100,6 +100,26 @@ export const updateCollection = async  (collection : Collection,
 
 
 
+export const deleteCollection = async (collection_id : string, creator : string ) =>{
+
+    let url = `${REMOTE_URL}delete_collection/${encodeURIComponent(collection_id)}/${encodeURIComponent(creator)}`;
+    
+    try {
+
+        let c = await ((await fetch(url,{
+            headers:commonHeaders,
+        }))).json() ;
+        return c;
+    }
+    catch (e : any) {
+
+        console.error("error@deleteCollection", e);
+
+        return e;
+    }
+}
+
+
 export const getCollectionsBy = async (creator : string, offset : number = 0, limit : number = 20 )
 : Promise<{res : Collection[], total? :number , offset? : number, limit? : number}> =>{
 

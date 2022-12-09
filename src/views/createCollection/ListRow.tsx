@@ -4,6 +4,7 @@ import { Dropdown, DropdownItem } from "../components/Dropdown";
 import { Collection } from "../../models/collection";
 import { MoreIcon } from "../components/icons/MoreIcon";
 import { Props } from "./List";
+import useService from "../../hooks/useService";
 import { statusItems } from "./HeaderForm";
 import { ViewType } from "./View";
 
@@ -12,17 +13,38 @@ type RProps = Props & {
     collection? : Collection,
 
     index?: number,
+
+    refreshList? : (refresh: boolean) => void, 
 }
 
 export const ListRow : FC <RProps> = ({
-    index, collection, setViewType
+    index, collection, setViewType, refreshList
 }) =>{
 
     const timeAgo = dateToTimeAgo(collection?.date_updated);
 
-    const remove = () => {
+    const {deleteCollection} = useService();
+
+    const remove = async () => {
         if (window.confirm("Are you to remove this?")) {
 
+            if ( collection?._id ) {
+
+                await deleteCollection(collection?._id, (e)=>{
+
+                    if ( e instanceof Error){
+                        window.alert(`Error: ${e.message}`);
+                    }
+                    else {
+
+                        window.alert("Deleted!");
+                        if (refreshList){
+                            refreshList(true);
+                        }
+                    }
+                });
+            }
+            
         }
     }
 
