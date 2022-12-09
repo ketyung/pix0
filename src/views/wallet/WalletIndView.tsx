@@ -2,6 +2,7 @@ import { FC, useEffect, useState, useCallback } from "react";
 import { StoredWallet } from "../../models";
 import { shortenStringTo, pubkeyOrAddress } from "../../utils";
 import { Spinner } from "../components/Spinner";
+import { Modal } from "../components/Modal";
 import useXrp from "../../hooks/useXrp";
 import { WalletsStorage } from "../../utils/local-storage";
 
@@ -49,19 +50,14 @@ export const WalletIndView : FC <Props> = ({
      <div className="max-w-200 mr-10 mb-4">{shortenStringTo(pubkeyOrAddress(storedWallet) ?? "", 20)}</div>
      <div className="mr-20">Balance : {loading ? <Spinner/> : <>{balance} XRP</>}</div>
      <div className="mt-4">
-        <div className="mt-2">
-            <button title="Send XRP" disabled={processing}
-            className="text-sm w-32 font-bold p-2 mb-2 bg-gray-900 rounded text-white" 
-            onClick={(e)=>{
-                e.preventDefault();
-            }}>{processing ? <Spinner/> : <>Send</>}</button>
 
-            <button title="Receive XRP" disabled={processing}
-            className="text-sm w-32 font-bold p-2 ml-10 mb-2 bg-blue-900 rounded text-white" 
-            onClick={(e)=>{
-                e.preventDefault();
-            }}>{processing ? <Spinner/> : <>Receive</>}</button>
-        </div>
+        <Modal id="SendModal" title="Send XRP..." triggerButton={
+        <><button title="Send XRP" 
+        className="text-sm w-32 font-bold p-2 mb-2 bg-gray-900 rounded text-white" 
+        onClick={(e)=>{
+            e.preventDefault();}}>Send</button></>}
+        triggerButtonClassName="text-sm w-64 font-bold ml-4 text-2xl p-2 mb-2 bg-blue-900 rounded-3xl text-white ease-linear transition-all duration-250"
+        ><p>Coming soon..</p></Modal>
         
      </div>
     </div>

@@ -53,7 +53,7 @@ export const genAndFundWallet = async (storeWallet : boolean = true) =>{
             WalletsStorage.add(wallet.wallet);
         }
     
-       // await client.disconnect();
+       // client?.disconnect();
 
         return wallet;
     }
@@ -259,7 +259,7 @@ export const mintNft = async (
 
             if (nft_result.result.meta.TransactionResult === "tesSUCCESS") {
                 
-                await client.disconnect();
+                client?.disconnect();
                 if ( completion ) {
 
                     completion(nft_signed.hash);
@@ -268,7 +268,7 @@ export const mintNft = async (
             } 
             else {
                 
-                await client.disconnect();
+                client?.disconnect();
              
                 if ( completion ) {
                     completion(new Error(`Error sending transaction: ${nft_result}`));
@@ -317,11 +317,52 @@ export const getNftsOf = async (
         id : resp.id, 
     }
 
-    await client.disconnect();
+    client?.disconnect();
     
     return res; 
 
 }
+
+export const sendXrp = async ( from : xrpl.Wallet, to : string,
+    amount : number ,
+    completion? : (res : { hash?: string } |Error)=> void ) =>{
+    
+    try {
+
+        let net = getNetwork();
+        
+        const client = new xrpl.Client(net);
+
+        await client.connect();
+
+        // Note that the destination is hard coded.
+        const prepared = await client.autofill({
+            "TransactionType": "Payment",
+            "Account": from.address,
+            "Amount": xrpl.xrpToDrops(amount),
+            "Destination": to
+        });
+
+        let signerWallet = xrpl.Wallet.fromSeed(from.seed ?? "");
+            
+        const signed = signerWallet.sign(prepared)
+        
+        const tx = await client.submitAndWait(signed.tx_blob);
+
+        client?.disconnect();
+ 
+        if ( completion) {
+            completion({hash : tx.result.hash });
+        }
+    }
+    catch (e : any) {
+
+        if ( completion)
+            completion(new Error(e.message));
+    }
+
+}
+
 
 export const getTx = async ( id : string) : Promise<TxResponse>=> {
 
@@ -338,14 +379,11 @@ export const getTx = async ( id : string) : Promise<TxResponse>=> {
 
     let resp = await client.request(req);
    
-    await client.disconnect();
+    client?.disconnect();
     
     return resp; 
 
 }
-
-
-
 
 
 export const createNftOffer = async (tokenId : string, price: number,
@@ -372,7 +410,7 @@ export const createNftOffer = async (tokenId : string, price: number,
        
         // submit tx
         const tx = await client.submitAndWait(transactionBlob,{wallet: signerWallet});
-        await client.disconnect();
+        client?.disconnect();
  
         if ( completion) {
             completion({hash : tx.result.hash, seq_num: tx.result.Sequence});
@@ -482,7 +520,7 @@ export const getNftSellOffers = async (
 
         let resp = await client.request(req);
         
-        await client.disconnect();
+        client?.disconnect();
         return resp.result.offers; 
     }
     catch ( e : any ){
@@ -513,7 +551,7 @@ export const getNftBuyOffers = async (
 
         let resp = await client.request(req);
         
-        await client.disconnect();
+        client?.disconnect();
         return resp.result.offers; 
 
     }
