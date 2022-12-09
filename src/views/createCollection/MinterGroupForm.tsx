@@ -37,11 +37,19 @@ export const MinterGroupForm : FC <Props> = ({
             value={group.description }/>
         </div>
         <div className="mb-4">
-            <TextField label="Mint Price" id="price" 
+            <TextField label="Mint Price" id="price" type="number"
             onChange={(e)=>{
                 setGroup({...group, mint_price : parseFloat(e.target.value)});
             }} labelInline={true}
             value={`${group.mint_price ?? ""}`}
+            className={commonTextfieldClassName("w-32 inline-block ml-2")}/><span className="ml-2 font-bold">XRP</span>
+        </div>
+        <div className="mb-4">
+            <TextField label="Max Per Wallet" id="maxPerWallet" type="number"
+            onChange={(e)=>{
+                setGroup({...group, max_per_wallet : parseInt(e.target.value)});
+            }} labelInline={true}
+            value={`${group.max_per_wallet ?? 1}`}
             className={commonTextfieldClassName("w-32 inline-block ml-2")}/><span className="ml-2 font-bold">XRP</span>
         </div>
 
@@ -61,7 +69,7 @@ export const MinterGroupForm : FC <Props> = ({
         </div>
         
         <div className="mt-2">
-            <button title="Add media" disabled={loading}
+            <button title="Add minter group" disabled={loading}
             className="text-sm w-64 font-bold p-2 mb-2 bg-gray-500 rounded text-white" 
             onClick={(e)=>{
                 e.preventDefault();
