@@ -7,6 +7,8 @@ import { decryptStoredWallet } from "../utils/enc";
 import { uriExists } from "../utils";
 import { StoredWallet, NFTResult, NFTMetadata } from "../models";
 import { WalletsStorage } from "../utils/local-storage";
+import { Collection, CollectionMedia } from "../models/collection";
+import { randomMediaForMinting, removeMintInfoOf } from "../service";
 
 
 export default function useXrp() {
@@ -133,6 +135,31 @@ export default function useXrp() {
         }
        
     }
+
+    const randomMint = async (
+        minterWallet : xrpl.Wallet,
+        collection : Collection,
+        completion? : (res : string|Error)=> void) => {
+    
+        if ( collection?._id) {
+    
+            let collection_media : CollectionMedia|undefined =
+            await randomMediaForMinting(collection._id, minterWallet.publicKey);
+        
+            if ( collection_media && collection_media.medias.length > 0 ) {
+    
+                let media_uri = collection_media.medias[0];
+    
+            }
+            else {
+    
+                if ( completion )
+                    completion(new Error('Failed to fetch collection media!'));
+            }
+        }
+      
+    }
+    
 
 
     const mintNft = async (
@@ -331,6 +358,6 @@ export default function useXrp() {
     return {genWallet,getNftsOf,  
         fundWallet,getBalance,mintNft, getNftSellOffers,getNftBuyOffers, 
         walletFromSeed, burnNft, createNftOffer, cancelOffer,
-        acceptSellOffer} as const;
+        acceptSellOffer,randomMint} as const;
 
 }

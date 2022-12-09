@@ -3,8 +3,6 @@ import { NFTOffer } from 'xrpl/dist/npm/models/common';
 import { WalletsStorage } from '../utils/local-storage';
 import { NFTResult} from '../models';
 import { TxResponse, xrpToDrops } from 'xrpl';
-import { Collection, CollectionMedia } from '../models/collection';
-import { randomMediaForMinting, removeMintInfoOf } from '../service';
 
 export enum Network {
 
@@ -212,30 +210,6 @@ export const burnNft = async (
 
 }
 
-
-export const randomMint = async (
-    minterWallet : xrpl.Wallet,
-    collection : Collection,
-    completion? : (res : string|Error)=> void) => {
-
-    if ( collection?._id) {
-
-        let collection_media : CollectionMedia|undefined =
-        await randomMediaForMinting(collection._id, minterWallet.publicKey);
-    
-        if ( collection_media && collection_media.medias.length > 0 ) {
-
-            let media_uri = collection_media.medias[0];
-
-        }
-        else {
-
-            if ( completion )
-                completion(new Error('Failed to fetch collection media!'));
-        }
-    }
-  
-}
 
 
 export const mintNft = async (
