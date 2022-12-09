@@ -152,7 +152,6 @@ export default function useXrp() {
     }
 
     const randomMint = async (
-        minterWallet : xrpl.Wallet,
         collection : Collection,
         completion? : (res : string|Error)=> void) => {
 
@@ -173,7 +172,7 @@ export default function useXrp() {
                 if ( collection?._id) {
     
                     let collection_media : CollectionMedia|undefined =
-                    await randomMediaForMinting(collection._id, minterWallet.publicKey);
+                    await randomMediaForMinting(collection._id, selectedWalletPubkey);
                 
                     if ( collection_media && collection_media.medias.length > 0 ) {
             
@@ -210,7 +209,20 @@ export default function useXrp() {
         
                                 await xrp.mintNft(wallet, uri ,collection.std_price, 
                                     collection.transfer_fee,
-                                    collection.burnable,completion);
+                                    collection.burnable, async (e)=>{
+
+                                        if ( e instanceof Error) {
+                                            // if error, release the mint info
+                                            // from the backend, so next person can mint
+                                            await removeMintInfoOf(collection_media?._id ?? "", 
+                                            selectedWalletPubkey);
+
+                                        }
+                                        if (completion)
+                                            completion(e);
+                               
+
+                                });
         
         
                             }

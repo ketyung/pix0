@@ -60,6 +60,8 @@ export interface MintInfo {
 
 export interface CollectionMedia {
 
+    _id? : string,
+
     collection_id : string, 
 
     name : string, 
