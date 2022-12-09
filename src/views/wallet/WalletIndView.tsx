@@ -50,11 +50,9 @@ export const WalletIndView : FC <Props> = ({
      <div className="max-w-200 mr-10 mb-4">{shortenStringTo(pubkeyOrAddress(storedWallet) ?? "", 20)}</div>
      <div className="mr-20">Balance : {loading ? <Spinner/> : <>{balance} XRP</>}</div>
      <div className="mt-4">
-
         <Modal id="SendModal" title="Send XRP..." triggerButton="Send"
         triggerButtonClassName="text-sm w-32 font-bold p-2 mb-2 bg-gray-900 rounded text-white"
         ><p>Coming soon..</p></Modal>
-        
      </div>
     </div>
 }
