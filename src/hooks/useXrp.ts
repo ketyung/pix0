@@ -74,7 +74,7 @@ export default function useXrp() {
     }
 
     const createNftOffer = async (tokenID : string,
-        price : number, 
+        price : number, isSellOffer : boolean,
         completion? : (res : { hash?: string, seq_num? : number}|Error)=> void)  =>{
 
         if ( selectedWalletPubkey ) {
@@ -85,7 +85,7 @@ export default function useXrp() {
                 let wallet = decryptStoredWallet(connectedWallet);
 
                 if ( wallet ) {
-                    await xrp.createNftOffer(tokenID,price, wallet, completion);
+                    await xrp.createNftOffer(tokenID,price, wallet, isSellOffer, completion);
                 }
                 else {
                     if ( completion ) {

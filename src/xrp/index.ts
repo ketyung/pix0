@@ -386,7 +386,7 @@ export const getTx = async ( id : string) : Promise<TxResponse>=> {
 
 
 export const createNftOffer = async (tokenId : string, price: number,
-    sellerWallet : xrpl.Wallet,
+    sellerWallet : xrpl.Wallet, isSellOffer : boolean,
     completion? : (res : { hash?: string, seq_num? : number} |Error)=> void) =>{
 
     try {
@@ -402,7 +402,7 @@ export const createNftOffer = async (tokenId : string, price: number,
             Account: sellerWallet.classicAddress ,
             NFTokenID: tokenId,
             Amount : xrpl.xrpToDrops(`${price}`),
-            Flags: 1,
+            Flags: isSellOffer ? 1 : undefined,
         };
     
         let signerWallet = xrpl.Wallet.fromSeed(sellerWallet.seed ?? "");

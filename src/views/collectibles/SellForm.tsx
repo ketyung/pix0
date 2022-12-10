@@ -60,7 +60,7 @@ export const SellForm : FC <Props> = ({
                 return;
             }
 
-            await createNftOffer(nftToken?.NFTokenID, price,async (e)=>{
+            await createNftOffer(nftToken?.NFTokenID, price, true, async (e)=>{
 
                 if (e instanceof Error){
 
@@ -72,7 +72,7 @@ export const SellForm : FC <Props> = ({
 
                         let o = {...offer, seq_num : e.seq_num };
     
-                        await addOffer(o); // index it off-chain
+                        await addOffer(o); // index it off-ledger 
     
                     }
                    
@@ -101,6 +101,15 @@ export const SellForm : FC <Props> = ({
             }
         }} className={commonTextfieldClassName('ml-2 w-64')}/><span className="ml-2 font-bold">XRP</span>
         </div>
+
+        <div className="mb-4">
+        <TextField label="Destination" type="text" value={offer.destination}
+        onChange={(e)=>{
+            setOffer({...offer, destination : e.target.value});    
+        }}/>
+        <p className="text-xs">This is the XRP wallet address of the person 
+        that this offer is intended to.</p></div>
+       
         <div className="mb-4">
         <TextField label="Remark" type="text" value={offer.remark}
         onChange={(e)=>{

@@ -50,7 +50,7 @@ export const SideBar : FC = () =>{
                 <div className="flex-shrink-0 inline-flex items-center justify-center w-14">
                     <i className="fa fa-gift"></i>
                 </div>
-                <div className="text-center text-xs font-normal ">Your Collectibles</div>
+                <div className="text-center text-xs font-normal ">Collectibles</div>
             </a>
 
             <a onClick={()=>{
