@@ -1,5 +1,5 @@
 import { Collection, CollectionMedia, Minter, MinterGroup } from "../models/collection"
-import { Offer, OfferCreator, OfferType } from "../models/token_offer";
+import { Offer, OfferType } from "../models/token_offer";
 
 const REMOTE_URL = `${process.env.REACT_APP_SERVICE_API_URL ?? "http://localhost:3338/"}`;
 
