@@ -3,6 +3,7 @@ import { Spinner } from "../components/Spinner";
 import { dateToTimeAgo, shortenStringTo } from "../../utils";
 import { NFTOffer } from "xrpl/dist/npm/models/common";
 import useXrp from "../../hooks/useXrp";
+import useService from "../../hooks/useService";
 import { NFTMetadataImageView } from "../collectibles/NFTMetadataImageView";
 import { NFTMetadata } from "../../models";
 import { Offer } from "../../models/token_offer";
@@ -30,6 +31,8 @@ export const OfferListRow : FC <Props> = ({
 
     const {acceptSellOffer, getNftSellOffers} = useXrp();
 
+    const {deleteOffer} = useService();
+
     const fetchSellOffers = useCallback( async () =>{
 
         if ( offer?.nft_token?.NFTokenID) {
@@ -54,13 +57,15 @@ export const OfferListRow : FC <Props> = ({
 
             setProcessing(true);
             await acceptSellOffer(nftOffer,
-            (e)=>{
+            async (e)=>{
 
                 if ( e instanceof Error){
                     window.alert(`Error : ${e.message}`);
                 }
                 else {
                     window.alert("Success!");
+                    await deleteOffer(nftOffer.nft_offer_index);
+                    await fetchSellOffers();
                 }
 
                 setProcessing(false);
