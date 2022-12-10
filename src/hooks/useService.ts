@@ -1,6 +1,7 @@
 import * as service from "../service";
-import { Offer, OfferCreator, OfferType } from "../models/token_offer";
+import { Offer, OfferType } from "../models/token_offer";
 import { Collection, CollectionMedia } from "../models/collection";
+import { toClassicAddress } from "../utils";
 import useWalletState from "./useWalletState";
 import { singleUpload } from "../cloudUpload";
 import { useState } from "react";
@@ -232,16 +233,27 @@ export default function useService()  {
         offset : number = 0, limit : number = 20 )
         : Promise<{res : Offer[], total? :number , offset? : number, limit? : number}> => {
     
-            if ( selectedWalletPubkey) {
-                setLoading(true);
-                
-                let c = await service.getOffersBy(type , destination, offset, limit);
-                setLoading(false);
-                return c; 
-            }
-    
-            return {res: []};
+        setLoading(true);
+        
+        let c = await service.getOffersBy(type , destination, offset, limit);
+        setLoading(false);
+        return c;         
     }
+
+    const getPrivateOffers = async (
+        type : OfferType, 
+        offset : number = 0, limit : number = 20 )
+        : Promise<{res : Offer[], total? :number , offset? : number, limit? : number}> => {
+
+        if (selectedWalletPubkey) {
+
+            return await getOffers(type, toClassicAddress(selectedWalletPubkey), offset, limit );
+        }
+
+        return {res :[]};
+    }
+
+
 
     const hasOffer = async (tokenId : string, type : OfferType, destination? : string )
     : Promise<{has_offer : boolean}> =>{
@@ -253,7 +265,8 @@ export default function useService()  {
 
     return {getCollectionsBy, addCollection, loading, updateCollection, getCollectionBy
     ,getCollectionsMediaBy, getCollectionsMediaCountBy, addCollectionMedia, addOffer, 
-    getOffers,deleteOffer,hasOffer, getPublishedCollections, getOneCollectionMedia,
+    getOffers,deleteOffer,hasOffer,getPrivateOffers,  
+    getPublishedCollections, getOneCollectionMedia,
     deleteCollection} as const ;
 
 }
