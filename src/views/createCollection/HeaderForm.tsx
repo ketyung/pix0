@@ -159,8 +159,8 @@ export const HeaderForm : FC <Props> = ({
         which the item has a name prefix "Helmet" followed by a number e.g. Helmet #001, Helmet #002 etc</div>
     </div> 
     <div className="mb-4">
-    <TextField label="Price" value={`${collection.std_price}`}
-    className={commonTextfieldClassName("w-80")} id="price" type="number" 
+    <TextField label="Price" value={`${collection.std_price}`} labelInline={true}
+    className={commonTextfieldClassName("ml-2 w-80")} id="price" type="number" 
     placeholder="Standard mint price"
         onChange={(e)=>{
             let p =  parseFloat(e.target.value);
@@ -172,11 +172,31 @@ export const HeaderForm : FC <Props> = ({
     </div> 
 
     <div className="mb-4">
-    <span className="mr-1 font-bold">Burnable?</span><input type="checkbox" />
+    <span className="mr-1 font-bold">Burnable?</span><input type="checkbox"
+    checked={collection.burnable}  
+    onChange={(e)=>{
+        setCollection({...collection, burnable : e.currentTarget.checked});
+
+    }}/>
     <span className="ml-10 mr-1 font-bold">Transferrable?</span><input type="checkbox" 
-    checked={collection.transferrable === undefined ? true : collection.transferrable}/>
-    </div> 
-    
+    onChange={(e)=>{
+        
+        setCollection({...collection, transferrable : e.currentTarget.checked});
+
+    }} checked={collection.transferrable === undefined ? true : collection.transferrable}
+    className="mr-10"/>
+   
+    <TextField label="Transfer Rate" value={`${collection.transfer_fee}`} labelInline={true}
+    className={commonTextfieldClassName("ml-1 w-32 inline-block")} id="txfee" type="number" 
+    placeholder="Transfer fee in percentage"
+        onChange={(e)=>{
+            let p =  parseFloat(e.target.value);
+            if ( !isNaN(p))
+                setCollection({...collection, transfer_fee :p});
+        }}/> <span className="ml-1 font-bold">%</span>
+   
+   </div> 
+
     <div className="mb-4">
         <Select value={collection.status} items={statusItems} 
         firstItem={{name : "Status", value: "-"}} id="status" onChange={(e)=>{
