@@ -1,6 +1,6 @@
 import { FC , useState, useCallback, useEffect} from "react";
 import { Spinner } from "../components/Spinner";
-import { dateToTimeAgo } from "../../utils";
+import { dateToTimeAgo, shortenStringTo } from "../../utils";
 import { NFTOffer } from "xrpl/dist/npm/models/common";
 import useXrp from "../../hooks/useXrp";
 import { NFTMetadataImageView } from "../collectibles/NFTMetadataImageView";
@@ -106,8 +106,10 @@ export const OfferListRow : FC <Props> = ({
                 window.alert("Coming sooon...");
             }}>{processing ? <Spinner/> : <>Details</>}</button>  
 
-            <div className="mb-2 pl-2 text-sm" title={offer?.date_created?.toString()}>
-            <>Listed : {timeAgo.short}</>
+            <div className="mb-2 pl-2 text-xs" title={offer?.date_created?.toString()}>
+            <span className="mr-2">Listed: {timeAgo.short}</span>
+            <span title={offer?.created_by.classic_address} 
+            className="ml-2">By: { shortenStringTo(offer?.created_by.classic_address ?? "", 10)}</span>
             </div>
       </div>
     
