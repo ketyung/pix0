@@ -19,8 +19,6 @@ export const SellForm : FC <Props> = ({
     nftToken
 }) =>{
 
-    const [price, setPrice] = useState(1);
-
     const {selectedWalletPubkey} = useWalletState();
 
     const {addOffer, hasOffer} = useService();
@@ -60,22 +58,19 @@ export const SellForm : FC <Props> = ({
                 return;
             }
 
-            await createNftOffer(nftToken?.NFTokenID, price, true, async (e)=>{
+            await createNftOffer(nftToken?.NFTokenID, offer.price ?? 1, 
+                offer.destination, true, async (e)=>{
 
                 if (e instanceof Error){
 
                     setMessageNow({text : e.message,type : MessageType.Error });
                 }
                 else {
+                  
+                    let o = {...offer, seq_num : e.seq_num };
 
-                    if ( e.seq_num ) {
-
-                        let o = {...offer, seq_num : e.seq_num };
+                    await addOffer(o); // index it off-ledger/chain 
     
-                        await addOffer(o); // index it off-ledger 
-    
-                    }
-                   
                     setMessageNow({text : "Success", type : MessageType.Info, hash: e.hash});
                 }
                 setProcessing(false);
@@ -92,11 +87,10 @@ export const SellForm : FC <Props> = ({
         </div>
         <div className="mb-4">
         <TextField label="Price: " type="number" labelInline={true} 
-        value={`${price}`}
+        value={`${offer.price}`}
         onChange={(e)=>{
             let p = parseFloat(e.target.value);
             if ( !isNaN(p)) {
-                setPrice(p);
                 setOffer({...offer, price : p});
             }
         }} className={commonTextfieldClassName('ml-2 w-64')}/><span className="ml-2 font-bold">XRP</span>
@@ -108,7 +102,7 @@ export const SellForm : FC <Props> = ({
             setOffer({...offer, destination : e.target.value});    
         }}/>
         <p className="text-xs">This is the XRP wallet address of the person 
-        that this offer is intended to.</p></div>
+        that this offer is intended to. Leave blank if it's meant for everyone.</p></div>
        
         <div className="mb-4">
         <TextField label="Remark" type="text" value={offer.remark}
