@@ -43,5 +43,8 @@ export const PubCollectionsView : FC <Props> = ({
             return <CollectionView collection={c} key={`coll_${i}`} setViewType={setViewType}/>
         })
     }
+    {(!loading && collections?.length=== 0) && 
+    <div className="font-boldt text-lg uppercase mt-10 mb-10">
+        <i className="fa fa-exclamation-triangle mr-4"/>Nothing here...</div>}
     </div> 
 }
