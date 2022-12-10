@@ -228,13 +228,14 @@ export default function useService()  {
 
     const getOffers = async (
         type : OfferType, 
+        destination? : string,
         offset : number = 0, limit : number = 20 )
         : Promise<{res : Offer[], total? :number , offset? : number, limit? : number}> => {
     
             if ( selectedWalletPubkey) {
                 setLoading(true);
                 
-                let c = await service.getOffersBy(type , offset, limit);
+                let c = await service.getOffersBy(type , destination, offset, limit);
                 setLoading(false);
                 return c; 
             }

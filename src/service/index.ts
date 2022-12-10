@@ -453,12 +453,16 @@ export const deleteOffer = async  (offer_id : string ) =>{
 }
 
 
-export const getOffersBy = async (type : OfferType, offset?: number , limit? : number )
+export const getOffersBy = async (type : OfferType, 
+    destination? : string, 
+    offset?: number , limit? : number )
     : Promise<{res : Offer[], total? :number , offset? : number, limit? : number}> =>{
 
     let url = 
-    `${REMOTE_URL}offers/${encodeURIComponent(type)}/${offset}/${limit}`;
+    `${REMOTE_URL}offers/${encodeURIComponent(type)}/${encodeURIComponent(destination ?? "any")}/${offset}/${limit}`;
     
+    console.log("url::", url);
+
     try {
 
         let c = await ((await fetch(url,{

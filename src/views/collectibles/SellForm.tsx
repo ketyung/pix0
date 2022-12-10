@@ -49,15 +49,20 @@ export const SellForm : FC <Props> = ({
 
             setProcessing(true);
 
-            let _hasOffer = await hasOffer(nftToken.NFTokenID, OfferType.Sell);
-            if (_hasOffer.has_offer) {
+            if ( offer.destination === undefined || offer.destination.trim() === "") {
 
-                setMessageNow({text : "You've already created a sell offer for this NFT!", 
-                type: MessageType.Error });
-                setProcessing(false);
-                return;
+                let _hasOffer = await hasOffer(nftToken.NFTokenID, OfferType.Sell);
+                if (_hasOffer.has_offer) {
+    
+                    setMessageNow({text : 
+                    "You've already created a public sell offer for this NFT!", 
+                    type: MessageType.Error });
+                    setProcessing(false);
+                    return;
+                }
+    
             }
-
+           
             await createNftOffer(nftToken?.NFTokenID, offer.price ?? 1, 
                 offer.destination, true, async (e)=>{
 
