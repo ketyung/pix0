@@ -243,10 +243,10 @@ export default function useService()  {
             return {res: []};
     }
 
-    const hasOffer = async (tokenId : string, type : OfferType )
+    const hasOffer = async (tokenId : string, type : OfferType, destination? : string )
     : Promise<{has_offer : boolean}> =>{
 
-        let c = await service.hasOffer(tokenId, type);
+        let c = await service.hasOffer(tokenId, type, destination);
         return c;
     }
     

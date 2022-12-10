@@ -477,11 +477,12 @@ export const getOffersBy = async (type : OfferType,
     }
 }
 
-export const hasOffer = async (tokenId : string, type : OfferType )
+export const hasOffer = async (tokenId : string, type : OfferType,
+    destination? : string  )
     : Promise<{has_offer : boolean}> =>{
 
     let url = 
-    `${REMOTE_URL}has_offer/${encodeURIComponent(type)}/${tokenId}`;
+    `${REMOTE_URL}has_offer/${encodeURIComponent(type)}/${encodeURIComponent(tokenId)}/${encodeURIComponent(destination ?? "any")}`;
     
     try {
 
