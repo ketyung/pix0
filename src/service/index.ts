@@ -461,7 +461,7 @@ export const getOffersBy = async (type : OfferType,
     let url = 
     `${REMOTE_URL}offers/${encodeURIComponent(type)}/${encodeURIComponent(destination ?? "any")}/${offset}/${limit}`;
     
-    console.log("url::", url);
+    //console.log("url::", url);
 
     try {
 
@@ -472,6 +472,7 @@ export const getOffersBy = async (type : OfferType,
     }
     catch (e : any) {
 
+        console.error("error@getOffers", e);
         return {res: []};
         
     }

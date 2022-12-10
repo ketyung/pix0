@@ -52,13 +52,13 @@ export const List : FC <Props> = ({
     </thead>
     <tbody>
     {
-        collections.map((c,i)=>{
+        collections?.map((c,i)=>{
             return <ListRow key={`coll_${i}`} collection={c} index={i} setViewType={setViewType}
             refreshList={refreshList}/>
         })
     }
     {loading ? <tr><td colSpan={6} className="p-10"><Spinner/></td></tr> : <></>}
-    { (!loading && collections.length === 0) && 
+    { (!loading && collections?.length === 0) && 
     <tr><td colSpan={7} className="text-center">You have NOT created any collection,
     click on "Create New Collection" to create some.</td></tr>}
     </tbody>
