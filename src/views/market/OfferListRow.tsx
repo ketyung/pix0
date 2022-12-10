@@ -64,6 +64,7 @@ export const OfferListRow : FC <Props> = ({
                 }
                 else {
                     window.alert("Success!");
+                    // delete the offer on success
                     await deleteOffer(nftOffer.nft_offer_index);
                     await fetchSellOffers();
                 }

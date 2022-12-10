@@ -426,8 +426,15 @@ export default function useXrp() {
                 let wallet = decryptStoredWallet(connectedWallet);
                 if ( wallet ) {
     
+                    let amt = parseFloat(nftOffer.amount.toString());
+                    console.log("amnt:1:", amt);
+
+                    amt = amt * 1.1;
+
+                    console.log("amnt:2:", amt);
+
                     await xrp.acceptSellOffer( nftOffer.nft_offer_index, 
-                        parseFloat(nftOffer.amount.toString()), wallet, completion);
+                        amt, wallet, completion);
                 }
                 else {
                     if ( completion ) {
