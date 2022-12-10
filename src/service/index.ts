@@ -18,7 +18,7 @@ const obtainHeaderWithJWT = async  () =>{
 
             if ( jwt === null) {
 
-                let url = `${REMOTE_URL}get_jwt/${encodeURIComponent(user.user)}/${encodeURIComponent(user.pass)}`;
+                let url = `${REMOTE_URL}get_jwt/${encodeURIComponent(user.email)}/${encodeURIComponent(user.pass)}`;
       
                 let c = await ((await fetch(url))).json() ;
                 jwt = c.token;
