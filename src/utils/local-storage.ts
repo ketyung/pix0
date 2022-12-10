@@ -140,7 +140,7 @@ export class WalletsStorage {
             return ( enc.decryptStoredWallet(sw[0]) !== undefined);
         }
 
-        return true;
+        return false;
     }
 
 
