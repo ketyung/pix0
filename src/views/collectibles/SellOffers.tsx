@@ -55,10 +55,7 @@ export const SellOffers : FC <Props> = ({
                 }
                 else {
                     window.alert('Success!');
-                    await deleteOffer({ token_id :tokenId, type : OfferType.Sell,
-                        creator :  {pubkey :selectedWalletPubkey, classic_address: 
-                            toClassicAddress(selectedWalletPubkey ?? "") }
-                    });
+                    await deleteOffer(id);
                     await fetchSellOffers();
                 }
                

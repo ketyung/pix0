@@ -434,53 +434,22 @@ export const addOffer = async  (offer : Offer,
     
 }
 
-export const deleteOffer = async  (
-    param : {token_id : string,
-        type : OfferType,  
-        creator : OfferCreator},
-    completion? : (res : Error|{deleted: boolean}) => void ) =>{
+export const deleteOffer = async  (offer_id : string ) =>{
 
-    let url = `${REMOTE_URL}delete_offer/`; 
-
+    let url = 
+    `${REMOTE_URL}delete_offer_by/${encodeURIComponent(offer_id)}`;
+    
     try {
 
-        const response = await fetch(url, {
-            method: 'POST', 
-            mode: 'cors', 
-            cache: 'no-cache', 
-            //credentials: 'same-origin', // include, *same-origin, omit
+        let c = await ((await fetch(url,{
             headers:commonHeaders,
-            redirect: 'follow', 
-            referrerPolicy: 'no-referrer', 
-            body: JSON.stringify(param) 
-        });
-
-        if ( response.status !== 200) {
-
-            let return_err = (await response.json()) ;
-
-            if ( completion ){
-                completion( new Error(`${return_err.error} : ${return_err.details}`));
-                return ;
-            }
-        }
-
-        
-        if ( completion) {
-
-            let return_collection = (await response.json()) ;
-            completion(return_collection);
-      
-        }
-    
+        }))).json() ;
+        return c;
     }
-    catch(e : any ){
+    catch (e : any) {
 
-        if ( completion )
-            completion( new Error(e.message));
-
-    }
-    
+        return {res: []};
+    } 
 }
 
 
