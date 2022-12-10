@@ -49,6 +49,11 @@ export const OfferListRow : FC <Props> = ({
 
         if ( offer && offer.offer_id) {
 
+            if ( !window.confirm(`Confirm to buy this NFT with ${offer.price} XRP?`)){
+
+                return;
+            }
+
             setProcessing({ processing : true, button : ButtonType.Buy});
             await acceptSellOffer(offer,
             async (e)=>{
@@ -101,7 +106,7 @@ export const OfferListRow : FC <Props> = ({
             rounded-3xl text-white inline-block m-2" 
             onClick={async (e)=>{
                 e.preventDefault();
-                window.alert("Coming sooon...");
+                window.alert("Feature of \"Create Buy Offer\" will be coming sooon...");
             }}>{processing.button=== ButtonType.Offer && processing.processing ? <Spinner/> : <>Offer</>}</button> 
             <button title="More Details..." disabled={processing.button=== ButtonType.Details && processing.processing}
             className="text-sm w-20 font-bold text-sm p-2 mb-2 bg-blue-600 text-center 
