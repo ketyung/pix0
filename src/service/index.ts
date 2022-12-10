@@ -28,10 +28,10 @@ const obtainHeaderWithJWT = async  () =>{
             
             let hdrs = ( jwt !== null ) ? {           
                 'Content-Type': 'application/json',
-                'access_token': jwt, 
+                'token': jwt, 
             } : {           
                 'Content-Type': 'application/json',
-                'access_token': "none", 
+                'token': "none", 
             };
 
             return hdrs;
@@ -503,8 +503,6 @@ export const getOffersBy = async (type : OfferType,
     let url = 
     `${REMOTE_URL}offers/${encodeURIComponent(type)}/${encodeURIComponent(destination ?? "any")}/${offset}/${limit}`;
     
-    //console.log("url::", url);
-
     try {
 
         let c = await ((await fetch(url,{

@@ -3,11 +3,10 @@ import { NFTOffer } from "xrpl/dist/npm/models/common";
 import useXrp from "../../hooks/useXrp";
 import useService from "../../hooks/useService";
 import useWalletState from "../../hooks/useWalletState";
-import { shortenStringTo, toClassicAddress } from "../../utils";
+import { shortenStringTo } from "../../utils";
 import { Spinner } from "../components/Spinner";
 import { dropsToXrp } from "xrpl";
 import { FC , useCallback, useEffect, useState} from "react";
-import { OfferType } from "../../models/token_offer";
 
 
 export const SellOffers : FC <Props> = ({
