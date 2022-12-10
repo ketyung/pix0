@@ -50,11 +50,11 @@ export const NftDetailsView : FC <Props> = ({
         nftToken?.Flags === (1+2+8);
     }
 
-
+    /*
     const isTransferable = () =>{
         return nftToken?.Flags === 8 || nftToken?.Flags === (1+8) ||
         nftToken?.Flags === (1+2+8);
-    }
+    }*/
 
     useEffect(()=>{
 
@@ -63,6 +63,11 @@ export const NftDetailsView : FC <Props> = ({
     },[nftToken]);
 
 
+    const refreshSellOffersCallback = async (refresh : boolean) => {
+
+        if ( refresh )
+            await fetchSellOffers();
+    }
    
 
     const burnNftNow = async () =>{
@@ -130,7 +135,7 @@ export const NftDetailsView : FC <Props> = ({
     <Modal id="SellFormModal" title="Create Sell Offer for this NFT" triggerButton={
     <><i className="fa fa-exchange mr-2" aria-hidden="true"/><span className="mr-6">Sell</span></>}
     triggerButtonClassName="text-sm w-64 font-bold ml-4 text-2xl p-2 mb-2 bg-gray-900 rounded-3xl text-white ease-linear transition-all duration-250"
-    ><SellForm nftToken={nftToken} /></Modal>}
+    ><SellForm nftToken={nftToken} refreshSellOffersCallback={refreshSellOffersCallback} /></Modal>}
     </div>
     
     {((sellOffers?.length ?? 0) > 0) && 

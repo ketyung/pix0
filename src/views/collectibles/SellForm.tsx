@@ -13,10 +13,12 @@ import { AccountNFToken } from "../../models";
 
 type Props = {
     nftToken? : AccountNFToken,
+
+    refreshSellOffersCallback? : (refresh: boolean) => void,
 }
 
 export const SellForm : FC <Props> = ({
-    nftToken
+    nftToken, refreshSellOffersCallback
 }) =>{
 
     const {selectedWalletPubkey} = useWalletState();
@@ -74,6 +76,9 @@ export const SellForm : FC <Props> = ({
                     await addOffer(o); // index it off-ledger/chain 
     
                     setMessageNow({text : "Success", type : MessageType.Info, hash: e.hash});
+
+                    if ( refreshSellOffersCallback )
+                        refreshSellOffersCallback(true);
                 }
                 setProcessing(false);
             });
