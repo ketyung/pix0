@@ -32,7 +32,7 @@ export const List : FC <Props> = ({
         fetchNfts();
     },[]);
 
-    return <div className="m-auto p-10 mt-4 border-2 border-gray-200 rounded-3xl w-5/6 text-center">
+    return <div className="mx-auto p-2 mt-4 border-2 border-gray-200 rounded-3xl w-4/5 shadow-2xl text-center">
     { loading ? <Spinner/> :
     nftResult?.nfts.map((n,i)=>{
 

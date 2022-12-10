@@ -32,6 +32,15 @@ export const SideBar : FC = () =>{
                 </div>
                 <div className="text-center text-xs font-normal ">Wallet</div>
             </a>
+            
+            <a onClick={()=>{
+                setPage(Page.Collectibles);
+            }} className={classNamesIfPageIs(Page.Collectibles)}>
+                <div className="flex-shrink-0 inline-flex items-center justify-center w-14">
+                    <i className="fa fa-gift"></i>
+                </div>
+                <div className="text-center text-xs font-normal ">Collectibles</div>
+            </a>
 
             <a onClick={()=>{
                 setPage(Page.MintNFT);
@@ -41,16 +50,6 @@ export const SideBar : FC = () =>{
                     <i className="fa fa-picture-o"></i>
                 </div>
                 <div className="text-center text-xs font-normal ">Mint NFT</div>
-            </a>
-
-
-            <a onClick={()=>{
-                setPage(Page.Collectibles);
-            }} className={classNamesIfPageIs(Page.Collectibles)}>
-                <div className="flex-shrink-0 inline-flex items-center justify-center w-14">
-                    <i className="fa fa-gift"></i>
-                </div>
-                <div className="text-center text-xs font-normal ">Collectibles</div>
             </a>
 
             <a onClick={()=>{

@@ -93,7 +93,9 @@ export const SimpleMintForm : FC = () =>{
 
     return <div className="m-auto p-10 mt-4 border-2 border-gray-200 rounded-3xl w-5/6 text-left">
         <h1 className="font-bold">Simple Mint</h1>
-        You can mint an NFT by simply providing a media URL or upload an image/video etc below :
+        You can mint an NFT by simply providing a media URL or upload an image etc below :
+        <p className="mt-1 text-xs text-red-500">Please make sure what you mint is what you truly own!
+        Don't mint something copyrighted by others!</p>
         {message && <MessageView message={message}/>}
         <form className="bg-white shadow-md rounded-2xl px-8 pt-6 pb-8 mb-4 mt-4">
         <div className="mb-4">
