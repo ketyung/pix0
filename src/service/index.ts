@@ -1,12 +1,54 @@
 import { Collection, CollectionMedia, Minter, MinterGroup } from "../models/collection"
 import { Offer, OfferType } from "../models/token_offer";
+import { JWTStorage } from "../utils/sess-storage";
 
 const REMOTE_URL = `${process.env.REACT_APP_SERVICE_API_URL ?? "http://localhost:3338/"}`;
 
-const commonHeaders = {           
-    'Content-Type': 'application/json',
-    'access_token': process.env.REACT_APP_SERVICE_ACCESS_TOKEN ?? "", 
-};
+
+const obtainHeaderWithJWT = async  () =>{
+
+    let user : any = JSON.parse(process.env.REACT_APP_SERVICE_API_USER ?? "") ;
+
+    if ( user ) {
+
+        
+        try {
+
+            let jwt = JWTStorage.get();
+
+            if ( jwt === null) {
+
+                let url = `${REMOTE_URL}get_jwt/${encodeURIComponent(user.user)}/${encodeURIComponent(user.pass)}`;
+      
+                let c = await ((await fetch(url))).json() ;
+                jwt = c.token;
+                if ( jwt !== null )
+                    JWTStorage.set(jwt);
+            }
+            
+            let hdrs = ( jwt !== null ) ? {           
+                'Content-Type': 'application/json',
+                'access_token': jwt, 
+            } : {           
+                'Content-Type': 'application/json',
+                'access_token': "none", 
+            };
+
+            return hdrs;
+        }
+        catch (e : any) {
+
+            console.error("error@obtainJwt", e);
+
+            return {           
+                'Content-Type': 'application/json',
+                'access_token': "none", 
+            };
+
+        }
+    }
+
+}
 
 
 export const addCollection = async  (collection : Collection,
@@ -21,7 +63,7 @@ export const addCollection = async  (collection : Collection,
             mode: 'cors', 
             cache: 'no-cache', 
             //credentials: 'same-origin', // include, *same-origin, omit
-            headers:commonHeaders,
+            headers:await obtainHeaderWithJWT(),
             redirect: 'follow', 
             referrerPolicy: 'no-referrer', 
             body: JSON.stringify(collection) 
@@ -64,7 +106,7 @@ export const updateCollection = async  (collection : Collection,
             method: 'POST', 
             mode: 'cors', 
             cache: 'no-cache', 
-            headers: commonHeaders,
+            headers: await obtainHeaderWithJWT(),
             redirect: 'follow', 
             referrerPolicy: 'no-referrer', 
             body: JSON.stringify(collection) 
@@ -107,7 +149,7 @@ export const deleteCollection = async (collection_id : string, creator : string 
     try {
 
         let c = await ((await fetch(url,{
-            headers:commonHeaders,
+            headers:await obtainHeaderWithJWT(),
         }))).json() ;
         return c;
     }
@@ -128,7 +170,7 @@ export const getCollectionsBy = async (creator : string, offset : number = 0, li
     try {
 
         let c = await ((await fetch(url,{
-            headers:commonHeaders,
+            headers:await obtainHeaderWithJWT(),
         }))).json() ;
         return c;
     }
@@ -149,7 +191,7 @@ export const getCollectionsByStatus = async (status : string , offset : number =
     try {
 
         let c = await ((await fetch(url,{
-            headers:commonHeaders,
+            headers:await obtainHeaderWithJWT(),
         }))).json() ;
         return c;
     }
@@ -168,7 +210,7 @@ export const getCollectionBy = async (creator : string, id : string )
     try {
 
         let c = await ((await fetch(url,{
-            headers: commonHeaders,
+            headers: await obtainHeaderWithJWT(),
         }))).json() ;
 
         return c;
@@ -194,7 +236,7 @@ export const addCollectionMedia = async  (
             mode: 'cors', 
             cache: 'no-cache', 
             //credentials: 'same-origin', // include, *same-origin, omit
-            headers:commonHeaders,
+            headers:await obtainHeaderWithJWT(),
             redirect: 'follow', 
             referrerPolicy: 'no-referrer', 
             body: JSON.stringify(media) 
@@ -242,7 +284,7 @@ export const updateCollectionMedia = async  (
             mode: 'cors', 
             cache: 'no-cache', 
             //credentials: 'same-origin', // include, *same-origin, omit
-            headers:commonHeaders,
+            headers:await obtainHeaderWithJWT(),
             redirect: 'follow', 
             referrerPolicy: 'no-referrer', 
             body: JSON.stringify(media) 
@@ -285,7 +327,7 @@ export const randomMediaForMinting = async (collection_id : string, minted_by : 
     try {
 
         let c = await ((await fetch(url,{
-            headers: commonHeaders,
+            headers: await obtainHeaderWithJWT(),
         }))).json() ;
 
         return c;
@@ -306,7 +348,7 @@ export const removeMintInfoOf = async (media_id : string, minted_by : string  )
     try {
 
         let c = await ((await fetch(url,{
-            headers: commonHeaders,
+            headers: await obtainHeaderWithJWT(),
         }))).json() ;
 
         return c;
@@ -330,7 +372,7 @@ export const getCollectionsMediaCountBy = async (
     try {
 
         let c = await ((await fetch(url,{
-            headers:commonHeaders,
+            headers:await obtainHeaderWithJWT(),
         }))).json() ;
         return c;
     }
@@ -352,7 +394,7 @@ export const getCollectionsMediaBy = async (
     try {
 
         let c = await ((await fetch(url,{
-            headers:commonHeaders,
+            headers:await obtainHeaderWithJWT(),
         }))).json() ;
         return c;
     }
@@ -375,7 +417,7 @@ export const getOneCollectionMedia = async (
     try {
 
         let c = await ((await fetch(url,{
-            headers:commonHeaders,
+            headers:await obtainHeaderWithJWT(),
         }))).json() ;
         return c;
     }
@@ -400,7 +442,7 @@ export const addOffer = async  (offer : Offer,
             mode: 'cors', 
             cache: 'no-cache', 
             //credentials: 'same-origin', // include, *same-origin, omit
-            headers:commonHeaders,
+            headers:await obtainHeaderWithJWT(),
             redirect: 'follow', 
             referrerPolicy: 'no-referrer', 
             body: JSON.stringify(offer) 
@@ -442,7 +484,7 @@ export const deleteOffer = async  (offer_id : string ) =>{
     try {
 
         let c = await ((await fetch(url,{
-            headers:commonHeaders,
+            headers:await obtainHeaderWithJWT(),
         }))).json() ;
         return c;
     }
@@ -466,7 +508,7 @@ export const getOffersBy = async (type : OfferType,
     try {
 
         let c = await ((await fetch(url,{
-            headers:commonHeaders,
+            headers:await obtainHeaderWithJWT(),
         }))).json() ;
         return c;
     }
@@ -488,7 +530,7 @@ export const hasOffer = async (tokenId : string, type : OfferType,
     try {
 
         let c = await ((await fetch(url,{
-            headers:commonHeaders,
+            headers:await obtainHeaderWithJWT(),
         }))).json() ;
         return c;
     }
@@ -513,7 +555,7 @@ export const addMinterGroup = async  (minterGroup : MinterGroup,
             mode: 'cors', 
             cache: 'no-cache', 
             //credentials: 'same-origin', // include, *same-origin, omit
-            headers:commonHeaders,
+            headers:await obtainHeaderWithJWT(),
             redirect: 'follow', 
             referrerPolicy: 'no-referrer', 
             body: JSON.stringify(minterGroup) 
@@ -560,7 +602,7 @@ export const addMintersToGroup = async  (minters : Minter[],
             mode: 'cors', 
             cache: 'no-cache', 
             //credentials: 'same-origin', // include, *same-origin, omit
-            headers:commonHeaders,
+            headers:await obtainHeaderWithJWT(),
             redirect: 'follow', 
             referrerPolicy: 'no-referrer', 
             body: JSON.stringify(minters) 

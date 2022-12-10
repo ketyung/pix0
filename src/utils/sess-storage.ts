@@ -63,3 +63,24 @@ export class WalletPasswordStorage {
 
 }
 
+
+export class JWTStorage {
+
+    private static key : string = "SessJwtKey";
+
+
+    static get() {
+
+        let p = SessionStorage.get(this.key);
+        return p;
+    }
+
+    static set(jwt : string) {
+        SessionStorage.set(this.key, jwt);
+    }
+
+    static remove(){
+        SessionStorage.remove(this.key);
+    }
+
+}
