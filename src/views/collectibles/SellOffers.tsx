@@ -67,9 +67,10 @@ export const SellOffers : FC <Props> = ({
     return <>
         <table cellPadding={3} cellSpacing={3} className="text-left w-full">
             <tr className="bg-gray-300">
-            <th style={{width:"60%"}}>ID</th>
-            <th style={{width:"20%"}} className="text-center">Price (XRP)</th>
-            <th style={{width:"20%"}} className="text-center">Action</th>
+            <th style={{width:"45%"}}>ID</th>
+            <th style={{width:"25%"}}>For</th>
+            <th style={{width:"15%"}} className="text-center">Price (XRP)</th>
+            <th style={{width:"15%"}} className="text-center">Action</th>
             </tr>
         {
             loading ? 
@@ -79,8 +80,11 @@ export const SellOffers : FC <Props> = ({
 
             sellOffers?.map((s,i)=>{
 
+            
                 return <tr key={`so${i}`} className="hover:bg-gray-200">
                     <td>{shortenStringTo(s.nft_offer_index, 16)}</td>
+                    <td title={s.destination ?? ""} className="text-left">{
+                    shortenStringTo(s.destination ?? "public",10)}</td>
                     <td className="text-center">{dropsToXrp(s.amount.toString())}</td>
                     <td className="text-center">
                     <button title="Cancel!!" disabled={processing.processing} 
@@ -88,14 +92,14 @@ export const SellOffers : FC <Props> = ({
                         e.preventDefault();
                         await cancelOfferNow(s.nft_offer_index, i);
                     }}
-                    className="text-xs w-32 m-1 text-2xl p-1 mb-2 bg-red-800 rounded-xl text-white">
+                    className="text-xs w-28 m-1 text-2xl p-1 mb-2 bg-red-800 rounded-xl text-white">
                     {(processing.processing && processing.index === i) ? <Spinner/> : <>Cancel?</>}
                     </button>
                     </td>
                 </tr>
             })
         }
-         {(!loading && sellOffers?.length === 0) && <tr><td colSpan={3} className="text-center p-2">
+         {(!loading && sellOffers?.length === 0) && <tr><td colSpan={4} className="text-center p-2">
             NO Sell Offers
         </td></tr>}
         </table>
