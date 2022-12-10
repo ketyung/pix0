@@ -41,10 +41,16 @@ export const SellOffersList : FC <Props> = ({
         fetchOffers();
     },[]);
 
+    const setToReload = async ( reload : boolean) =>{
+        if ( reload){
+            await fetchOffers();
+        }
+    }
+
     return <div className="mt-2 p-2 text-center content-center mx-auto">
         <h2 className="font-bold mt-4 mb-2">{isPrivate ? "Sell Offers For You" : "Public Sell Offers" } </h2>
         {loading ? <Spinner/> : offers?.map((o,i)=>{
-            return <OfferListRow offer={o} index={i}/>
+            return <OfferListRow offer={o} index={i} setToReloadList={setToReload}/>
         })}
         {(!loading && offers?.length === 0) && <p className="mt-4 uppercase">
         <i className="fa fa-exclamation-triangle mr-4"/>It's empty here...</p> }

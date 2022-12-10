@@ -1,12 +1,13 @@
 import * as xrp from "../xrp";
 import * as xrpl from 'xrpl';
-import { NFTOffer } from "xrpl/dist/npm/models/common";
 import { uploadToArweave, uploadMetadata } from "../arweave";
 import useWalletState from './useWalletState';
 import { decryptStoredWallet } from "../utils/enc";
 import { uriExists, urlToBase64, toClassicAddress } from "../utils";
 import { StoredWallet, NFTResult, NFTMetadata } from "../models";
 import { WalletsStorage } from "../utils/local-storage";
+import { Offer } from "../models/token_offer";
+import { NFTOffer } from "xrpl/dist/npm/models/common";
 import { Collection, CollectionMedia } from "../models/collection";
 import { randomMediaForMinting, removeMintInfoOf } from "../service";
 
@@ -408,12 +409,12 @@ export default function useXrp() {
     }
 
 
-    const acceptSellOffer = async (nftOffer : NFTOffer, completion? : (res : string|Error)=> void) =>{
+    const acceptSellOffer = async (offer : Offer, completion? : (res : string|Error)=> void) =>{
 
         if ( selectedWalletPubkey ) {
 
 
-            if ( nftOffer.owner === toClassicAddress(selectedWalletPubkey) ) {
+            if ( offer.created_by.classic_address === toClassicAddress(selectedWalletPubkey) ) {
                 if ( completion ) {
                     completion(new Error("You're the seller!"));
                 }
@@ -426,14 +427,14 @@ export default function useXrp() {
                 let wallet = decryptStoredWallet(connectedWallet);
                 if ( wallet ) {
     
-                    let amt = parseFloat(nftOffer.amount.toString());
+                    let amt = offer.price;
                     console.log("amnt:1:", amt);
 
-                    amt = amt * 1.1;
+                    amt = (amt ?? 1) * 1.1;
 
                     console.log("amnt:2:", amt);
 
-                    await xrp.acceptSellOffer( nftOffer.nft_offer_index, 
+                    await xrp.acceptSellOffer( offer.offer_id ?? "", 
                         amt, wallet, completion);
                 }
                 else {

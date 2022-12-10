@@ -1,4 +1,4 @@
-import { FC , useState, useCallback, useEffect} from "react";
+import { FC , useState} from "react";
 import { Spinner } from "../components/Spinner";
 import { dateToTimeAgo, shortenStringTo } from "../../utils";
 import { NFTOffer } from "xrpl/dist/npm/models/common";
@@ -7,6 +7,7 @@ import useService from "../../hooks/useService";
 import { NFTMetadataImageView } from "../collectibles/NFTMetadataImageView";
 import { NFTMetadata } from "../../models";
 import { Offer } from "../../models/token_offer";
+import { off } from "process";
 
 
 type Props = {
@@ -14,49 +15,31 @@ type Props = {
     offer? : Offer, 
 
     index? : number, 
+
+    setToReloadList? : (reload : boolean) =>void, 
 }
 
 
 export const OfferListRow : FC <Props> = ({
-    offer, index, 
+    offer, index, setToReloadList
 }) =>{
 
     const [metadata, setMetadata] = useState<NFTMetadata>();
 
     const [processing, setProcessing] = useState(false);
 
-    const [nftOffer, setNftOffer] = useState<NFTOffer>();
-
     const timeAgo = dateToTimeAgo(offer?.date_created);
 
-    const {acceptSellOffer, getNftSellOffers} = useXrp();
+    const {acceptSellOffer} = useXrp();
 
     const {deleteOffer} = useService();
 
-    const fetchSellOffers = useCallback( async () =>{
-
-        if ( offer?.nft_token?.NFTokenID) {
-
-            let offrs = await getNftSellOffers( offer?.nft_token?.NFTokenID );
-            if ( offrs && (offrs?.length ?? 0) > 0 ){
-                setNftOffer(offrs[0]);
-            }
-        }
-        
-    },[getNftSellOffers]);
-
-
-    useEffect(()=>{
-        fetchSellOffers();
-    },[]);
-
-
     const buy = async () =>{
 
-        if ( nftOffer ) {
+        if ( offer && offer.offer_id) {
 
             setProcessing(true);
-            await acceptSellOffer(nftOffer,
+            await acceptSellOffer(offer,
             async (e)=>{
 
                 if ( e instanceof Error){
@@ -65,8 +48,12 @@ export const OfferListRow : FC <Props> = ({
                 else {
                     window.alert("Success!");
                     // delete the offer on success
-                    await deleteOffer(nftOffer.nft_offer_index);
-                    await fetchSellOffers();
+                    await deleteOffer(offer.offer_id ?? "");
+
+                    if ( setToReloadList) {
+
+                        setToReloadList(true);
+                    }
                 }
 
                 setProcessing(false);
