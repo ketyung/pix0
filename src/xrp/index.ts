@@ -389,7 +389,7 @@ export const createNftOffer = async (tokenId : string, price: number,
     sellerWallet : xrpl.Wallet, 
     destination? : string, 
     isSellOffer? : boolean,
-    completion? : (res : { hash?: string, seq_num? : number} |Error)=> void) =>{
+    completion? : (res : { hash?: string, seq_num? : number, offer_id? : string } |Error)=> void) =>{
 
     try {
 
@@ -401,7 +401,7 @@ export const createNftOffer = async (tokenId : string, price: number,
         
         let transactionBlob : xrpl.NFTokenCreateOffer = 
         
-        destination ? {
+        (destination && destination.trim()!== "") ? {
             TransactionType: "NFTokenCreateOffer",
             Account: sellerWallet.classicAddress ,
             NFTokenID: tokenId,
@@ -420,11 +420,29 @@ export const createNftOffer = async (tokenId : string, price: number,
         let signerWallet = xrpl.Wallet.fromSeed(sellerWallet.seed ?? "");
        
         // submit tx
-        const tx = await client.submitAndWait(transactionBlob,{wallet: signerWallet});
+        const tx : any = await client.submitAndWait(transactionBlob,{wallet: signerWallet});
+        
+        let aff_nodes = tx.result.meta?.AffectedNodes;
+        let offer_id = "";
+        // a way to obtain the offer id
+        // to be stored off ledger 
+        for (var i =0; i < aff_nodes.length; i++){
+
+            let n = aff_nodes[i];
+
+            if (n.CreatedNode?.LedgerEntryType === 'NFTokenOffer'){
+
+                offer_id = n.CreatedNode?.LedgerIndex;
+                break;
+            }
+        }
+            
+       // console.log("offer.id::", offer_id);
+
         client?.disconnect();
  
         if ( completion) {
-            completion({hash : tx.result.hash, seq_num: tx.result.Sequence});
+            completion({hash : tx.result.hash, seq_num: tx.result.Sequence, offer_id : offer_id});
         }
     }
     catch( e : any ) {

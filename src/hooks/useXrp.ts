@@ -77,7 +77,7 @@ export default function useXrp() {
         price : number, 
         destination? : string, 
         isSellOffer? : boolean,
-        completion? : (res : { hash?: string, seq_num? : number}|Error)=> void)  =>{
+        completion? : (res : { hash?: string, seq_num? : number, offer_id? : string }|Error)=> void)  =>{
 
         if ( selectedWalletPubkey ) {
 
