@@ -427,13 +427,8 @@ export default function useXrp() {
                 let wallet = decryptStoredWallet(connectedWallet);
                 if ( wallet ) {
     
-                    let amt = offer.price;
-                    console.log("amnt:1:", amt);
-
-                    amt = (amt ?? 1) * 1.1;
-
-                    console.log("amnt:2:", amt);
-
+                    let amt = offer.price ?? 1;
+                  
                     await xrp.acceptSellOffer( offer.offer_id ?? "", 
                         amt, wallet, completion);
                 }
