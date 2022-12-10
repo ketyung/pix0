@@ -21,7 +21,7 @@ export const MinterGroupForm : FC <Props> = ({
     return <div className="m-auto p-10 mt-4 border-1 border-gray-300 rounded-3xl w-3/5 shadow-2xl text-left">
           <div className="mb-4">Add a minter group (such as WhiteList, OG etc) in your collection <span className="font-bold">{
             collection?.name 
-        }</span></div>    
+        }</span><span className="ml-4 text-red-500">Coming soon...</span></div>    
         <div className="mb-4">
             <TextField label="Name" id="name" onChange={(e)=>{
                 setGroup({...group, name : e.target.value});
@@ -73,6 +73,7 @@ export const MinterGroupForm : FC <Props> = ({
             className="text-sm w-64 font-bold p-2 mb-2 bg-gray-500 rounded text-white" 
             onClick={(e)=>{
                 e.preventDefault();
+                window.alert("This feature will be coming soon...");
             }}>{loading ? <Spinner/> : <>Add</>}</button>
         </div>
     </div>;

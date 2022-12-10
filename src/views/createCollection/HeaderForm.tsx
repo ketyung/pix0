@@ -163,14 +163,18 @@ export const HeaderForm : FC <Props> = ({
     className={commonTextfieldClassName("w-80")} id="price" type="number" 
     placeholder="Standard mint price"
         onChange={(e)=>{
-
-            console.log("e.target.vLL", e.target.value);
             let p =  parseFloat(e.target.value);
             if ( !isNaN(p))
                 setCollection({...collection, std_price :p});
         }}/> <span className="ml-1 font-bold">XRP</span>
     <div className="text-xs mt-1">This is a standard price for minting.
     You can also define other prices for for different groups such as White List etc</div>
+    </div> 
+
+    <div className="mb-4">
+    <span className="mr-1 font-bold">Burnable?</span><input type="checkbox" />
+    <span className="ml-10 mr-1 font-bold">Transferrable?</span><input type="checkbox" 
+    checked={collection.transferrable === undefined ? true : collection.transferrable}/>
     </div> 
     
     <div className="mb-4">
