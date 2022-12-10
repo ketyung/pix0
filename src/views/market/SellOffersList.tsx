@@ -3,29 +3,41 @@ import { OfferType, Offer } from "../../models/token_offer";
 import useService from "../../hooks/useService";
 import { OfferListRow } from "./OfferListRow";
 
+type Props = {
 
-export const SellOffersList : FC = () =>{
+    isPrivate? : boolean,
+}
 
-    const {getOffers} = useService();
+export const SellOffersList : FC <Props> = ({
+    isPrivate
+}) =>{
+
+    const {getOffers, getPrivateOffers} = useService();
 
     const [offers, setOffers] = useState<Offer[]>();
 
+    const getOffersNow = async () =>{
+
+        return isPrivate ? await getPrivateOffers(OfferType.Sell) : 
+        await getOffers(OfferType.Sell);
+    }
+
     const fetchOffers = useCallback(async ()=>{
 
-        let o = await getOffers(OfferType.Sell);
+        let o = await getOffersNow();
 
         if ( o ) {
             setOffers(o.res);
         }
 
-    },[getOffers]);
+    },[getOffersNow]);
 
     useEffect(()=>{
         fetchOffers();
     },[]);
 
     return <div className="mt-2 p-2 text-center content-center mx-auto">
-        <h2 className="font-bold mb-2">Listed Sell Offers</h2>
+        <h2 className="font-bold mt-4 mb-2">{isPrivate ? "Sell Offers For You" : "Public Sell Offers" } </h2>
         { offers?.map((o,i)=>{
             return <OfferListRow offer={o} index={i}/>
         })}
