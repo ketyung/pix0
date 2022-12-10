@@ -1,5 +1,6 @@
 import { FC, useState } from "react";
 import useXrp from "../../hooks/useXrp";
+import { shortenStringTo } from "../../utils";
 import { Message, MessageType } from "../../models";
 import { MessageView } from "../components/MessageView";
 import { Spinner } from "../components/Spinner";
@@ -35,6 +36,10 @@ export const SendForm : FC = () =>{
 
         if (toAddress.trim() === ""){
             window.alert("Invalid address");
+            return;
+        }
+
+        if ( !window.confirm(`Confirm to send ${amount} XRP to ${shortenStringTo(toAddress,10)}?`)){
             return;
         }
 
