@@ -5,10 +5,12 @@ the XRP Ledger. Currently, it's a project built from scratch for the XRP NFT hac
 
 
 ## Include a .env file
-You must include a .env file which contains an array of the cloundinary servers that you want to upload to
-the format is as follows:
+You must include a .env file which contains a number of parameters as follows:
 
 ````
+REACT_APP_SERVICE_API_URL=...
+REACT_APP_ARWEAVE_KEY=..
+REACT_APP_CLOUD_UPLOAD_URL=...
 REACT_APP_CLOUDINARY_PARAMS=[{"name":"cloud1","api_key":"xxxxx","secret":"xxxxx", "upload_folder":"xxxx"}]
 ````
 
