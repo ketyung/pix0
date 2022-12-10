@@ -67,7 +67,7 @@ export const SellForm : FC <Props> = ({
                 }
                 else {
                   
-                    let o = {...offer, seq_num : e.seq_num };
+                    let o = {...offer, seq_num : `${e.seq_num}` };
 
                     await addOffer(o); // index it off-ledger/chain 
     

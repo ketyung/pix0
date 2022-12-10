@@ -399,13 +399,22 @@ export const createNftOffer = async (tokenId : string, price: number,
     
         await client.connect();
         
-        let transactionBlob : xrpl.NFTokenCreateOffer =  {
+        let transactionBlob : xrpl.NFTokenCreateOffer = 
+        
+        destination ? {
             TransactionType: "NFTokenCreateOffer",
             Account: sellerWallet.classicAddress ,
             NFTokenID: tokenId,
             Amount : xrpl.xrpToDrops(`${price}`),
             Flags: isSellOffer ? 1 : undefined,
-            Destination : destination,
+            Destination : (destination?.trim() === "" ) ? undefined : destination,
+        } : 
+        {
+            TransactionType: "NFTokenCreateOffer",
+            Account: sellerWallet.classicAddress ,
+            NFTokenID: tokenId,
+            Amount : xrpl.xrpToDrops(`${price}`),
+            Flags: isSellOffer ? 1 : undefined,
         };
     
         let signerWallet = xrpl.Wallet.fromSeed(sellerWallet.seed ?? "");
