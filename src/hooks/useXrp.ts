@@ -4,7 +4,7 @@ import { NFTOffer } from "xrpl/dist/npm/models/common";
 import { uploadToArweave, uploadMetadata } from "../arweave";
 import useWalletState from './useWalletState';
 import { decryptStoredWallet } from "../utils/enc";
-import { uriExists, urlToBase64 } from "../utils";
+import { uriExists, urlToBase64, toClassicAddress } from "../utils";
 import { StoredWallet, NFTResult, NFTMetadata } from "../models";
 import { WalletsStorage } from "../utils/local-storage";
 import { Collection, CollectionMedia } from "../models/collection";
@@ -408,18 +408,26 @@ export default function useXrp() {
     }
 
 
-    const acceptSellOffer = async (offerId : string,
-        fee : number, completion? : (res : string|Error)=> void) =>{
+    const acceptSellOffer = async (nftOffer : NFTOffer, completion? : (res : string|Error)=> void) =>{
 
         if ( selectedWalletPubkey ) {
+
+
+            if ( nftOffer.owner === toClassicAddress(selectedWalletPubkey) ) {
+                if ( completion ) {
+                    completion(new Error("You're the seller!"));
+                }
+                return;
+            }
 
             let connectedWallet = WalletsStorage.get(selectedWalletPubkey);
             if ( connectedWallet) {
 
                 let wallet = decryptStoredWallet(connectedWallet);
                 if ( wallet ) {
-
-                    await xrp.acceptSellOffer(offerId, fee, wallet, completion);
+    
+                    await xrp.acceptSellOffer( nftOffer.nft_offer_index, 
+                        parseFloat(nftOffer.amount.toString()), wallet, completion);
                 }
                 else {
                     if ( completion ) {

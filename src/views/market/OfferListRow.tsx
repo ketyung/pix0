@@ -50,10 +50,10 @@ export const OfferListRow : FC <Props> = ({
 
     const buy = async () =>{
 
-        if ( nftOffer?.nft_offer_index &&  nftOffer?.amount ) {
+        if ( nftOffer ) {
 
             setProcessing(true);
-            await acceptSellOffer(nftOffer?.nft_offer_index, parseFloat(nftOffer?.amount.toString()),
+            await acceptSellOffer(nftOffer,
             (e)=>{
 
                 if ( e instanceof Error){

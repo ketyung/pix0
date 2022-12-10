@@ -504,8 +504,7 @@ export const acceptSellOffer = async (offerId : string,
         let transactionBlob : xrpl.NFTokenAcceptOffer =  {
             TransactionType: "NFTokenAcceptOffer",
             Account: wallet.classicAddress ,
-            NFTokenSellOffer: "sell_offer", 
-            AccountTxnID : offerId,
+            NFTokenSellOffer: offerId, 
             Fee : xrpToDrops(fee), 
         };
     
