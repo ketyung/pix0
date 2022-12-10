@@ -20,13 +20,24 @@ type Props = {
 }
 
 
+enum ButtonType {
+
+    Buy,
+
+    Offer,
+
+    Details,
+}
+
 export const OfferListRow : FC <Props> = ({
     offer, index, setToReloadList
 }) =>{
 
     const [metadata, setMetadata] = useState<NFTMetadata>();
 
-    const [processing, setProcessing] = useState(false);
+    const [processing, setProcessing] = useState<{processing: boolean, button? : ButtonType}>({
+        processing: false, 
+    });
 
     const timeAgo = dateToTimeAgo(offer?.date_created);
 
@@ -38,7 +49,7 @@ export const OfferListRow : FC <Props> = ({
 
         if ( offer && offer.offer_id) {
 
-            setProcessing(true);
+            setProcessing({ processing : true, button : ButtonType.Buy});
             await acceptSellOffer(offer,
             async (e)=>{
 
@@ -56,7 +67,8 @@ export const OfferListRow : FC <Props> = ({
                     }
                 }
 
-                setProcessing(false);
+                setProcessing({ processing : false, button : ButtonType.Buy});
+           
             });
         }
         
@@ -77,27 +89,27 @@ export const OfferListRow : FC <Props> = ({
             <div className="mb-2">
             <span className="mr-2 ml-2">Price:</span><span className="font-bold">{offer?.price ?? 1} XRP</span>
             </div>
-            <button title="Buy..." disabled={processing}
+            <button title="Buy..." disabled={processing.button=== ButtonType.Buy && processing.processing}
             className="text-sm w-20 font-bold text-sm p-2 mb-2 bg-gray-800 text-center 
             rounded-3xl text-white inline-block m-2" 
             onClick={async (e)=>{
                 e.preventDefault();
                 await buy();
-            }}>{processing ? <Spinner/> : <>Buy</>}</button> 
-            <button title="Create Buy Offer..." disabled={processing}
+            }}>{processing.button=== ButtonType.Buy && processing.processing ? <Spinner/> : <>Buy</>}</button> 
+            <button title="Create Buy Offer..." disabled={processing.button=== ButtonType.Offer && processing.processing}
             className="text-sm w-20 font-bold text-sm p-2 mb-2 bg-purple-600 text-center 
             rounded-3xl text-white inline-block m-2" 
             onClick={async (e)=>{
                 e.preventDefault();
                 window.alert("Coming sooon...");
-            }}>{processing ? <Spinner/> : <>Offer</>}</button> 
-            <button title="More Details..." disabled={processing}
+            }}>{processing.button=== ButtonType.Offer && processing.processing ? <Spinner/> : <>Offer</>}</button> 
+            <button title="More Details..." disabled={processing.button=== ButtonType.Details && processing.processing}
             className="text-sm w-20 font-bold text-sm p-2 mb-2 bg-blue-600 text-center 
             rounded-3xl text-white inline-block m-2" 
             onClick={async (e)=>{
                 e.preventDefault();
                 window.alert("Coming sooon...");
-            }}>{processing ? <Spinner/> : <>Details</>}</button>  
+            }}>Details</button>  
 
             <div className="mb-2 pl-2 text-xs" title={offer?.date_created?.toString()}>
             <span className="mr-2">Listed: {timeAgo.short}</span>
