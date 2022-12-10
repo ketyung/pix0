@@ -172,12 +172,10 @@ export const HeaderForm : FC <Props> = ({
     </div> 
 
     <div className="mb-4">
-    <span className="mr-1 font-bold">Burnable?</span><input type="checkbox"
-    checked={collection.burnable}  
-    onChange={(e)=>{
-        setCollection({...collection, burnable : e.currentTarget.checked});
-
-    }}/>
+    {/** 
+     * 
+     * temporarily omited this, will consider in the future if transferrable
+     * can be set. Currently all set transferrable
     <span className="ml-10 mr-1 font-bold">Transferrable?</span><input type="checkbox" 
     onChange={(e)=>{
         
@@ -185,6 +183,7 @@ export const HeaderForm : FC <Props> = ({
 
     }} checked={collection.transferrable === undefined ? true : collection.transferrable}
     className="mr-10"/>
+    */}
    
     <TextField label="Transfer Rate" value={`${collection.transfer_fee}`} labelInline={true}
     className={commonTextfieldClassName("ml-1 w-32 inline-block")} id="txfee" type="number" 
@@ -195,6 +194,13 @@ export const HeaderForm : FC <Props> = ({
                 setCollection({...collection, transfer_fee :p});
         }}/> <span className="ml-1 font-bold">%</span>
    
+   <span className="ml-10 mr-1 font-bold">Burnable?</span><input type="checkbox"
+    checked={collection.burnable}  
+    onChange={(e)=>{
+        setCollection({...collection, burnable : e.currentTarget.checked});
+
+    }}/>
+ 
    </div> 
 
     <div className="mb-4">

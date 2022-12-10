@@ -240,7 +240,7 @@ export const mintNft = async (
             TransferFee : transferFee ?? 0 ,
 
             Fee : fee ? xrpl.xrpToDrops(`${fee}`) : undefined,
-
+                                             // automatically plus 8, so it's transferrable without option!
             Flags : isBurnable ? (1 + 8) : 8 // (1+8 = burnable & transferrable) else transferrable only
 
         };
