@@ -52,7 +52,7 @@ export const LoginView : FC <Props>= ({
 
             if ( !isPwStrong(pass) ){
 
-                window.alert("Password must be at least 8 char in length with big and small cap, numbers & symbols!");
+                window.alert("Password must be at least 8 char in length with big and small cap, numbers & special characters (!$@%)!");
                 return; 
             }
 
