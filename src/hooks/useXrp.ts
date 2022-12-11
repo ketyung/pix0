@@ -172,6 +172,8 @@ export default function useXrp() {
                     return;
                 }
 
+                console.log("txFee", collection.transfer_fee);
+
                 if ( collection?._id) {
     
                     let collection_media : CollectionMedia|undefined =

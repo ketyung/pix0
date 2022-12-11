@@ -225,6 +225,8 @@ export const mintNft = async (
 
         await client.connect();
 
+        let txFee = (transferFee ?? 0) * 1000;
+
         let nftMint : xrpl.NFTokenMint = {
 
             Account : minterWallet.classicAddress,
@@ -235,7 +237,7 @@ export const mintNft = async (
 
             TransactionType : "NFTokenMint",
 
-            TransferFee : xrpl.percentToTransferRate(`${transferFee ?? 0}%`) ,
+            TransferFee : txFee,
 
             Fee : fee ? xrpl.xrpToDrops(`${fee}`) : undefined,
                                              // automatically plus 8, so it's transferrable without option!
