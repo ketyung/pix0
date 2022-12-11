@@ -24,7 +24,7 @@ export const SimpleMintForm : FC = () =>{
     const [mediaDataUrl, setMediaDataUrl] = useState<{mediaDataUrl? : string,
         contentType?: string,fileName? : string, }>();
 
-    const {mintNft} = useXrp();
+    const {mintNft2} = useXrp();
 
     const setMediaCallback = (media: {
         mediaDataUrl? : string,
@@ -59,11 +59,10 @@ export const SimpleMintForm : FC = () =>{
             contentType : mediaDataUrl?.contentType, 
             isDataUrl : useUpload, 
             metadata : metadata,
-            fee: 2, transferFee :undefined, isBurnable: true};
+            fee: 1, transferFee :undefined, isBurnable: true};
 
-        await mintNft(params, (e)=>{
+        await mintNft2(params, (e)=>{
 
-           
             if ( e instanceof Error) {
                 setMessageNow ({
                     text: e.message,
@@ -140,7 +139,10 @@ export const SimpleMintForm : FC = () =>{
         }}>
         {processing ? <Spinner/> : <>Mint NFT</>}
         </button>
-        <p className="text-xs mt-1">You'll be charged 2 XRP for using Simple Mint to mint</p>
+        <p className="text-xs mt-1">You'll be charged 1 XRP for using Simple Mint to mint.<br/>
+        The 1 XRP fee, 99% goes to Pix0 for uploading your NFT image and metadata to Arweave,
+        <br/>whereas 1% (0.01 XRP) goes to the transaction cost
+        </p>
         </div>
         </form> 
     </div>

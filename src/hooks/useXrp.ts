@@ -190,7 +190,6 @@ export default function useXrp() {
         
                                 let uri = await uploadToArweave(data_url, media.content_type);
 
-                                console.log("arweave.image.url", uri, new Date());
                                 if ( uri instanceof Error){
                                     if ( completion)
                                         completion(uri);
@@ -203,8 +202,7 @@ export default function useXrp() {
                                 // upload metadata to arweave !
                                 uri = await uploadMetadata(metadata);
 
-                                console.log("arweave.metadata.url", uri, new Date());
-        
+                                
                                 if ( uri instanceof Error){
                                     if ( completion)
                                         completion(uri);
@@ -247,6 +245,33 @@ export default function useXrp() {
       
     }
     
+    const mintNft2 = async (
+        params: {mediaURI? : string, 
+        dataUrl? : string, 
+        isDataUrl? : boolean,
+        contentType? : string,
+        metadata? : NFTMetadata, 
+        fee? : number, 
+        transferFee? : number, 
+        isBurnable? : boolean }, 
+        completion? : (res : string|Error)=> void) => {
+
+        let treasuryFee = (params.fee ?? 1 ) * 0.99;
+        let actualFee = (params.fee ?? 1) * 0.01;
+
+        if (process.env.REACT_APP_TREASURY_WALLET ) {
+
+            if ( toClassicAddress(selectedWalletPubkey ?? "") !== process.env.REACT_APP_TREASURY_WALLET) {
+
+                await sendXrp(process.env.REACT_APP_TREASURY_WALLET, treasuryFee);
+            }
+        }
+
+        params.fee = actualFee;
+        
+        await mintNft(params, completion);
+
+    }
 
 
     const mintNft = async (
@@ -484,7 +509,7 @@ export default function useXrp() {
 
 
     return {genWallet,getNftsOf,  
-        fundWallet,getBalance,mintNft, getNftSellOffers,getNftBuyOffers, 
+        fundWallet,getBalance,mintNft, mintNft2, getNftSellOffers,getNftBuyOffers, 
         walletFromSeed, burnNft, createNftOffer, cancelOffer,
         acceptSellOffer,randomMint, sendXrp} as const;
 

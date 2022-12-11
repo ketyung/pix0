@@ -187,8 +187,6 @@ export const burnNft = async (
        
         const tx = await client.submitAndWait(txb,{wallet: signerWallet});
 
-        console.log("burn.tx:: ", tx, new Date());
-
         let res = tx.result.meta?.toString();
 
         if ( completion ){
@@ -237,7 +235,7 @@ export const mintNft = async (
 
             TransactionType : "NFTokenMint",
 
-            TransferFee : transferFee ?? 0 ,
+            TransferFee : xrpl.percentToTransferRate(`${transferFee ?? 0}%`) ,
 
             Fee : fee ? xrpl.xrpToDrops(`${fee}`) : undefined,
                                              // automatically plus 8, so it's transferrable without option!
