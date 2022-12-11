@@ -2,6 +2,8 @@ import { StoredWallet } from "../../models";
 import { WalletsStorage } from "../../utils/local-storage";
 import { shortenStringTo,pubkeyOrAddress, copy } from "../../utils";
 import useXrp from "../../hooks/useXrp";
+import { Modal } from "../components/Modal";
+import { ShowSeedView } from "./ShowSeedView";
 import useWalletState from "../../hooks/useWalletState";
 import { Spinner } from "../components/Spinner";
 import { decryptStoredWallet } from "../../utils/enc";
@@ -108,9 +110,9 @@ export const WalletListRow : FC <Props> = ({
         removeSelected();
     }}><DeleteIcon/></button>
 
-    <button title="Show seed" 
-    className="text-sm max-w-35 ml-4 p-2 mb-2 bg-gray-500 rounded text-white" 
-    onClick={()=>{showSeed();}}>Show seed</button>
+    <Modal id="ShowSeedModal" title="Seed" triggerButton="Show Seed"
+        triggerButtonClassName="ml-4 text-sm w-32 font-bold p-2 mb-2 bg-gray-900 rounded text-white"
+        ><ShowSeedView walletPubkey={wallet.pubkey}/></Modal>
     </div>
 
     return <div className="items-left max-w-200 text-ellipsis 
@@ -129,11 +131,5 @@ export const WalletListRow : FC <Props> = ({
     <span className="mr-20 min-w-260">Balance : {loading ? <Spinner/> : <>{balance} XRP</>}</span>
     {buttons}
     </div>
-    {seed && <div className="bg-gray-300 rounded-2xl p-2 pl-4 max-w-32">
-    Seed : {seed} 
-        <div className="text-sm">
-        Please keep this safe and don't share to others
-        </div>    
-    </div>}
     </div>
 }

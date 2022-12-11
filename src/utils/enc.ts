@@ -82,3 +82,19 @@ export const decryptStoredWallet = (storedWallet : StoredWallet) : Wallet|undefi
         return undefined;
     }
 }
+
+export const decryptStoredWalletBy = (storedWallet : StoredWallet, password : string) : Wallet|undefined =>{
+
+    let pw = `${password}-${shortenStringTo(storedWallet.pubkey,10)}`; 
+
+    try {
+
+        let txt =  decrypt(storedWallet.encryptedValue, pw);
+
+        return JSON.parse(txt) as Wallet;
+    }
+    catch(e : any) {
+
+        return undefined;
+    }
+}
