@@ -72,11 +72,38 @@ export class JWTStorage {
     static get() {
 
         let p = SessionStorage.get(this.key);
+        if ( p !== null) {
+
+            let pp = null;
+
+            try {
+                pp = JSON.parse(p) as {jwt : string, date : number};
+            }
+            catch(e : any){}
+
+            if ( pp === undefined || pp === null ){
+
+                this.remove();
+                return null;
+            }
+            //revoke if more than 1 hour
+            if ((new Date().getTime() - pp.date) > (1000*60*60)){
+
+                this.remove();
+                return null;
+            }
+              
+            return pp.jwt;
+        }
         return p;
     }
 
     static set(jwt : string) {
-        SessionStorage.set(this.key, jwt);
+
+        let jwtObj : {jwt : string, date : number} =  
+        { jwt : jwt, date : new Date().getTime()};
+
+        SessionStorage.set(this.key, JSON.stringify(jwtObj));
     }
 
     static remove(){
