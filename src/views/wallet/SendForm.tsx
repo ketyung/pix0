@@ -59,12 +59,16 @@ export const SendForm : FC = () =>{
         });
     }
 
-    return <div className="mt-2 w-full" style={{minWidth:"450px"}}>
+    return <div className="mt-2 w-max">
         {message && <MessageView message={message}/>}
         <div className="mb-4">
             <TextField id="amount" type="number" label="Amount" className={commonTextfieldClassName("w-64")}
             value={`${amount}`} onChange={(e)=>{
                 let a = parseFloat(e.target.value);
+                if ( a < 0 ){
+                    return;
+                }
+
                 if ( !isNaN(a)) {
                     setAmount(a);
                 }

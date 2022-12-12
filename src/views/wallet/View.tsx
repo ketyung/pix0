@@ -108,7 +108,7 @@ export const View : FC = () =>{
 
 
    
-    return <div className="m-auto p-10 mt-20 border-2 border-gray-200 rounded-3xl w-4/5 shadow-2xl text-center">
+    return <div className="mx-auto w-4/5 p-10 mt-20 border-2 border-gray-200 rounded-3xl shadow-2xl text-center">
         
         <div className="text-right">
         {viewType === ViewType.AllWallets && 

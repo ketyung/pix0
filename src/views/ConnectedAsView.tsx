@@ -43,10 +43,12 @@ export const ConnectedAsView : FC = () =>{
   
     return <div className="float-right clear-both bg-gray-900 rounded-3xl text-base 
     text-sky-200 mr-20 mt-2 p-1 w-2/5 align-text-top cursor-pointer max-w-500 dropdown relative">
-    <i className="fa fa-plug" aria-hidden="true"></i> 
-    <span className="ml-4">{shortenStringTo(
+    <i className="fa fa-plug hidden md:inline-block lg:inline-block" aria-hidden="true"/> 
+    <span className="ml-4 inline-block md:hidden lg:hidden">{shortenStringTo(
+        pubkeyOrAddress(WalletsStorage.get(selectedWalletPubkey)) ?? "", 6)}</span> 
+    <span className="ml-4 hidden md:inline-block lg:inline-block">{shortenStringTo(
         pubkeyOrAddress(WalletsStorage.get(selectedWalletPubkey)) ?? "", 10)}</span> 
-    <span className="ml-4">{loading ? <Spinner/> : <>{balance}</>}</span>
+    <span className="ml-4 hidden md:inline-block lg:inline-block">{loading ? <Spinner/> : <>{balance}</>}</span>
     <i className="ml-2 fa fa-sign-out" aria-hidden="true" onClick={()=>{
         signOutNow();
     }}/> 

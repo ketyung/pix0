@@ -164,6 +164,8 @@ export const HeaderForm : FC <Props> = ({
     placeholder="Standard mint price"
         onChange={(e)=>{
             let p =  parseFloat(e.target.value);
+            if (p < 0)return;
+            
             if ( !isNaN(p))
                 setCollection({...collection, std_price :p});
         }}/> <span className="ml-1 font-bold">XRP</span>
@@ -190,6 +192,7 @@ export const HeaderForm : FC <Props> = ({
     placeholder="Transfer fee in percentage"
         onChange={(e)=>{
             let p =  parseFloat(e.target.value);
+            if (p < 0)return;
             if ( !isNaN(p))
                 setCollection({...collection, transfer_fee :p});
         }}/> <span className="ml-1 font-bold">%</span>
