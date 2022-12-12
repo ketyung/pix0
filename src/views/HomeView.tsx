@@ -33,7 +33,7 @@ export const HomeView : FC = () =>{
         sm:translate-x-0 transition-transform duration-150 ease-in bg-gray-800 ASideBar">
             <SideBar/>
         </aside>
-        <main className="main flex flex-col grow -ml-64 md:ml-0 
+        <main className="main flex flex-col grow md:ml-0 
         transition-all duration-250 ease-in mx-auto">
             <MainView/>
         </main>

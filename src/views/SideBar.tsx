@@ -28,7 +28,7 @@ export const SideBar : FC = () =>{
                 setPage(Page.Wallet);
             }} className={ classNamesIfPageIs(Page.Wallet)}>
                 <div className="flex-shrink-0 inline-flex items-center justify-center w-14">
-                    <i className="fa fa-money"></i>
+                    <i className="fa fa-money"/>
                 </div>
                 <div className="text-center text-xs font-normal ">Wallet</div>
             </a>
@@ -37,7 +37,7 @@ export const SideBar : FC = () =>{
                 setPage(Page.Collectibles);
             }} className={classNamesIfPageIs(Page.Collectibles)}>
                 <div className="flex-shrink-0 inline-flex items-center justify-center w-14">
-                    <i className="fa fa-gift"></i>
+                    <i className="fa fa-gift"/>
                 </div>
                 <div className="text-center text-xs font-normal ">Collectibles</div>
             </a>
@@ -47,7 +47,7 @@ export const SideBar : FC = () =>{
             }} className={ 
                 classNamesIfPageIs(Page.MintNFT)}>
                 <div className="flex-shrink-0 inline-flex items-center justify-center w-14">
-                    <i className="fa fa-picture-o"></i>
+                    <i className="fa fa-picture-o"/>
                 </div>
                 <div className="text-center text-xs font-normal ">Mint NFT</div>
             </a>
@@ -56,7 +56,7 @@ export const SideBar : FC = () =>{
                 setPage(Page.Market);
             }} className={classNamesIfPageIs(Page.Market)}>
                 <div className="flex-shrink-0 inline-flex items-center justify-center w-14">
-                    <i className="fa fa-exchange"></i>
+                    <i className="fa fa-exchange"/>
                 </div>
                 <div className="text-center text-xs font-normal ">Buy NFT</div>
             </a>
@@ -65,7 +65,7 @@ export const SideBar : FC = () =>{
                 setPage(Page.CreateCollection);
             }} className={classNamesIfPageIs(Page.CreateCollection)}>
                 <div className="flex-shrink-0 inline-flex items-center justify-center w-14">
-                    <i className="fa fa-file-image-o"></i>
+                    <i className="fa fa-file-image-o"/>
                 </div>
                 <div className="text-center text-xs font-normal ">Creator</div>
             </a>
