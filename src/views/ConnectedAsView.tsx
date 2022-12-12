@@ -36,8 +36,10 @@ export const ConnectedAsView : FC = () =>{
 
     const signOutNow = () => {
 
-        signOut();
-        window.location.reload();
+        if ( window.confirm('Are you sure you want to sign out now?')){
+            signOut();
+            window.location.reload();    
+        }
     }
     
   

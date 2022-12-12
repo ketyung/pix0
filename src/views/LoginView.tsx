@@ -123,7 +123,7 @@ export const LoginView : FC <Props>= ({
             <img src={logo} className="w-64 h-auto mx-auto" title="Pix0 Logo"/>
           </div>
           <div className="mt-4 text-left pl-4">
-            <b>Pix0</b> - is an all-in-one NFT wallet and marketplace on the <b>XRP Ledger</b>, 
+            <b>Pix0</b> - is an all-in-one NFT wallet and marketplace on the <b>XRP Ledger</b> (DevNet), 
             which you can use to create collections, mint, buy and sell NFTs.
           </div>
           <form className="bg-white px-8 pt-6 pb-8 mb-4 mt-4">
