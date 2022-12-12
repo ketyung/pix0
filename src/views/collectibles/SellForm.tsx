@@ -97,6 +97,7 @@ export const SellForm : FC <Props> = ({
         value={`${offer.price}`}
         onChange={(e)=>{
             let p = parseFloat(e.target.value);
+            if (p < 0)return;
             if ( !isNaN(p)) {
                 setOffer({...offer, price : p});
             }
