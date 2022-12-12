@@ -22,6 +22,10 @@ The second one is users can mint any NFT randomly from any collections created b
 Images of these collections are temporarily stored on Cloudinary image storage. Once they are minted from the , they are then stored on decentralised and permanent storage - Arweave. The upcoming features of this section including creators are able to create their groups of minters with different prices such as OG, WhiteList etc.
 
 
+A live demo version is available on https://test.pix0.xyz/
+
+If you want to run this on localhost, you must do the followings:
+
 ## Include a .env file
 You must include a .env file which contains a number of parameters as follows:
 
