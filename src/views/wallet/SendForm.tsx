@@ -5,7 +5,7 @@ import { Message, MessageType } from "../../models";
 import { MessageView } from "../components/MessageView";
 import { Spinner } from "../components/Spinner";
 import { TextField, commonTextfieldClassName } from "../components/TextField";
-
+import './css/SendForm.css';
 
 export const SendForm : FC = () =>{
 
@@ -59,7 +59,7 @@ export const SendForm : FC = () =>{
         });
     }
 
-    return <div className="mt-2 w-max">
+    return <div className="mt-2 SendForm">
         {message && <MessageView message={message}/>}
         <div className="mb-4">
             <TextField id="amount" type="number" label="Amount" className={commonTextfieldClassName("w-64")}

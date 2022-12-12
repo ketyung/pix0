@@ -10,6 +10,7 @@ import { toClassicAddress } from "../../utils";
 import useService from "../../hooks/useService";
 import { TextField, commonTextfieldClassName } from "../components/TextField";
 import { AccountNFToken } from "../../models";
+import './css/SellForm.css';
 
 type Props = {
     nftToken? : AccountNFToken,
@@ -86,7 +87,7 @@ export const SellForm : FC <Props> = ({
     }
 
 
-    return <div className="mt-2 text-left" style={{minWidth:"600px"}}>
+    return <div className="mt-2 text-left SellForm">
         {message && <MessageView message={message}/>}
         <div className="mb-4">
         <span className="font-bold mr-2">Token ID:</span>
