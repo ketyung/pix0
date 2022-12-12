@@ -36,7 +36,7 @@ export const IndNftView : FC <IProps> = ({
     },[nftToken?.URI]);
 
     return <div className="flex-1 w-32 md:w-64 lg:w-64 p-4 inline-block 
-    border-2 border-gray-200 mx-2 rounded-2xl hover:bg-gray-200 hover:cursor-pointer"
+    border-2 border-gray-200 m-2 rounded-2xl hover:bg-gray-200 hover:cursor-pointer"
     onClick={()=>{
 
         if ( setViewType) {
