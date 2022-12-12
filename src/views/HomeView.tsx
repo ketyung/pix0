@@ -3,7 +3,7 @@ import { SideBar } from "./SideBar";
 import { LoginView } from "./LoginView";
 import { WalletPasswordStorage } from '../utils/sess-storage';
 import { MainView } from "./MainView";
-
+import './css/SideBar.css';
 
 export const HomeView : FC = () =>{
 
@@ -29,9 +29,9 @@ export const HomeView : FC = () =>{
 
 
     return  hasPasswd ? <div className="flex flex-row min-h-screen bg-gray-100 text-gray-800">
-        <aside style={{minWidth:"130px"}} 
-        className="sidebar w-32 md:shadow transform -translate-x-full md:translate-x-0 
-        transition-transform duration-150 ease-in bg-gray-800">
+        <aside 
+        className="sidebar w-0 lg:w-32 md:shadow transform -translate-x-full md:translate-x-0 
+        transition-transform duration-150 ease-in bg-gray-800 ASideBar">
             <SideBar/>
         </aside>
         <main className="main flex flex-col grow -ml-64 md:ml-0 

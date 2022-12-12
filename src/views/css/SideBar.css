@@ -1,0 +1,13 @@
+@media only screen and (min-width: 1024px) {
+    .ASideBar {
+       
+        min-width: 130px;
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    .ASideBar {
+       
+        width: 0px;
+    }
+}
