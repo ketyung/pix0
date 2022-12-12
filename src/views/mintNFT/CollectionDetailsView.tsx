@@ -57,6 +57,10 @@ export const CollectionDetailsView : FC <Props> = ({
 
         if ( collection) {
 
+            if ( !window.confirm(`Confirm to mint 1 NFT with ${collection.std_price} XRP?`)){
+                return;
+            }
+
             setProcessing(true);
             await randomMint(collection, (e)=>{
 
