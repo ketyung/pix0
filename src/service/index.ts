@@ -340,6 +340,27 @@ export const randomMediaForMinting = async (collection_id : string, minted_by : 
 }
 
 
+export const availableMintCount = async (collection_id : string )
+: Promise<{count: number}|undefined> =>{
+
+    let url = `${REMOTE_URL}available_mint_count/${encodeURIComponent(collection_id)}`;
+    
+    try {
+
+        let c = await ((await fetch(url,{
+            headers: await obtainHeaderWithJWT(),
+        }))).json() ;
+
+        return c;
+    }
+    catch (e : any) {
+
+        console.error("error@getCollectionsBy", e);
+        return undefined;
+    }
+}
+
+
 export const removeMintInfoOf = async (media_id : string, minted_by : string  )
 : Promise< CollectionMedia|undefined> =>{
 

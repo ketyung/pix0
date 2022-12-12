@@ -13,7 +13,9 @@ export const CollectionDetailsView : FC <Props> = ({
 
     const [media, setMedia] = useState<string>();
 
-    const {getOneCollectionMedia} = useService();
+    const {getOneCollectionMedia, availableMintCount} = useService();
+
+    const[ availMintCount, setAvailMintCount] = useState<number>();
 
     const [processing, setProcessing] = useState(false);
 
@@ -28,6 +30,13 @@ export const CollectionDetailsView : FC <Props> = ({
 
     },[getOneCollectionMedia]);
 
+
+    const fetchAvailableMintCount = useCallback( async ()=>{
+
+        let c = await availableMintCount(collection?._id ?? "");
+        setAvailMintCount(c);
+    },[availableMintCount]);
+
     const {randomMint} = useXrp();
 
     const setMessageNow = (message : Message) => {
@@ -41,6 +50,7 @@ export const CollectionDetailsView : FC <Props> = ({
 
     useEffect(()=>{
         fetchMedia();
+        fetchAvailableMintCount();
     },[]);
 
     const mintNow = async () => {
@@ -75,8 +85,11 @@ export const CollectionDetailsView : FC <Props> = ({
         <img src={media} className="object-scale-down h-64 w-64 bg-gray-100 p-4 rounded-xl"/>
         </div>}
 
+        { availMintCount && <div className="mb-4 mt-4 bg-gray-600 text-gray-100 p-2 rounded-2xl text-left pl-20">
+        Remaining mint : {availMintCount}
+        </div>}
         { collection?.std_price &&
-        <div className="mb-2 text-center mt-4 pl-4 font-bold w-100 rounded-3xl bg-gray-600 p-2 text-gray-100">
+        <div className="mb-2 text-left mt-4 pl-20 font-bold w-100 rounded-3xl bg-gray-600 p-2 text-gray-100">
         <span className="text-center">Std Price : {collection?.std_price.toFixed(2)} XRP</span>
         <button className="ml-4 shadow bg-blue-800 hover:bg-purple-700 w-1/2 inline-block
         focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded-3xl" 

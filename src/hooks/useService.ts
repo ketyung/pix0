@@ -125,6 +125,15 @@ export default function useService()  {
 
     }
 
+    const availableMintCount = async (collection_id : string )
+    : Promise<number|undefined> =>{
+
+        let c = await service.availableMintCount(collection_id);
+
+        return c?.count;
+
+    }
+
     const getCollectionsMediaBy = async (
     collection_id : string,     
     offset : number = 0, limit : number = 20 )
@@ -267,6 +276,6 @@ export default function useService()  {
     ,getCollectionsMediaBy, getCollectionsMediaCountBy, addCollectionMedia, addOffer, 
     getOffers,deleteOffer,hasOffer,getPrivateOffers,  
     getPublishedCollections, getOneCollectionMedia,
-    deleteCollection} as const ;
+    deleteCollection, availableMintCount} as const ;
 
 }
