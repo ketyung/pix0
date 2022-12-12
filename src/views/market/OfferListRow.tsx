@@ -1,13 +1,11 @@
 import { FC , useState} from "react";
 import { Spinner } from "../components/Spinner";
 import { dateToTimeAgo, shortenStringTo } from "../../utils";
-import { NFTOffer } from "xrpl/dist/npm/models/common";
 import useXrp from "../../hooks/useXrp";
 import useService from "../../hooks/useService";
 import { NFTMetadataImageView } from "../collectibles/NFTMetadataImageView";
 import { NFTMetadata } from "../../models";
 import { Offer } from "../../models/token_offer";
-import { off } from "process";
 
 
 type Props = {
