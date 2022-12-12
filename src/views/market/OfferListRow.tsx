@@ -78,7 +78,7 @@ export const OfferListRow : FC <Props> = ({
     }
 
 
-    return <div className="mb-6 p-4 border-b-2 hover:bg-gray-200 rounded-2xl w-1/2 mx-auto shadow-2xl">
+    return <div className="mb-6 p-4 border-b-2 hover:bg-gray-200 rounded-2xl w-11/12 lg:w-7/12 mx-auto shadow-2xl">
       <div className="mb-2 text-left font-bold">
         <span className="mr-2">{((index ?? 0) + 1)}.</span>  
         {metadata?.name && <span className="ml-2">{metadata?.name}</span>}
